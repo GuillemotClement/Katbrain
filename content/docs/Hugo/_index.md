@@ -2,4 +2,4 @@
 title: Hugo 
 ---
 
-{{< section-toc >}}
+{{< sommaire >}}
