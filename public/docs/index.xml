@@ -1,0 +1,323 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KatBrain – </title>
+    <link>http://localhost:1313/docs/</link>
+    <description>Recent content on KatBrain</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr-FR</language>
+    <lastBuildDate>Fri, 05 Jun 2026 00:09:02 +0200</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/docs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/hugo/base/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/hugo/base/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;Lancer le serveur local&lt;/h1&gt;&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo server --buildDrafts --disableFastRender&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+    aria-label=&#34;Copy code&#34;
+    data-copied-label=&#34;Copied!&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/neovim/keymap/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/neovim/keymap/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;Keymap&lt;/h1&gt;&lt;p&gt;The configuration is inspired by this blog : &lt;a href=&#34;https://vincent.jousse.org/blog/fr/tech/configurer-neovim-comme-ide-a-partir-de-zero-tutoriel-guide/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://vincent.jousse.org/blog/fr/tech/configurer-neovim-comme-ide-a-partir-de-zero-tutoriel-guide/&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Ajout raccourcis&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;ajout-raccourcis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#ajout-raccourcis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;lua/core/keymaps.lua&lt;/code&gt; contient la confiration de keymaps.&lt;/p&gt;
+&lt;p&gt;La fonction permet de spécifier le raccourcis. En quatrièmme argument, il prends une clé-valeur qui permet d&amp;rsquo;ajouter une description au raccourcis.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;keympa([mode], [nouvelle touches], [Ancienne Touche], { desc = &amp;quot;description&amp;quot; })&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;Commandes de base&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;commandes-de-base&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#commandes-de-base&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;;;&lt;/code&gt;: sortir du mode edition [I]&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;i&lt;/code&gt;: [v] déplace le texte sélectionné vers le haut en mode visuel&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;k&lt;/code&gt;: [v] déplace le texte sélectionné vers le bas en mode visuel&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;I&lt;/code&gt;: [V] déplace le texte sélectionné vers le haut en mode visuel bloc&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;K&lt;/code&gt;: [V] déplace le texte sélectionné vers le bas en mode visuel bloc&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;yy&lt;/code&gt; : (N) copie la ligne entière&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;yyp&lt;/code&gt; : (N) copie et colle en dessous&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;p&lt;/code&gt; : (N) coller en dessous&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;P&lt;/code&gt;: (N) coller au dessus&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1&gt;Plugins&lt;/h1&gt;&lt;h2&gt;Ajout de plugin&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;ajout-de-plugin&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#ajout-de-plugin&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Pour chaque nouveau plugin, on créer un nouveau fichier dans &lt;code&gt;lua/plugins/[plugin_name].lua&lt;/code&gt;. Lazy se charge de télécharger le plugin, et de le charger dans la configuration Nvim.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:Lazy&lt;/code&gt;: lance la fenetre de gestion des plugins&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;q&lt;/code&gt;: quitter la fenetre de gestion&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;U&lt;/code&gt;: update des plugins&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1&gt;Plugins installés&lt;/h1&gt;&lt;h2&gt;lazy.nvim&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;lazynvim&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#lazynvim&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Il permet de gérer l&amp;rsquo;installation et la configuration des différents plugins. Pour chaque nouveau plugin, on vient créer un nouveau fichier qui permet de set une configuration.&lt;/p&gt;
+&lt;p&gt;Pour ouvrir la fenêtre de gestion des plugins, on peut utiliser &lt;code&gt;:Lazy&lt;/code&gt;, et &lt;code&gt;q&lt;/code&gt; pour quitter.L&amp;rsquo;utilisation de &lt;code&gt;U&lt;/code&gt; permet de mettre à jour automatiquement tous les plugins.&lt;/p&gt;
+&lt;p&gt;La config se trouve dans &lt;code&gt;lua/config/lazy.lua&lt;/code&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Theme&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;theme&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#theme&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href=&#34;https://dotfyle.com/neovim/colorscheme/trending&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Liste de theme&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Dans le fichier, utiliser la config fournis dans le Github, en se basant sur cet exemple&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-lua&#34; data-lang=&#34;lua&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[repo_name]&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  lazy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  priority &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  opts &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {},
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  config &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;-- chargement du thème&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    require(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;[theme_name]&amp;#39;&lt;/span&gt;).load()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+    aria-label=&#34;Copy code&#34;
+    data-copied-label=&#34;Copied!&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;hr&gt;
+&lt;h2&gt;nvim-tree.lua&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;nvim-treelua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#nvim-treelua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Ajoute l&amp;rsquo;explorateur de fichier.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;e&lt;/code&gt;: ouvre l&amp;rsquo;explorateur. Définis dans le fichier de config du pugins&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a&lt;/code&gt;: Permet de créer un nouveau fichier, ou dossier -&amp;gt; &lt;code&gt;/file.txt&lt;/code&gt; | &lt;code&gt;/file/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d&lt;/code&gt; : Supprimer un fichier&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;r&lt;/code&gt;: Renommer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt;: Couper&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c&lt;/code&gt;: Copier&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;p&lt;/code&gt;: Coller&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;R&lt;/code&gt;: Rafraichir&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;H&lt;/code&gt;: Afficher/masquer les fichiers cachés&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Les raccourcis suivant sont définis dans le fichier &lt;code&gt;lua/core/keymaps.lua&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-h&amp;gt;&lt;/code&gt;: déplace le curseur dans la fenetre de gauche&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-j&amp;gt;&lt;/code&gt;: déplace le curseur dans la fenetre du bas&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-k&amp;gt;&lt;/code&gt;: déplace le curseur dans la fenetre du haut&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-l&amp;gt;&lt;/code&gt;: déplace le curseur dans la fenetre de droite&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;telescope.lua&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;telescopelua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#telescopelua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Recherche par mot. Le fichier &lt;code&gt;lua/plugins/telescope.lua&lt;/code&gt; permet de définir la configuration.
+&lt;a href=&#34;https://github.com/nvim-telescope/telescope.nvim#default-mappings&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Keymap default&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;Ctrl-k&amp;gt;&lt;/code&gt; : remonte dans la liste de sélection&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;Ctrl-j&amp;gt;&lt;/code&gt; : descend dans la liste de sélection&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;ff&lt;/code&gt;: recherche de string dans les noms de fichier&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;fg&lt;/code&gt;: recherche de string dans le contenu du fichier&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;fb&lt;/code&gt;: recherche de string dans les noms de buffers&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;fx&lt;/code&gt;: recherche de string sous le curseur&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;bufferline.lua&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;bufferlinelua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#bufferlinelua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Permet d&amp;rsquo;avoir un aperçu des buffers en cours (&lt;code&gt;lua/plugins/bufferline.lua&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Raccourcis définis dans &lt;code&gt;lua/core/keymaps&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;S-l&amp;gt;&lt;/code&gt;: [n] passer au buffer suivant&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;S-h&amp;gt;&lt;/code&gt; : [n] passer au buffer précédent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Lualine - &lt;code&gt;lua/plugins/lualine.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;lualine---luapluginslualinelua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#lualine---luapluginslualinelua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Ajoute la barre de status.
+&lt;a href=&#34;https://github.com/nvim-lualine/lualine.nvim&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Treesitter - &lt;code&gt;lua/plugins/treesitter.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;treesitter---luapluginstreesitterlua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#treesitter---luapluginstreesitterlua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Permet de parser et comprendre la syntaxe des langages. Apporte la coloration syntaxique, indentation intelligente, tags automatique, et contexte.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/romus204/tree-sitter-manager.nvim/tree/main/runtime/queries&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Language supportés&lt;/a&gt; a ajouter dans le &lt;code&gt;ensure_installed&lt;/code&gt; de la configuration.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Nvim-cmp - &lt;code&gt;lua/plugins/nvim-cmp.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;nvim-cmp---luapluginsnvim-cmplua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#nvim-cmp---luapluginsnvim-cmplua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Ajout de l&amp;rsquo;autocomplétion. Il fournit l&amp;rsquo;interface et doit ensuite etre configuré avec les lsp, snippets, etc.
+Il est possible d&amp;rsquo;ajouter des &lt;a href=&#34;https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;sources possible&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-k&amp;gt;&lt;/code&gt;: suggestion précédente&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-j&amp;gt;&lt;/code&gt;: suggestion suivamte&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-b&amp;gt;&lt;/code&gt;: défile la documentation vers le haut&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-f&amp;gt;&lt;/code&gt;: défile la documentation vers le bas&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-space&amp;gt;&lt;/code&gt;: ouvre manuellement le menu d&amp;rsquo;autocompletion&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;C-e&amp;gt;&lt;/code&gt;: ferme le menu d&amp;rsquo;autocompletion&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Enter&lt;/code&gt;: valide une suggestion&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Support des LSP&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;support-des-lsp&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#support-des-lsp&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Les LSP sont des protocoles qui permettent à Neovim de connaître le language de programme sur lequel on travail. C&amp;rsquo;est via les LSP que l&amp;rsquo;on peut ajouter de l&amp;rsquo;auto-complète ou le go to definition.
+Ces protocoles ne sont pas spécifique à Neovim, mais sont utiliser par les IDE.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;lspconfig - &lt;code&gt;lua/plugins/lsp/lspconfig.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;lspconfig---luapluginslsplspconfiglua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#lspconfig---luapluginslsplspconfiglua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Permet de configurer de manière unifié les différents LSP.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gd&lt;/code&gt;: [n] accéder à la définition -&amp;gt; où c&amp;rsquo;est défini&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gD&lt;/code&gt;: [n] accéder à la déclaration&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gR&lt;/code&gt;: [n] affiche tous les endroits où l&amp;rsquo;élément est utilisé -&amp;gt; où c&amp;rsquo;est utilisé&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gi&lt;/code&gt;: [n] accéde au éléments qui implément (ex une interface Go) -&amp;gt; qui implémente&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gt&lt;/code&gt;: [n] accède au type type définition d&amp;rsquo;un type Go par exemple&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;K&lt;/code&gt;: [n] affiche la documentation&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gs&lt;/code&gt;: [n] affiche la signature d&amp;rsquo;une fonction&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;rn&lt;/code&gt;: [n] renommage&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;ca&lt;/code&gt;: [n] code action&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;d&lt;/code&gt;: [n] affiche les erreurs de la ligne courante&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader-D&lt;/code&gt;: [n] affiches les erreurs du fichier&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[d&lt;/code&gt;: [n] diagnostics précédent&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;]d&lt;/code&gt;: [n] diagnostics suivant&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;F&lt;/code&gt;: [n] formate le fichier&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;rs&lt;/code&gt;: [n] relance le serveur LSP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Mason - &lt;code&gt;lua/plugins/lsp/mason.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;mason---luapluginslspmasonlua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#mason---luapluginslspmasonlua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Installe les LSP. &lt;code&gt;ensure_installed&lt;/code&gt; permet d&amp;rsquo;ajouter des nouveaux language. Il seront automatiquement téléchargement est les indiquant dans cette liste.
+&lt;a href=&#34;https://mason-registry.dev/registry/list&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Liste des language&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:LspInfo&lt;/code&gt;: affiche la liste des LSP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Trouble - &lt;code&gt;lua/plugins/trouble.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;trouble---luapluginstroublelua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#trouble---luapluginstroublelua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Remonte les erreurs remonté par le LSP: permet de voir les définitions de fonction du fichier, etc&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;xx&lt;/code&gt;: [n] ouvre/ferme la liste des diagnostics du projet&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;xX&lt;/code&gt;: [n] ouvre/ferme la liste pour le fichier courant&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;cs&lt;/code&gt;: [n] affiche les symboles du fichier, le outline de VSCODE&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;cl&lt;/code&gt;: [n] affiche les informations LSP liées à l&amp;rsquo;élément sous le curseur (endroit de la défintion, où est utilisé, ..)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;xL&lt;/code&gt;: [n] affiche la location list&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;xQ&lt;/code&gt;: [n] affiche la Quickfix List&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Conform - &lt;code&gt;lua/plugins/conform.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;conform---luapluginsconformlua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#conform---luapluginsconformlua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Ajoute le formatage automatique à la sauvegarde. Les LSP sont à préciser.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;mp&lt;/code&gt;: [v] formate le fichier&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Gitsigns - &lt;code&gt;lua/plugins/gitsigns.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;gitsigns---luapluginsgitsignslua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#gitsigns---luapluginsgitsignslua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Affiche les status de suivis Git. Les blocs sont définie dans des &lt;strong&gt;hunk&lt;/strong&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;]h&lt;/code&gt;: [n] hunk suivant&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[h&lt;/code&gt;: [n] hunk précédent&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;hs&lt;/code&gt;: ajoute le hunk courant au stage&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;hr&lt;/code&gt;: annule le hunk courant&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;hR&lt;/code&gt;: annule les modification du fichier&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;hu&lt;/code&gt;: annule &lt;code&gt;&amp;lt;leader&amp;gt;hs&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;hp&lt;/code&gt;: affiche un mini dif&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;hb&lt;/code&gt;: git blame pour la ligne courante&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;hB&lt;/code&gt;: git blamce afficher en permanent&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;hd&lt;/code&gt;: git diff du fichier courant&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;hD&lt;/code&gt;: compare avec le commit précédent&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ih&lt;/code&gt;: text object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;whichKey - &lt;code&gt;lua/plugins/whichkey.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;whichkey---luapluginswhichkeylua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#whichkey---luapluginswhichkeylua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Permet de voir les informations sur les commandes&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;leader&amp;gt;?&lt;/code&gt; : affiche la liste des raccourcis possible dans le contexte actuel.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Todo&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;todo&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#todo&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Permet de mettre en valeur les TODO. On peut utiliser ces commentaires:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;TODO&lt;/code&gt;: a faire&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;FIX&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;FIXME&lt;/code&gt;: a corriger&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;BUG&lt;/code&gt;: bug connu&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;HACK&lt;/code&gt;: solution temporaire&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;WARN&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;WARNING&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;NOTE&lt;/code&gt;: information&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;PERF&lt;/code&gt;: optimisation&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;TEST&lt;/code&gt;: test a ajouter&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;]t&lt;/code&gt;: commentaire TODO suivant&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;[t&lt;/code&gt;: commentaire TODO précédent&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Indent-blankline - &lt;code&gt;lua/plugins/indent-blankline.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;indent-blankline---luapluginsindent-blanklinelua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#indent-blankline---luapluginsindent-blanklinelua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Ajout des guides d&amp;rsquo;indentation&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Autopairs - &lt;code&gt;lua/plugins/autopairs.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;autopairs---luapluginsautopairslua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#autopairs---luapluginsautopairslua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Pairing auto des parenthèses&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Rainbow delimiters - &lt;code&gt;lua/plugins/rainbow-delimiters.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;rainbow-delimiters---luapluginsrainbow-delimiterslua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#rainbow-delimiters---luapluginsrainbow-delimiterslua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Ajout de parenthèse de couleurs&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Noice - &lt;code&gt;lua/plugins/noice.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;noice---luapluginsnoicelua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#noice---luapluginsnoicelua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Modification de l&amp;rsquo;interface des erreurs et des notifications par défaut et les passe en haut à droite. Modifier l&amp;rsquo;interface de recherche ou les &lt;code&gt;cmdline&lt;/code&gt; en affichant une popup&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Render Markdown - &lt;code&gt;lua/plugins/render-markdown.lua&lt;/code&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;render-markdown---luapluginsrender-markdownlua&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#render-markdown---luapluginsrender-markdownlua&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Permet d&amp;rsquo;avoir un affichage propre du markdown.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+{{ range .Page.RegularPagesRecursive.ByWeight }}
+
+{{ $pageUrl := .RelPermalink }}
+{{ $content := .RawContent }}
+{{ $matches := findRESubmatch `(?m)^(#{1,6})\s+(.+)$` $content }}
+
+{{ if $matches }}
+<ul>
+  {{ range $matches }}
+  {{ $level := len (index . 1) }}
+  {{ $title := index . 2 }}
+
+  <li style="margin-left: {{ mul (sub $level 1) 20 }}px;">
+    <a href="{{ $pageUrl }}#{{ $title | anchorize }}">
+      {{ $title }}
+    </a>
+  </li>
+  {{ end }}
+</ul>
+
+<hr>
+{{ end }}
+
+{{ end }}

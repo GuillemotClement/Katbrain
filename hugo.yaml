@@ -1,0 +1,30 @@
+baseURL: https://example.org/
+locale: fr-FR
+title: KatBrain
+
+module:
+  imports:
+    - path: github.com/imfing/hextra
+
+menu:
+  main:
+    - name: Accueil
+      pageRef: /
+      weight: 1
+
+    - name: Documentation
+      pageRef: /docs
+      weight: 2
+
+    - name: Projets
+      pageRef: /projet
+      weight: 3
+
+    - name: Search
+      params:
+        type: search
+
+    - name: Github
+      url: "https://github.com"
+      params:
+        icon: github
