@@ -1,7 +1,9 @@
 ---
 date: '2026-06-05T00:08:47+02:00'
-draft: true
-
+draft: false
+title: Katbrain 
+cascade:
+    type: docs
 ---
 
 ![](katbrain.png)
