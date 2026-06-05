@@ -1,9 +1,14 @@
-FROM hugomods/hugo:exts AS builder 
+FROM hugomods/hugo:exts AS builder
 
-WORKDIR /src 
+WORKDIR /src
 COPY . .
-RUN hugo --minify 
 
-FROM nginx:alpine 
-COPY --from=builder /src/public /usr/share/nginx/html 
+RUN hugo --minify
+
+FROM nginx:alpine
+
+RUN rm -rf /usr/share/nginx/html/*
+
+COPY --from=builder /src/public/ /usr/share/nginx/html/
+
 EXPOSE 80
