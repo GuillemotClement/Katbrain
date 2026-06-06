@@ -23,6 +23,7 @@ La fonction permet de spécifier le raccourcis. En quatrièmme argument, il pren
 - `p` : (N) coller en dessous 
 - `P`: (N) coller au dessus 
 
+- `:%d`: supprimer le contenu du fichier 
 
 ---
 # Plugins 
