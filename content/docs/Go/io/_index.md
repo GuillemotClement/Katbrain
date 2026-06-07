@@ -3,6 +3,9 @@
 La lecture/ecriture (IO) dans les programme fonctionne comme un flux (stream): les données arrivent par paquets, leurs taille est connue à l'avance, et la vitese dépend du monde extérieur.
 La logique doit dépendre de `Reader` et `Writer`, ce pas ce qu'il y a à l'intérieur (fichier, réseau, mémoire, stdin/stdout).
 
+`IO` correspond au transferts d'octets: string -> buffer, buffer -> stdout, buffer -> buffer, `Reader` -> `Writer`. Et on vient écrire à chaque fois une boucle `for`.
+
+
 ```mermaid
 flowchart LR
     R["Source de donnees - Reader"]
@@ -678,3 +681,107 @@ func main() {
 	fmt.Printf("shownNow=%q\n", buf[:n])           // shownNow="task report "
 	fmt.Printf("storedCopy=%q\n", shown.String()) // storedCopy="task report "
 }
+```
+
+---
+
+## `io.Copy` & `io.CopyN` 
+
+### `io.Copy()`: copie 
+
+Cette méthode permet de faire une copie.
+
+Elle vient lire dans un buffer, écrit par portion, et recommance jusqu'à la fin ou jusqu'a une erreur. Il choisit le buffer lui même, on permet de ce concentrer sur la logique du programme plutôt qu'implémenter manuelle la copie.
+
+```go 
+written, err := io.Copy(dst, src)
+```
+
+- `dst`: un `io.Writter` -> où l'on vient écrire 
+- `srd`: un `io.Reader` -> on l'on dit 
+- `written` indique combien d'octets ont été écrit dans `dst`. Le type `int64` permet de gérer les flux volumineux.
+
+- `err == nil` : copiée jusqu'a la fin du flux 
+- `err != nil` : erreur lors de la copie. `written` peut être `0` ou `>0`.
+
+```go 
+import (
+	"bytes"
+	"fmt"
+	"io"
+	"strings"
+)
+
+func main() {
+	// création de la source => une string 
+	src := strings.NewReader("hello, stream")
+	// création de la dst => un buffer 
+	var dst bytes.Buffer
+
+	// on fait la copie de la source vers la destination 
+	n, err := io.Copy(&dst, src)
+	fmt.Printf("n=%d err=%v dst=%q\n", n, err, dst.String())
+	// n=13 err=<nil> dst="hello, stream"
+}
+```
+
+#### Progression partiel
+
+`err != nil` n'indique pas forcément une erreur total. Le flux à pu transmettre une partie des données, puis échouer, un `Writer` a pu accepter une partie des données, puis refuser la suite ...
+
+Une opération peut renvoyer une partie du résultat + une erreur. L'important est que l'erreur n'annule pas ce qui a été fait avant elle.
+
+---
+
+### `io.CopyN()`: copier exactement N octets 
+
+Cette méthode permet de faire la copie d'un nombre définis d'octet. Pas plus, pas moins.
+
+```go
+written, err := io.CopyN(dst, src, n)
+```
+
+- `written`: le nombre d'octet copier 
+- `err` : si erreur pendant l'exécution 
+- `dst`: destination  
+- `src`: source 
+- `n`: nombre d'octets à copier
+
+```go 
+import (
+	"bytes"
+	"fmt"
+	"io"
+	"strings"
+)
+
+func main() {
+	src := strings.NewReader("hey")
+	var dst bytes.Buffer
+
+	written, err := io.CopyN(&dst, src, 10) // on copie 10 octets dans la destination 
+	fmt.Printf("written=%d err=%v dst=%q\n", written, err, dst.String())
+	// written=3 err=EOF dst="hey"
+}
+```
+
+### Gestion d'erreur
+
+On retourne nombre d'octets copier et le message d'erreur pour obtenir un message precis.
+
+```go 
+import (
+	"fmt"
+	"io"
+)
+
+func copyWithContext(dst io.Writer, src io.Reader, op string) (int64, error) {
+	n, err := io.Copy(dst, src)
+	if err != nil {
+		return n, fmt.Errorf("%s: %w", op, err) // ajout du contexte 
+	}
+	return n, nil
+}
+
+func main() {}
+```
