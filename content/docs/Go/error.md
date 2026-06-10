@@ -1,9 +1,4 @@
----
-date: 2026-06-05T11:48:25+02:00
----
-# Wrapping
-
-## Définition 
+## Wrapping
 
 Le **wrapping** permet d'ajouter du contexte à une erreur. On utilise `%w`, ce qui permet de créer une string, qui sera ensuite possible de venir découper pour retirer des "couches".
 
@@ -46,5 +41,3 @@ func main() {
 	fmt.Println(errors.Unwrap(w2)) // parse: bad input => retire la première couche 
 }
 ```
-
-### 

@@ -785,3 +785,8 @@ func copyWithContext(dst io.Writer, src io.Reader, op string) (int64, error) {
 
 func main() {}
 ```
+
+---
+
+## 26-4: `context.Context`
+

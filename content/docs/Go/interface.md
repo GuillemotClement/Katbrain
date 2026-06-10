@@ -11,28 +11,3 @@ type Greeter interface {
 ```
 
 *`Greeter` est une interface*
-
-
-
-
----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
