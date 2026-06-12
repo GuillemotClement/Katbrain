@@ -259,3 +259,349 @@ for (int i = grades.length - 1; i >= 0; i--) {
     System.out.println("Note n°" + (i + 1) + ": " + grades[i]);
 }
 ```
+
+## Tableau deux dimensions 
+
+La première paire de `[]` pour les lignes, la seconde pour les colonnes.
+
+Chaque élément du tableau est défini par une paire d'indice.
+
+```java
+// création du tableau
+int[][] matrix;
+// création et affectation 
+int[][] matrix = new int[3][4];
+// création rapide
+int[][] example = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+```
+
+```java
+int[][] data = new int[5][2];
+data[1][1] = 5;         // [ligne][colonne] écriture
+int value = data[1][1]; // lecture
+```
+
+En mémoire, la variable stocke la référence vers un emplacement mémoire qui contient des références vers les sous tableau.
+
+Pour accéder aux au conteneur de conteneur, il suffit d'indiquer un indice :
+
+```java
+// Matrice importante avec des données
+int[][] matrix = {
+  {1, 2, 3, 4, 5},
+  {5, 4, 3, 2, 1}
+};
+
+int[] tmp = matrix[0];
+matrix[0] = matrix[1];
+matrix[1] = tmp;
+```
+
+### Remplir un tableau à deux dimensions 
+
+```java
+int[][] matrix = new int[3][4];
+int value = 1;
+
+for (int row = 0; row < 3; row++)
+{
+    for (int col = 0; col < 4; col++)
+    {
+        matrix[row][col] = value;
+        value++;
+    }
+}
+```
+
+### Affichage d'un tableau à deux dimensions 
+
+```java
+for (int row = 0; row < matrix.length; row++)
+{
+    for (int col = 0; col < matrix[row].length; col++)
+    {
+        System.out.print(matrix[row][col] + "\t");
+    }
+    System.out.println(); // saut de ligne
+}
+```
+
+---
+
+## `jagged arrays`: Tableau irrégulier 
+
+Les jagged arrays permettent d'avoir des lignes de longueurs différentes. Chaque élément est un tableau, et ces tableau imbriqués peuvent avoir des longueurs différentes.
+
+```java
+// création du tableau principale -> 3 lignes initialisé ä null  
+int[][] jaggedArray = new int[3][];
+
+// création et initialisation des tableaux interne
+jaggedArray[0] = new int[2]; // 2 éléments dans la première ligne
+jaggedArray[1] = new int[4]; // 4 éléments dans la deuxième ligne
+jaggedArray[2] = new int[3]; // 3 éléments dans la troisième ligne
+
+// remplissage avec des valeurs 
+jaggedArray[0][0] = 1;
+jaggedArray[0][1] = 2;
+
+jaggedArray[1][0] = 3;
+jaggedArray[1][1] = 4;
+jaggedArray[1][2] = 5;
+jaggedArray[1][3] = 6;
+
+jaggedArray[2][0] = 7;
+jaggedArray[2][1] = 8;
+jaggedArray[2][2] = 9;
+```
+
+On peut créer et remplir un tableau irrégulier d'emblée si on connait les valeurs à l'avance 
+
+```java
+int[][] jaggedArray = new int[][]
+{
+    new int[] { 1, 2 },
+    new int[] { 3, 4, 5, 6 },
+    new int[] { 7, 8, 9 }
+};
+
+// syntaxe courte 
+int[][] jaggedArray =
+{
+    { 1, 2 },
+    { 3, 4, 5, 6 },
+    { 7, 8, 9 }
+};
+```
+
+### Itération 
+
+```java
+for (int i = 0; i < jaggedArray.length; i++)
+{
+    System.out.println("Ligne " + i + ":");
+    for (int j = 0; j < jaggedArray[i].length; j++)
+    {
+        System.out.print(jaggedArray[i][j] + " ");
+    }
+    System.out.println();
+}
+
+// for-each 
+for (int[] row : jaggedArray)
+{
+    for (int value : row)
+    {
+        System.out.print(value + " ");
+    }
+    System.out.println();
+}
+
+// éviter d'ajouter un caractère sur le dernier élément du sous tableau 
+for(int i = 0; i < playerAchievements.length; i++){
+    for (int j = 0; j < playerAchievements[i].length; j++){
+        if(j == playerAchievements[i].length - 1){
+            System.out.println(playerAchievements[i][j]);
+            continue;
+        }
+        System.out.print(playerAchievements[i][j] + " ");
+    }
+    System.out.println("");
+}
+```
+
+### Exemple complet 
+On souhaite gérer le suivis des notes des étudiants
+
+On commence par déclarer un nouveau tableau qui vient stocker les étudiants et les notes :
+
+```java
+int[][] studentMarks = new int[3][];
+studentMarks[0] = new int[] { 5, 4 };         // Premier étudiant — 2 notes
+studentMarks[1] = new int[] { 3, 4, 4 };      // Deuxième étudiant — 3 notes
+studentMarks[2] = new int[] { 5 };            // Troisième étudiant — 1 note
+```
+
+On viens afficher ensuite ces notes 
+
+```java 
+for (int i = 0; i < studentMarks.length; i++)
+{
+    System.out.print("Étudiant " + i + ": ");
+    for (int j = 0; j < studentMarks[i].length; j++)
+    {
+        System.out.print(studentMarks[i][j] + " ");
+    }
+    System.out.println();
+}
+```
+
+### Tableaux irrégulier et types 
+
+Un tableau irrégulier peut contenir n'importe quel types: chaîne, tableaux, objets 
+
+```java
+String[][] groups = {
+    { "John", "Peter" },
+    { "Maria", "Alex", "Serge" },
+    { "Sarah" }
+};
+```
+
+---
+
+## Tableaux tridimensionnels et multidimensionnels 
+
+Il est possible de créer des tableaux de n'importe quel dimensions.
+
+On indique le nombre de dimensions avec des paires de crochets:
+
+```java
+int[][][] cube = new int[2][3][4]; // 2 couches, 3 lignes, 4 colonnes
+cube[0][1][2] = 99;
+```
+
+On obtient ici :
+- 2 éléments selon la première coordonnée
+- 3 selon la deuxième 
+- 4 selon la troisième 
+
+L'accès à un élément se fait en utilisant tous les indices à la fois:
+
+```java
+for (int i = 0; i < cube.length; i++)
+{
+    for (int j = 0; j < cube[i].length; j++)
+    {
+        for (int k = 0; k < cube[i][j].length; k++)
+        {
+            System.out.print(cube[i][j][k] + " ");
+        }
+        System.out.println();
+    }
+    System.out.println("---");
+}
+```
+
+Ce tableau contient au total 24 élément (2 x 3 x 4)
+
+---
+
+## Classe `Arrays`
+
+La classe `java.utils.Arrays`fournit des méthodes statiques pour travailler avec des tableaux: trie, copie, comparaison, affichage formaté.
+
+Pas besoin de créer des instances, les méthodes sont statique.
+
+```java
+// import de la classe 
+import java.util.Arrays;
+```
+
+### `Arrays.sort`: trie de tableau 
+
+La méthode trie sur place, elle modifie le tableau d'origine et ne retourne pas de nouveau tableau. Pour conserver l'ordre d'origine, faire une copie avant le triage.
+
+```java
+// trie d'un tableau d'entier
+int[] scores = {5, 2, 9, 1, 7};
+Arrays.sort(scores); // Tri croissant
+
+System.out.println("Tableau trié: " + Arrays.toString(scores));
+// Affichera: [1, 2, 5, 7, 9]
+
+// trie de strings
+String[] names = {"Alice", "Bob", "Charlie", "David"};
+Arrays.sort(names);
+
+System.out.println(Arrays.toString(names));
+// [Charlie, David, Bob, Alice]
+
+// trie d'une partie du tableau 
+int[] arr = {7, 5, 3, 1, 9, 8};
+Arrays.sort(arr, 1, 4); // trie les éléments d’indice 1 à 3 inclus (4 exclu)
+
+System.out.println(Arrays.toString(arr));
+// [7, 1, 3, 5, 9, 8]
+```
+
+### `Arrays.fill`: remplissag de tableau 
+
+La méthode remplt tous, ou une partie des éléments du tableau avec la même valeur.
+
+```java
+// remplissage de tout le tableau
+int[] marks = new int[5];
+Arrays.fill(marks, 3); // Tous les éléments valent désormais 3
+System.out.println(Arrays.toString(marks)); // [3, 3, 3, 3, 3]
+
+// Remplissage d'une partie du tableau 
+int[] arr = new int[10];
+Arrays.fill(arr, 2, 5, 7); // Remplit les éléments d’indice 2 à 4 inclus (5 exclu)
+System.out.println(Arrays.toString(arr));
+// [0, 0, 7, 7, 7, 0, 0, 0, 0, 0]
+
+// remplissage d'un tableau de string 
+String[] guests = new String[4];
+Arrays.fill(guests, "Vide");
+System.out.println(Arrays.toString(guests)); // [Vide, Vide, Vide, Vide]
+```
+
+### `Arrays.copyOf` & `Arrays.copyOfRange`: copie de tableau 
+
+`copyOf` permet de créer un nouveau tableau et de copier les éléments depuis l'original. Si la nouvelle longueur est supérieur à l'originale, la queue est remplie par des valeurs par défaut.
+
+```java
+int[] original = {1, 2, 3};
+int[] copy = Arrays.copyOf(original, 5);
+System.out.println(Arrays.toString(copy)); // [1, 2, 3, 0, 0]
+
+// réduction de tableau 
+int[] shortCopy = Arrays.copyOf(original, 2);
+System.out.println(Arrays.toString(shortCopy)); // [1, 2]
+```
+
+`copyOfRange`
+
+```java
+int[] arr = {10, 20, 30, 40, 50};
+int[] mid = Arrays.copyOfRange(arr, 1, 4); // Copiera les éléments d’indice 1 à 3
+System.out.println(Arrays.toString(mid)); // [20, 30, 40]
+```
+
+### `Arrays.equals` & `Arrays.deepEquals`: comparaison de tableau 
+
+`equal` pour les tableaux simple, et `deepEquels` pour les tableau à dimensions multiple.
+
+```java 
+int[][] matrix1 = {{1, 2}, {3, 4}};
+int[][] matrix2 = {{1, 2}, {3, 4}};
+
+System.out.println(Arrays.equals(matrix1, matrix2));     // false!
+System.out.println(Arrays.deepEquals(matrix1, matrix2)); // true
+```
+
+### `Arrays.toString` & `Arrays.deepToString`: affichage lisible de tableau 
+
+Permet de faire un affichage direct d'un tableau dans une chaîne lisible.
+
+```java 
+// tableau simple 
+int[] arr = {1, 2, 3};
+System.out.println(Arrays.toString(arr)); // [1, 2, 3]
+
+// tableau multi-dimension 
+int[][] matrix = {{1, 2}, {3, 4}};
+System.out.println(Arrays.deepToString(matrix)); // [[1, 2], [3, 4]]
+```
+
+
+
+
+
+
+
