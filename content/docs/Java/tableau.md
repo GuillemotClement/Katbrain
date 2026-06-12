@@ -36,6 +36,25 @@ double[] vals = new double[20];
 - `new`: création du tableau
 - `type[count]`: le nombre de cellule du tableau
 
+### Déclaration rapide de tableau 
+
+Il est possible lors de la déclaration de tableau, de remplir directement les valeurs de celui ci.
+
+Le compilateur détermine alors le type, et la taille du tableau avec le nombres de valeurs insérées
+
+```java
+// longueurs des mois de l'année
+int[] months = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+// encore plus court 
+int[] months = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+// avec des string
+String[] months = { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" };
+```
+
+
+
 ## Accès aux valeurs
 
 On utilise la notation crochet pour accéder aux éléments.
@@ -128,5 +147,115 @@ else					// Sinon
 for (int i = 0; i < array.length; i++)	// Boucle sur tous les éléments du tableau : de 0 à array.length — 1
 {
    System.out.println(array[i]);
+}
+```
+
+## Tableau de string 
+
+Lors de la déclaration du tableau de string, ou de type personnalisé, les valeurs sont `null` par défaut.
+
+Seul les types primitifs ont une valeur par défaut,
+
+```java
+int[] numbers = new int[10];		// {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+String[] strings = new String[10];  // {null, null, null, null, null, null, null, null, null, null}
+User[] users = new User[10];		// {null, null, null, null, null, null, null, null, null, null}
+```
+
+Dans un tableau de `String`, ce n'est pas la string qui est stocké dans le tableau, mais une référence qui pointe vers son emplacement mémoire.
+
+---
+
+## `for-each`: parcourir un tableau
+
+La boucle parcours tous les éléments du tableau. On ne peut pas venir modifier directement les éléments, la variable de la boucle ne contient qu'une copie de la valeur.
+
+```java 
+for (int score : scores)
+{
+    System.out.println("Points: " + score);
+}
+
+// calculer la somme des éléments 
+int sum = 0;
+for (int score : scores)
+{
+    sum += score;
+}
+System.out.println("Somme de tous les points: " + sum);
+```
+
+--- 
+## Pattern 
+
+### Somme des éléments du tableau
+
+```java
+int sum = 0;
+for (int i = 0; i < grades.length; i++) {
+    sum += grades[i]; // équivaut à sum = sum + grades[i];
+}
+System.out.println("Somme des notes: " + sum);
+```
+
+### Recherche valeur max 
+
+```java
+int max = grades[0]; // commençons par le premier élément
+for (int i = 1; i < grades.length; i++) {
+    if (grades[i] > max) {
+        max = grades[i];
+    }
+}
+System.out.println("Note maximale: " + max);
+```
+
+### Recherche valeur min 
+
+```java
+int min = grades[0]; // commençons par le premier élément
+for (int i = 1; i < grades.length; i++) {
+    if (grades[i] < min) {
+        min = grades[i];
+    }
+}
+System.out.println("Note minimale: " + min);
+```
+
+### Calcul de moyenne 
+
+```java
+int sum = 0;
+for (int i = 0; i < grades.length; i++) {
+    sum += grades[i];
+}
+double average = (double) sum / grades.length; // il faut absolument convertir en double !
+System.out.println("Note moyenne: " + average);
+```
+
+### Saisie d'un tableau au clavier 
+
+```java
+Scanner console = new Scanner(System.in);
+
+int n = 5; // taille du tableau
+int[] numbers = new int[n];
+
+System.out.println("Saisissez " + n + " nombres:");
+for (int i = 0; i < n; i++) {
+    numbers[i] = console.nextInt();
+}
+
+System.out.println("Vous avez saisi:");
+for (int i = 0; i < n; i++) {
+    System.out.println(numbers[i]);
+}
+```
+
+### Affichage du tableau inverser
+
+```java
+for (int i = grades.length - 1; i >= 0; i--) {
+    System.out.println("Note n°" + (i + 1) + ": " + grades[i]);
 }
 ```
