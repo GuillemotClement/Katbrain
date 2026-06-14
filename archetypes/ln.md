@@ -3,7 +3,7 @@ date: {{ .Date }}
 ---
 # {{ replace .Name "-" " " | title }}
 
-## Définition 
+<!-- ## Définition 
 
 ## Raison 
 
@@ -17,4 +17,4 @@ date: {{ .Date }}
 
 ## Bonne pratique 
 
-## Pattern 
+## Pattern  -->
