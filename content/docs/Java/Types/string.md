@@ -4,6 +4,32 @@ date: 2026-06-12T21:22:36+02:00
 
 # String
 
+`""`: représente une chaîne vide.
+
+Tous les objets Java peuvent être convertis en type `String`
+
+```java
+String name = "Gizmo";
+
+String name1, name2, name3;
+
+String name = "Anya", city = "New York", message = "Hello!";
+```
+
+---
+
+
+## `+`: concaténation
+
+```java
+String s1 = "Amigo" + " the best";
+
+int x = 2025;
+String s3 = "Amigo" + x;
+```
+
+---
+
 ## Echappemet de caractères
 
 | Séquence | Description      |
@@ -485,13 +511,45 @@ if (sb1.toString().equals(sb2.toString()))
 }
 ```
 
-
-
-
-
-
 ## `StringBuffer`: sécurité pour multithreading 
 
 `StringBuffer` est plus lent, mais est thread-safe (synchronisé). 
 
 Si l'application utilise un seul thread, on garde `StringBuilder`.
+
+--
+
+## Conversion 
+
+### Conversion int -> String
+
+#### `String.valueOf()`: conversion int -> string
+
+```java
+int number = 42;
+String str = String.valueOf(number);  // str == "42"
+```
+
+#### Concaténation avec une chaîne vide
+
+```java
+int number = 42;
+String str = "" + number;
+```
+
+### Conversion String -> nombre
+
+Pour convertir une chaîne en nombre, la chaîne ne doit contenir que des nombres.
+
+#### `Integer.parseInt(string)`: convertis un int en String
+
+```java
+String str = "123";
+int number1 = Integer.parseInt(str);        //  number1 contient le nombre 123;
+
+int number2 = Integer.parseInt("321");      //  number2 contient le nombre 321
+
+int number3 = Integer.parseInt("321" + 0);  //  number3 contient le nombre 3210
+
+int number4 = "321"; //  Ne se compile pas : variable de type int, mais valeur de type String
+```

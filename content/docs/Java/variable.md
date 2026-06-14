@@ -40,3 +40,28 @@ name = null; 	// name contient null
 
 Il est impossible d'appeler des méthodes sur un objet si sa référene vaut `null`, l'objet n'existe pas.
 Cela provoque une erreur.
+
+--- 
+
+## `var`: inférence de type 
+
+`var` permet d'écrire une valeur, et le compilateur déduit le type.
+
+Ne fonctionne que pour des variables locales, à l'intérieur des méthodes. Il est interdit d'utiliser `var` pour des paramètres de méthodes, des champs de class, des constantes.
+
+Bonne pratiques: 
+- quand le type de la variable est évident d'apès la partie de droite 
+- quand le type est évident 
+- quand le type est trop long ou complexe
+
+```java
+var age = 23;            // le compilateur déterminera le type du nombre 23 et substituera int age
+var name = "Anna";       // le compilateur déterminera le type de "Anna" et substituera String name
+var price = 99.99;       // le compilateur déterminera le type de 99.99 et substituera double price
+
+// exemple avec un tableau 
+var numbers = new int[] { 1, 2, 3, 4 };
+
+// exemple avec une méthode 
+var input = console.nextLine(); // input est une String (la méthode retourne String)
+```
