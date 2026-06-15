@@ -599,8 +599,112 @@ int[][] matrix = {{1, 2}, {3, 4}};
 System.out.println(Arrays.deepToString(matrix)); // [[1, 2], [3, 4]]
 ```
 
+---
+
+## `ArrayList<T>`: Tableau infini 
+
+ArrayList est un "tableau intelligent" qui peut grandir et rétrécir automatiquement. 
+
+Le type des éléments du tableau doit être indiqué dans les chevrons. On peut utiliser n'importe quels types, sauf les primitifs. Il sera nécessaire de les envelopper.
+
+```java 
+// création du tableau infini de string 
+ArrayList<String> array = new ArrayList<String>()
+ArrayList<Integer> numbers = new ArrayList<Integer>();      // int
+ArrayList<Double> fees = new ArrayList<Double>();            // double
+ArrayList<Boolean> yesList = new ArrayList<Boolean>();       // boolean
+ArrayList<Character> chars = new ArrayList<Character>();     // char
+```
+
+### `add(element)`: ajouter un élément 
+
+```java
+// cr"ation d'un tableau de String  
+ArrayList<String> todo = new ArrayList<>(); // liste des tâches
+todo.add("Apprendre ArrayList");
+todo.add("Préparer du thé");
+todo.add("Se promener");
+```
+
+### `get(index)`: accès par indice
+
+Chaque élément est ranger par indice. L'indexation débute toujours à zéro.
+
+Si on tente d'accéder à un indice qui n'existe pas dans le tableau, cela provoque une erreur.
+
+```java
+String task = todo.get(1);
+System.out.println("Deuxième tâche : " + task);
+```
+
+### `set(index,element)`: remplacer 
+
+```java
+todo.set(1, "Préparer du café");
+System.out.println("Désormais, la deuxième tâche : " + todo.get(1));
+```
 
 
+### `remove(index)`: supprimer un élément 
+
+Lors de la supression, les éléments sont décalé vers la gauche. Par exemple, on supprime l'élément placé à l'index 0. L'élément ranger à l'index 1 passe sur l'index 0. 
+
+```java
+todo.remove(0);
+System.out.println("La première tâche maintenant : " + todo.get(0));
+```
+
+### `size()`: retourne le nombre d'élément du tableau 
+
+```java
+System.out.println("Nombre total de tâches : " + todo.size());
+
+// parcourir les éléments 
+for (int i = 0; i < todo.size(); i++)
+{
+    System.out.println(todo.get(i));
+}
+```
+
+### `contains(element)`: vérification de présence 
+
+Retourne true ou false selon si l'élément est présent dans le tableau.
+
+```java
+System.out.println(todo.contains("Se promener"));
+System.out.println(todo.contains("Préparer du thé"));
+```
+
+
+### Application: todo app 
+
+```java 
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class TodoApp
+{
+    public static void main(String[] args)
+    {
+        ArrayList<String> todo = new ArrayList<>();
+        Scanner console = new Scanner(System.in);
+
+        while (true)
+        {
+            System.out.print("Saisissez une tâche (ou une ligne vide pour quitter) : ");
+            String task = console.nextLine();
+            if (task.isEmpty()) break;
+            todo.add(task);
+        }
+
+        System.out.println("Votre liste de tâches :");
+        for (int i = 0; i < todo.size(); i++)
+        {
+            System.out.println((i + 1) + ". " + todo.get(i));
+        }
+    }
+}
+```
 
 
 
