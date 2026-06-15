@@ -83,3 +83,70 @@ public class Person {
     }
 }
 ```
+
+---
+
+## Surcharge de constructeurs 
+
+La surcharge c'est lorsque plusieurs constructeurs sont déclarés dans une même classe, mais avec des paramètres différents (nombre, type, ou ordre). Ils portent tous le même nom que la classe et n'ont pas de type de retour.
+
+Java viens analyser le nombre et le type d'arguments passer après le `new` lors de l'instanciation. Selon ce qui est passer, on utilise le constructeur adapté.
+
+```java
+public class Person {
+    String name;
+    int age;
+
+    // Constructeur sans paramètres (par défaut)
+    public Person() {
+        this.name = "Inconnu";
+        this.age = 0;
+    }
+
+    // Constructeur avec un paramètre
+    public Person(String name) {
+        this.name = name;
+        this.age = 0;
+    }
+
+    // Constructeur avec deux paramètres
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+// UTILISATION ==================================
+Person p1 = new Person();                // nom = "Inconnu", âge = 0
+Person p2 = new Person("John");         // nom = "John", âge = 0
+Person p3 = new Person("Peter", 25);     // nom = "Peter", âge = 25
+```
+
+## Appel d'un constructeur depuis un autre constructeur 
+
+Pour éviter de dupliquer le code lorsque l'on utilise la même logique dans chaque constructeur, on peut appeler un constructeur depuis un autre avec le `this()`.
+
+L'appel d'un autre constructeur via `this()` doit être la première ligne du constructeur.
+
+```java
+public class Person {
+    String name;
+    int age;
+
+    // Constructeur avec deux paramètres
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Le constructeur avec un paramètre appelle un autre constructeur
+    public Person(String name) {
+        this(name, 0); // appelle Person(String name, int age)
+    }
+
+    // Le constructeur sans paramètres appelle un autre constructeur
+    public Person() {
+        this("Inconnu", 0);
+    }
+}
+```
