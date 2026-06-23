@@ -3,6 +3,10 @@
 
 # Interface
 
+Une interface contient des signature de méthode devant être implémanté par une classe.
+
+Une classe peut implémenter plusieurs interface. 
+
 Une interface est un type spécial en Java qui définit un ensemble de méthodes que les classes ayant souscrit à cette interface doivent implémenter.
 
 L'interface đécrit **quoi faire** mais pas **comment faire**. si une classe implémente une interface, elle doit implémenter toutes ces méthodes.
@@ -596,9 +600,29 @@ remote.pressButton(); // Lumière éteinte !
 
 ## Expressions lambda 
 
-Permet de créer à la volée une implémentation d'une interface fonctionelle, sans déclarer une classe séparée ni une classe anonyme.
+Une expression lambda est une forme compacte d'écriture de l'implémentation de la méthode abstraite d'une interface fonctionnelle.
 
-C'est une forme compte d'écriture de l'implémentation de l'unique méthode abstraite d'une interface fonctionelle.
+Avant Java8, il était nécessaire de créer des classes anonyme pour implémenter un comportement.
+
+```java
+// interface fonctionelle 
+@FunctionalInterface
+interface Operation {
+    int apply(int a, int b);
+}
+
+// avec une classe anonyme -> ancienne syntaxe
+Operation sum = new Operation() {
+    @Override
+    public void apply(int a, int b) {
+        return a + b;
+    }
+};
+
+// avec expression lambda 
+Operation sum = (a, b) -> a + b; // on implémente l'interface et on passe directement l'expression
+System.out.println(sum.apply(3, 5)); // 8
+```
 
 ### Syntaxe 
 
@@ -736,3 +760,288 @@ List<Integer> numbers = Arrays.asList(1, 2, 3);
 numbers.forEach(n -> System.out.println(n * factor));
 // factor ne peut pas être modifié après ça!
 ```
+
+---
+
+## Références de méthode `::` 
+
+Method reference est une syntaxe spéciale en Java qui permet de transmettre une méthode ou un constructeur existante comme implémentation d'une interface fonctionnelle. On peut passer une méthode là où une expression lambda est attendue si les signatures coincident.
+
+```java
+Classe::méthode
+objet::méthode
+Classe::new
+```
+
+Si une lambda est une mini-fonction à la volée, une référence de méthode c'est le passage d'une méthode déjà existante. Au lieu de réécrire une "recette", on donne le lien vers la page qui la contient.
+
+```java
+// référence à une méthode statique 
+// Classe::methodeStatique 
+Function<Integer, String> intToString = String::valueOf;
+System.out.println(intToString.apply(123)); // "123"
+
+// référence à une méthode d'instance d'un objet 
+// object::methode
+PrintStream printer = System.out;
+Consumer<String> consumer = printer::println;
+consumer.accept("Bonjour, le monde!");
+
+// Référence à une méthode d'instance de classe 
+// Classe::méthode
+Function<String, Integer> stringLength = String::length;
+System.out.println(stringLength.apply("Java")); 
+
+// Référence à un constructeur 
+// Classee::new
+Supplier<ArrayList<String>> listSupplier = ArrayList::new;
+ArrayList<String> list = listSupplier.get();
+```
+
+---
+
+## Méthode défault dans les interfaces 
+
+Avant Java 8, une interface était strict: on ne pouvait y déclarer que des méthodes abstraites et des constantes. Lorsque l'on venait ajouter une nouvelle signature dans une interface pour une évolution, cela pouvait casser les projets dependant d'une lib et implémentant cette interface.
+
+Une méthode défault permet d'ajouter une méthode avec implémentation directement dans l'interface. Toutes les anciennes classe reçoivent automatiquement cette implémentation par défaut. 
+
+Il est possible de redéfinir cette méthode.
+
+### Syntaxe 
+
+Une méthode default est une méthode ordinaire avec implémentation dans une interface, et marquée par le mot clé `default`
+
+```java
+public interface Movable {
+    void move(int x, int y);
+
+    default void reset() {
+        // Implémentation typique : retour à l’origine (0,0)
+        move(0, 0);
+    }
+}
+```
+
+- Toute les méthodes d'une interface sont par défaut `public` et `abstract`, mais les méthodes défault ne sont pas abstraite: elles ont un corps.
+- Le mot clé `default` est toujours écrit avant le type de retour de la méthode.
+
+On peut utiliser de cette manière 
+
+```java
+// la classe implémente l'interface
+public class Robot implements Movable {
+    private int x, y;
+
+    @Override
+    public void move(int x, int y) {
+        this.x = x;
+        this.y = y;
+        System.out.println("Le robot a été déplacé vers (" + x + ", " + y + ")");
+    }
+
+    // Pas besoin d’implémenter reset() — la version par défaut fonctionnera !
+}
+
+// on peut utiliser ensuite 
+public class Main {
+    public static void main(String[] args) {
+        Movable robot = new Robot();
+        robot.move(10, 20); // Le robot a été déplacé vers (10, 20)
+        robot.reset();      // Le robot a été déplacé vers (0, 0)
+    }
+}
+```
+
+### Conflit et implémentation multiple des interfaces
+
+Si les deux interfaces implémenter par une classe possèdent une méthode `default` avec la même signature, le compilateur exige une résolution explicite du conflit
+
+```java
+interface A {
+    default void show() { System.out.println("A"); }
+}
+interface B {
+    default void show() { System.out.println("B"); }
+}
+class C implements A, B {
+    @Override
+    public void show() {
+        // Nous choisissons explicitement quelle méthode default utiliser
+        A.super.show(); // ou B.super.show();
+    }
+}
+```
+
+---
+
+## Méthode statique dans les interfaces
+
+Les méthodes statique dans les interfaces sont des méthodes qui appartiennent à l'interface elle-même et pas à ses implémentations. Elle ne nécessitent pas la création d'un objet et sont appelées directement via le nom de l'interface.
+
+### Syntaxe 
+
+Les méthodes statique sont déclarée dans une interface avec le mot clé `static`. Elle peuvent contenir une implémentation et ne peuvent pas être appelées que via le nom de l'interface 
+
+```java
+public interface MathUtils {
+    static int sum(int a, int b) {
+        return a + b;
+    }
+
+    static double average(int a, int b) {
+        return (a + b) / 2.0;
+    }
+}
+
+// appel 
+int result = MathUtils.sum(5, 7);        // 12
+double avg = MathUtils.average(10, 20);  // 15.0
+```
+
+### Private static 
+
+Parofois une interface a besoiun de méthodes auxiliaire uniquement pour un usage interne. Depuis Java 9, les interfaces prennent en charge les méthodes `private static`
+
+```java
+public interface Logger {
+    static void logInfo(String message) {
+        log("INFO", message);
+    }
+    static void logError(String message) {
+        log("ERROR", message);
+    }
+    private static void log(String level, String message) {
+        System.out.println("[" + level + "] " + message);
+    }
+}
+```
+---
+
+
+## Interface de la lib standard 
+
+### `Comparable<T>` 
+
+Cet interface permet de définir l'ordre naturel des objets. 
+
+```java
+public interface Comparable<T> {
+    int compareTo(T o);
+}
+```
+
+La méthode `compareTo` doit retourner: 
+- un nombre négatif si l'objet courant est plus petit que l'autre 
+- `0` s'il est égal 
+- un nombre positif s'il est plus grand 
+
+On as une classe `Student` et on implémente l'interface `Comparable<Student>` 
+
+```java
+public class Student implements Comparable<Student> {
+    private String name;
+    private int age;
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Getters pour l’exemple
+    public String getName() { return name; }
+    public int getAge() { return age; }
+
+    @Override
+    public int compareTo(Student other) {
+        // Tri par âge (ordre croissant)
+        return Integer.compare(this.age, other.age);
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + age + ")";
+    }
+}
+```
+
+On peut maintenant trier facilement un tableau ou une liste d'étudiant 
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("John", 20));
+        students.add(new Student("Peter", 18));
+        students.add(new Student("Mary", 22));
+
+        Collections.sort(students); // Fonctionne grâce à Comparable !
+
+        System.out.println("Étudiants triés:");
+        for (Student s : students) {
+            System.out.println(s);
+        }
+    }
+}
+```
+
+### `Serializable`
+
+La serialisation est la capacité d'un objet à se transformer en une séquence d'octet (sauvegarde de fichier, envoie sur le réseau) puis à être restauré. Dans le cas ou l'on souhaite sauvegarder l'etat d'un jeu, ou envoyer un objet au server.
+
+L'interface `Serialize` permet de marquer une classe commme serializable.
+
+```java
+import java.io.Serializable;
+
+public class Student implements Serializable {
+    private String name;
+    private int age;
+
+    // ... reste du code
+}
+```
+
+Pour sérialiser et deserialiser un objet, on utilise les classes `ObjectOutputStream` et `ObjectInputStream`. Par exemple, on enregistre un objet dans un fichier 
+
+```java
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Student s = new Student("Kate", 19);
+
+        // On enregistre l’objet dans un fichier
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("student.dat"))) {
+            out.writeObject(s);
+        }
+
+        // On lit l’objet depuis le fichier
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("student.dat"))) {
+            Student loaded = (Student) in.readObject();
+            System.out.println("Chargé: " + loaded);
+        }
+    }
+}
+```
+
+### `Cloneable` 
+
+Interface marqueur. Son rôle est d'indiquer à la JVM qu'un objet peut être cloné via la méthode `Object.clone()`. Sans cela, un appel à `clone()` levera une exception.
+
+Le clonage est superficiel.
+
+```java
+public class Student implements Cloneable {
+    private String name;
+    private int age;
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
+```
+
