@@ -311,7 +311,7 @@ try {
 
 De cette manière, dans la stack trace, on voit à la fois l'exception et toute la chaîne jusqu'a la cause première.
 
-### Obtenir la cause d'une exception 
+### Obtenir la cause d'une exception - `getCause()`
 
 Tout objet de type `Throwable` possède une méthode `getCause()` qui renvoie l'expression d'origine ou `null` si elle n'existe pas.
 
@@ -409,5 +409,208 @@ public class Main {
             throw new UserManagementException("Erreur lors des opérations sur la base de données", e);
         }
     }
+}
+```
+
+
+---
+
+## Gestion avancée des exceptions et bonnes pratiques 
+
+### `catch` multiple: gestion de différentes exceptions
+
+Dans un programme, un bloc de code peut lever différentes types d'exceptions. Par exemple, lors de la lecture d'un fichier, on peut obtenir un `FileNotFoundException`, un `IOException`, et lors de l'analyse des données, un `NumberFormatException`.
+Pour traiter correcte;ent chaque situation, Java permet d'enchaîne plusieurs bloc `catch`
+
+```java
+try {
+    // opérations dangereuses
+} catch (FileNotFoundException e) {
+    System.out.println("Fichier introuvable : " + e.getMessage());
+} catch (IOException e) {
+    System.out.println("Erreur d’entrée/sortie : " + e.getMessage());
+} catch (NumberFormatException e) {
+    System.out.println("Format de nombre incorrect : " + e.getMessage());
+}
+```
+
+Les blocs `catch` doivent aller du plus spécifique au plus général.
+
+### `catch` avec plusieurs types (multi-catch)
+
+Parfois des exceptions différentes nécessitent le même traitement. Par exemple, on souhaite simplement afficher un message d'erreur ou la consigner dans les logs, qu'ils s'agissent d'une erreur de lecture de fichiers ou de conversion de nombre
+
+```java
+try {
+    // opération dangereuse
+} catch (IOException | NumberFormatException e) {
+    System.out.println("Erreur lors du traitement du fichier ou du nombre : " + e.getMessage());
+}
+```
+
+- `e` aura le type de la superclasse commune la plus générale, généralement `Exception`
+- dans le bloc, il est impossible d'assigner une nouvelle valeur à la variable `e`, elle est automatiquement considérée comme `final`
+
+```java
+try {
+    BufferedReader reader = new BufferedReader(new FileReader("numbers.txt"));
+    String line = reader.readLine();
+    int number = Integer.parseInt(line);
+    System.out.println("Nombre : " + number);
+    reader.close();
+} catch (IOException | NumberFormatException e) {
+    System.out.println("Erreur : " + e.getMessage());
+}
+```
+
+---
+
+## Exceptions comme partie de l'API et try-with-ressources
+
+### Exception comme partie de l'API
+
+Lorsque l'on écrit une méthode. on définit les paramètres et la valeur de retour mais également quelles exceptions elle peut lever. Cela fait partie du contrat entre la méthode et ceux qui vont l'utiliser. Si une méthode peut lever une exception, tous ceux qui l'appellent doivent le savoir, afin de gérer correctement l'erreur.
+
+```java
+public void readFile(String filename) throws IOException {
+    // ... lecture du fichier
+}
+```
+
+Ici, on indique clairement que la méthode peut lever un `IOException`.
+
+### `@throws` - documentation des exceptions 
+
+L'annotation `@throws` permet de documenter les exceptions 
+
+```java
+/**
+ * Lit le contenu d’un fichier.
+ *
+ * @param filename nom du fichier
+ * @return le contenu du fichier sous forme de chaîne
+ * @throws IOException si une erreur de lecture du fichier s’est produite
+ */
+public String readFile(String filename) throws IOException {
+    // ...
+}
+```
+
+### Construction `try-with`ressources`
+
+Dans de nombreuse tâches, il faut travailler avec des ressources qu'il est impératifs de fermer après usage: fichiers, connexion réseau, bases de données. Si on oublie de fermer une ressource, on obtient une fuite mémoire, un verouillage de fichier, ou d'autres désagréments.
+
+Avant :
+```java
+BufferedReader reader = null;
+try {
+    reader = new BufferedReader(new FileReader("data.txt"));
+    String line = reader.readLine();
+    // ...
+} catch (IOException e) {
+    // traitement de l’erreur
+} finally {
+    if (reader != null) {
+        try {
+            reader.close();
+        } catch (IOException e) {
+            // traitement de l’erreur lors de la fermeture
+        }
+    }
+}
+```
+
+Avec la construction `try-withressources`, on vient fermer automatiquement toutes les ressources, même si une exception survient dans le bloc.
+
+**Syntaxe** 
+```java
+try (ResourceType resource = new ResourceType(...)) {
+    // travail avec la ressource
+} catch (ExceptionType e) {
+    // traitement de l’erreur
+}
+```
+
+**Exemple**
+```java
+try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
+    String line = reader.readLine();
+    System.out.println(line);
+} catch (IOException e) {
+    System.out.println("Erreur lors de la lecture du fichier : " + e.getMessage());
+}
+// reader.close() sera appelé automatiquement !
+```
+
+- Entre parenthéses après `try`, on déclare la ressources à fermer 
+- A la sortie du bloc `try` (même si une exception survient), la méthode `close()` est appelée pour chaque ressource
+- Cela ne fonctionne que pour les ressources qui implémentent l'interface `AutoCloseable`
+
+**Interface `AutoCloseable`
+```java
+public interface AutoCloseable {
+    void close() throws Exception;
+}
+```
+
+Toutes les ressources standard de Java implémentent cette interface.
+
+On peut venir déclarer plusieurs ressources 
+
+```java
+try (
+    BufferedReader reader = new BufferedReader(new FileReader("input.txt"));
+    BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))
+) {
+    String line;
+    while ((line = reader.readLine()) != null) {
+        writer.write(line);
+        writer.newLine();
+    }
+}
+```
+
+Les deux ressources seront fermées automatiquement, même si une exception survient
+
+#### Pattern `try-with-ressources` 
+
+**Lecture d'un fichier**
+```java
+public static void printFirstLine(String filename) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        String line = reader.readLine();
+        System.out.println("Première ligne : " + line);
+    } catch (IOException e) {
+        System.out.println("Erreur : " + e.getMessage());
+    }
+}
+```
+
+**Ecriture dans un fichier**
+```java
+public static void writeToFile(String filename, String text) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+        writer.write(text);
+    } catch (IOException e) {
+        System.out.println("Erreur lors de l’écriture : " + e.getMessage());
+    }
+}
+```
+
+**Sa propre ressource**
+Si on écrit sa propre classe qui doit être fermée, on implémente `AutoCloseable`
+```java
+public class MyResource implements AutoCloseable {
+    @Override
+    public void close() {
+        System.out.println("Ressource fermée !");
+    }
+}
+```
+
+On peut maitenant l'utiliser avec `try-with-ressources`
+```java
+try (MyResource res = new MyResource()) {
+    // travail avec la ressource
 }
 ```
