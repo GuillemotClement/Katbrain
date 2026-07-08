@@ -252,3 +252,251 @@ getGreeting("lane@example.com", "Lane");
 getGreeting("lane@example.com");
 // Hello there, welcome! You've registered your email: lane@example.com
 ```
+
+### IIFE
+
+Il est possible d'invoquer immediatement une fonction avec sa definition
+
+```js
+(function () {
+  console.log("JavaScript: at least it's not Java");
+})();
+// JavaScript: at least it's not Java
+
+// passer des arguments et retourner une valeur
+const result = (function (a, b) {
+  return a + b;
+})(1, 2);
+
+console.log(result);
+// 3
+```
+
+### Fonction flechees
+
+Syntaxe alternative pour declarer une fonction.
+
+```js
+// declaring a function without a variable
+function add(x, y) {
+  return x + y;
+}
+
+// declaring a function with a variable
+const add = function (x, y) {
+  return x + y;
+};
+
+// using the fat arrow syntax
+const add = (x, y) => {
+  return x + y;
+};
+```
+
+---
+
+## Objet 
+
+Permet de stocker sous forme de cle valeur
+
+```js
+// declaration d'un objet
+const apple = {
+  name: "Apple",
+  radius: 2,
+  color: "red",
+};
+
+// acces aux valeurs
+console.log(apple.name); // prints "Apple"
+console.log(apple.radius); // prints "2"
+console.log(apple.color); // prints "red"
+
+// update de valeur 
+apple.numSeeds = 3; // new property
+apple.color = "green"; // update property
+// {"name":"Apple","radius":2,"color":"green","numSeeds":3}
+
+// objet nested
+const tournament = {
+  referee: {
+    name: "Sally",
+    age: 25,
+  },
+  prize: {
+    units: "dollars",
+    value: 100,
+  },
+};
+
+console.log(tournament.referee.name); // Sally
+console.log(tournament.prize.value); // 100
+```
+
+### Optionnal Chainning 
+
+Lorsque l'on tente d'acceder a un champ de l'objet qui possede une valeur `null`, ou `undefined` n'existe cela provoque une erreur.
+
+Pour eviter ce genre d'erreur, on peut utiliser `?`
+
+```js
+const tournament = {
+  prize: {
+    units: "dollars",
+    value: 100,
+  },
+};
+
+const h = tournament.referee?.height;
+```
+
+### Methode d'un objet 
+
+Les objets peuvent contenir des methodes. Les methodes peuvent acceder aux champs de l'objet avec `this` 
+
+```js
+// acces aux champs de l'objet
+const person = {
+  firstName: "Lane",
+  lastName: "Wagner",
+  getFullName() {
+    return this.firstName + " " + this.lastName;
+  },
+};
+
+console.log(person.getFullName());
+// Lane Wagner
+
+// modification du champ de l'objet 
+const tree = {
+  height: 256,
+  color: "green",
+  cut() {
+    this.height /= 2;
+  },
+};
+
+tree.cut();
+console.log(tree.height);
+// prints 128
+
+tree.cut();
+console.log(tree.height);
+// prints 64
+```
+
+### Verification objet vide
+
+Pour verifier si un objet contient des valeurs, on utilis `!`
+
+```js
+const balances = {
+  lane: 100,
+  breanna: 150,
+  john: 200,
+};
+
+// if bob doesn't have a balance yet
+// create a new prop for him
+// set to 0
+if (!balances.bob) {
+  balances.bob = 0;
+}
+```
+
+### Variable pour un key 
+
+Pour acceder aux cle d'un objet en utilisant une variable, il faut utiliser des `[]`
+
+```js
+const desk = {
+  wood: "maple",
+  width: 100,
+};
+
+console.log(desk.wood);
+// prints "maple"
+
+console.log(desk["wood"]);
+// also prints "maple"
+
+const key = "wood";
+console.log(desk[key]);
+// also prints "maple"
+
+// par exemple, la cle est passer comme parametre d'une fonction 
+function getLastName(lastNames, firstName) {
+  return lastNames[firstName];
+}
+```
+
+### Spread Syntax
+
+Syntaxe simplifier pour extraire des valeurs, et merge des proprietes d'un objet 
+
+```js
+// fusion d'objet 
+const engineering_dept = {
+  lane: "grand magus",
+  hunter: "software engineer",
+  allan: "software engineer",
+  matt: "software engineer",
+  dan: "software engineer",
+  waseem: "software engineer",
+};
+
+const video_dept = {
+  stass: "video producer",
+  alex: "video producer",
+};
+
+const all_employees = { ...engineering_dept, ...video_dept };
+/*
+{
+  lane: 'grand magus',
+  hunter: 'software engineer',
+  allan: 'software engineer',
+  matt: 'software engineer',
+  dan: 'software engineer',
+  waseem: 'software engineer',
+  stass: 'video producer',
+  alex: 'video producer'
+}
+*/
+```
+
+### Destructuring 
+
+Permet de recuperer des valeurs d'un objet
+
+```js
+const apple = {
+  radius: 2,
+  color: "red",
+};
+
+const { radius, color } = apple;
+
+// extraction des valeurs retourner par une fonction 
+function getApple() {
+  const apple = {
+    radius: 2,
+    color: "red",
+  };
+  return apple;
+}
+
+const { radius, color } = getApple();
+console.log(radius); // 2
+console.log(color); // red
+
+// extraction pour les parametre d'une fonction 
+// without
+function eatApple(apple) {
+  console.log(`ate a ${apple.color} apple with a radius of ${apple.radius}`);
+}
+// with
+function eatApple({ radius, color }) {
+  console.log(`ate a ${color} apple with a radius of ${radius}`);
+}
+```
