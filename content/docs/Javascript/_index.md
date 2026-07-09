@@ -500,3 +500,302 @@ function eatApple({ radius, color }) {
   console.log(`ate a ${color} apple with a radius of ${radius}`);
 }
 ```
+
+## Classes
+
+```js
+// création d'une nouvelle classe
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+// création d'une nouvelle instance
+const user = new User("Lane", 100);
+```
+
+- `constructor`: méthode spéciale appeler lorsqu'une nouvel objet est créer
+
+### Portée des champs 
+
+Par défaut, toutes les propriétés d'une classes sont public.
+
+Pour rendre private un éléments, on utilise `#` devant le nom du champs, et le champs se déclare en haut de la classe
+
+```js
+class Movie {
+  #title;
+  constructor(title, rating) {
+    this.#title = title;
+    this.rating = rating;
+  }
+}
+
+const matrixMovie = new Movie("The Matrix", 9.5);
+console.log(matrixMovie.#title);
+// Uncaught SyntaxError: Private field '#title' must be declared in an enclosing class
+```
+
+Les propriétés privée peuvent toujours utiliser dans la classe.
+
+```js
+class Movie {
+  #title;
+  constructor(title, rating) {
+    this.#title = title;
+    this.rating = rating;
+  }
+
+  getTitleAllCaps() {
+    const allCaps = this.#title.toUpperCase();
+    return allCaps;
+  }
+}
+
+const matrixMovie = new Movie("The Matrix", 9.5);
+console.log(matrixMovie.getTitleAllCaps());
+// THE MATRIX
+```
+
+### Méthode static 
+
+Une méthode statique est une méthode associé à la classe, et pas à l'instance e la classe.
+
+```js
+class User {
+  static numUsers = 0;
+
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+    // acces aux static via le nom de la classe
+    User.numUsers++;
+  }
+
+  static getNumUsers() {
+    return User.numUsers;
+  }
+}
+
+const lane = new User("Lane", 30);
+console.log(User.getNumUsers()); // 1
+const allan = new User("Allan", 30);
+console.log(User.getNumUsers()); // 2
+
+// This doesn't work because its not a method on the object
+console.log(lane.getNumUsers());
+// TypeError: lane.getNumUsers is not a function
+//    at main.js:20:18
+```
+
+### Getter et Setter 
+
+Methodes speciale permettant de manipuler les champs de la classe.
+
+```js
+class User {
+  constructor(name, age) {
+    this._name = name;
+    this.age = age;
+  }
+
+  // getter permettant d'acceder au champ
+  get name() {
+    return this._name.toUpperCase();
+  }
+
+  // setter permettant de modifier la valeur
+  set age(value) {
+    if (value < 0) {
+      throw new Error("Age can't be negative.");
+    }
+    this._age = value;
+  }
+}
+
+const lane = new User("Lane", 30);
+console.log(lane.name); // LANE
+
+lane.age = -5; // "Age can't be negative."
+console.log(lane.age); // 30
+```
+
+### Heritage 
+
+L'heritage se fait via le `extends`. 
+
+```js
+class Titan {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+class BeastTitan extends Titan {
+  speak(msg) {
+    console.log(`${this.name} says, "${msg}"`);
+  }
+}
+
+const beast = new BeastTitan("Zeke");
+beast.speak("You know, it's almost like throwing a baseball");
+// Zeke says, "You know, it's almost like throwing a baseball"
+```
+
+Il est possible de modifier le comportement d'une methode de la classe enfant 
+
+```js
+class Titan {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    // this gets overridden in the BeastTitan class
+    console.log("*titan noises*");
+  }
+}
+
+class BeastTitan extends Titan {
+  speak() {
+    console.log(`${this.name} says, "I'm the Beast Titan"`);
+  }
+}
+
+const pureTitan = new Titan("Eren's mom");
+pureTitan.speak();
+// *titan noises*
+
+const beast = new BeastTitan("Zeke");
+beast.speak();
+// Zeke says, "I'm the Beast Titan"
+```
+
+### Super 
+
+`super` permet d'utiliser une methode de l'objet parent. Generalement utiliser pour les constructeur 
+
+```js
+class Titan {
+  constructor(name) {
+    this.name = name;
+  }
+
+  toString() {
+    return `Titan - Name: ${this.name}`;
+  }
+}
+
+class BeastTitan extends Titan {
+  constructor(name, power) {
+    // call the parent's constructor
+    super(name);
+    this.power = power;
+  }
+
+  toString() {
+    // call the parent's `toString` method
+    return `${super.toString()}, Power: ${this.power}`;
+  }
+}
+
+const beast = new BeastTitan("Zeke", 9000);
+console.log(beast.toString());
+// Titan - Name: Zeke, Power: 9000
+```
+
+---
+
+## Boucle 
+
+```js
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+// 0
+// 1
+// 2
+// 3
+// 4
+```
+
+### Break
+
+Permet de stoper l'execution de la boucle 
+
+```js
+for (let i = 0; ; i++) {
+  if (i === 3) {
+    break;
+  }
+  console.log(i);
+}
+
+```
+
+### Continue
+
+Permet de passer a l'iteration suivante 
+
+```js
+for (let i = 0; i < 10; i++) {
+  if (i % 2 === 0) {
+    continue;
+  }
+  console.log(i);
+}
+// Prints:
+// 1
+// 3
+// 5
+// 7
+// 9
+```
+
+### While 
+
+```js
+const jane = {
+  name: "Jane",
+  mom: {
+    name: "Alice",
+    mom: {
+      name: "Lilly",
+      mom: {
+        name: "Granny",
+      },
+    },
+  },
+};
+
+let currentPerson = jane;
+while (currentPerson) {
+  console.log(currentPerson.name);
+  currentPerson = currentPerson.mom;
+}
+console.log("No more ancestors!");
+// Jane
+// Alice
+// Lilly
+// Granny
+// No more ancestors!
+```
+
+### For ... in
+
+```js
+let titan = {
+  name: "Eren",
+  power: "Attack Titan",
+  age: 19,
+};
+
+for (const key in titan) {
+  console.log(`${key}: ${titan[key]}`);
+}
+// name: Eren
+// power: Attack Titan
+// age: 19
+```
