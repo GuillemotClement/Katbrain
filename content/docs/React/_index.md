@@ -737,3 +737,55 @@ const App = () => {
 
 export default App;
 ```
+
+---
+
+## UseEffect 
+
+Hook qui permet de faire des call 
+
+```jsx
+import { useEffect, useState } from "react";
+import SearchBar from "./SearchBar";
+import Persons from "./Persons";
+import PersonForm from "./PersonForm";
+import axios from "axios";
+
+const App = () => {
+  // stocke les numeros ajouter
+  const [persons, setPersons] = useState([]);
+  // permet de gerer l'input
+  const [newName, setNewName] = useState("");
+  const [newPhone, setNewPhone] = useState("");
+
+  // permet de recuperer les donnees sur le serveur => au build du composant
+  useEffect(() => {
+    // fais une requete vers le serveur au montage du composant
+    axios.get("http://localhost:3001/persons").then((response) => {
+      setPersons(response.data);
+    });
+  }, []);
+
+  // ...
+
+  return (
+    <div>
+      <h2>Phonebook</h2>
+
+      <SearchBar onChange={handleSearch} />
+
+      <PersonForm
+        onSubmit={addPerson}
+        newName={newName}
+        handleAddPerson={handleAddPerson}
+        newPhone={newPhone}
+        handleAddPhone={handleAddPhone}
+      />
+
+      <Persons persons={personsToShow} />
+    </div>
+  );
+};
+
+export default App;
+```
