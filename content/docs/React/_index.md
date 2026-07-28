@@ -1,5 +1,13 @@
 # React
 
+## Nouveau projet avec Vide
+
+```shell
+npm create vite@latest [project_name] -- --template react
+```
+
+---
+
 - `main.jsx`: point d'entrée de l'application
 - `App.jsx`: composant root
 
@@ -428,11 +436,7 @@ const Display = ({ counter }) => <div>{counter}</div>;
 
 // Button.jsx
 // le composant Button permet de déclencher le changement de la valeur
-const Button = ({ onClick, text }) => (
-  <button onClick={onClick}>
-    {text}
-  </button>
-)
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
 // App.jsx
 const App = () => {
@@ -458,3 +462,278 @@ const App = () => {
 Lorsque l'un des boutons est cliqué, le handler est exécuté. Celui ci modifie l'état du composant `App` avec la fonction `setCounter`.
 
 Lorsque le state est modifié, le composant, et les composants enfant sont re-render
+
+---
+
+## Debogage
+
+### Spread Syntaxe
+
+En React, on ne modifie jamais directement une valeur de state, cela pouvant entrainer des effets secondaires.
+
+Le changement d'état doit toujours être effectué en définissant l'état sur un nouvel objet.
+
+```js
+const handleLeftClick = () => {
+  const newClicks = {
+    // spread => on copie l'ensembles des valeurs
+    ...clicks,
+    left: clicks.left + 1, // une seule valeur est modifier
+  };
+  setClicks(newClicks);
+};
+
+// syntaxe simplifiée
+const handleLeftClick = () => setClicks({ ...clicks, left: clicks.left + 1 });
+```
+
+### Gestion des tableaux
+
+Chaque clic est stocker dans un tableau. Le state `allClicks` est initialiser sous forme de tableau.
+
+Lorsque un clic est déclencher, celui ci est enregistré dans le tableau.
+
+```jsx
+const App = () => {
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
+
+  // tableau qui enregistre les clics
+  const [allClicks, setAll] = useState([]);
+
+  // permet d'enregistrer un click
+  const handleLeftClick = () => {
+    // l'ajout se fait avec la méthode concat qui ne mute pas le tableau existant
+    setAll(allClicks.concat("L"));
+    setLeft(left + 1);
+  };
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat("R"));
+    setRight(right + 1);
+  };
+
+  return (
+    <div>
+      {left}
+      <button onClick={handleLeftClick}>left</button>
+      <button onClick={handleRightClick}>right</button>
+      {right}
+      // affichage des valeurs du tableau avec join() // les valeurs sont
+      afficher sous forme de string.
+      <p>{allClicks.join(" ")}</p>
+    </div>
+  );
+};
+```
+
+### Rendu conditionnel
+
+Le rendu du composant `History` dépent si le bouton à été cliquer au moins une fois.
+
+```jsx
+const History = (props) => {
+  // condition => si aucun clic
+  if (props.allClicks.length === 0) {
+    return <div>the app is used by pressing the buttons</div>;
+  }
+  // si des clics, on utilise ce rendu
+  return <div>button press history: {props.allClicks.join(" ")}</div>;
+};
+
+const App = () => {
+  // ...
+
+  return (
+    <div>
+      {left}
+      <button onClick={handleLeftClick}>left</button>
+      <button onClick={handleRightClick}>right</button>
+      {right}
+
+      <History allClicks={allClicks} />
+    </div>
+  );
+};
+```
+
+---
+
+## 2 - Communiquer avec le serveur
+
+### Rendu de collection
+
+#### map
+
+Permet de parcourir un tableau.
+
+```jsx
+const Note = ({ note }) => {
+  return <li>{note.content}</li>;
+};
+
+const App = ({ notes }) => {
+  return (
+    <div>
+      <h1>Notes</h1>
+      <ul>
+        {notes.map((note) => (
+          <Note key={note.id} note={note} />
+        ))}
+      </ul>
+    </div>
+  );
+};
+```
+
+---
+
+## Formulaire
+
+### Composant controlé
+
+```jsx
+import { useState } from "react";
+
+const App = () => {
+  // stocke les numeros ajouter
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", phone: "012-546-334" },
+  ]);
+  // permet de gerer l'input
+  const [newName, setNewName] = useState("");
+  const [newPhone, setNewPhone] = useState("");
+
+  //permet d'ajouter une nouvelle personne
+  const addPerson = (event) => {
+    // empeche le rechargement de la page
+    event.preventDefault();
+    let isExisting = false;
+    persons.forEach((person) => {
+      if (person.name.toLowerCase() === newName.toLowerCase()) {
+        // return;
+        isExisting = true;
+      }
+    });
+
+    if (isExisting) {
+      alert(`${newName} deja present`);
+      newName("");
+      return;
+    }
+
+    // creation du nouvel objet a ajouter
+    const personObj = {
+      name: newName,
+      phone: newPhone,
+    };
+
+    // concat permet d'ajouter la nouvelle personne
+    setPersons(persons.concat(personObj));
+    // reset de l'input
+    setNewName("");
+  };
+
+  // permet de gerer le changement de valeur
+  const handleAddPerson = (event) => {
+    setNewName(event.target.value); // ajout dans le state de la valeur
+  };
+
+  const handleAddPhone = (event) => {
+    setNewPhone(event.target.value);
+  };
+
+  return (
+    <div>
+      <h2>Phonebook</h2>
+      // lier au handler de submit
+      <form onSubmit={addPerson}>
+        <h2>add a new</h2>
+        <div className="">
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            className=""
+            // lier au state
+            value={newName}
+            // lier au handler
+            onChange={handleAddPerson}
+            required
+          />
+        </div>
+        <div className="">
+          <label htmlFor="phone">Phone: </label>
+          <input
+            type="text"
+            id="phone"
+            className=""
+            value={newPhone}
+            onChange={handleAddPhone}
+            required
+          />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default App;
+```
+
+### Search Bar
+
+```jsx
+import { useState } from "react";
+
+const App = () => {
+  // Gestion de la searchBar
+  // input controller de la recherche
+  const [newSearch, setNewSearch] = useState("");
+  // permet d'activer le filtrage
+  const [showAll, setShowAll] = useState(true);
+
+  // permet de faire le filtrage => on itere sur cet objet pour l'affichage
+  const personsToShow = showAll
+    ? persons
+    : persons.filter((person) => {
+        // permet de passer tout en minuscule pour inclure les recherches
+        const name = person.name.toLocaleLowerCase();
+        const search = newSearch.toLocaleLowerCase();
+        return name.includes(search);
+      });
+
+  const handleSearch = (event) => {
+    setShowAll(false);
+    setNewSearch(event.target.value);
+  };
+
+  return (
+    <div>
+      <h2>Phonebook</h2>
+      // permet de recuperer la valeur rechercher
+      <div className="searchBar">
+        <label htmlFor="">Filter shown with: </label>
+        <input type="text" onChange={handleSearch} />
+      </div>
+      <div className="repertoire">
+        <h2>Numbers</h2>
+        <ul>
+          // parcours l'objet contenant les valeur filtrer ou l'ensemble des
+          valeurs
+          {personsToShow.map((person) => (
+            <li key={person.id}>
+              {person.name}: {person.number}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default App;
+```
