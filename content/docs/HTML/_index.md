@@ -20,6 +20,32 @@ Il existe 6 niveaux de titres différents - 1 -> 6
 <!-- Commentaire -->
 ```
 
+### `<html>` 
+
+L'ensemble d'une page est placer dans les balises `<html>`. C'est le root de la page.
+On peut venir y définir le language de la page 
+
+```html
+<html lang="en">
+  <head>
+    <!-- metadata -->
+  </head>
+  <body>
+    <!-- content -->
+  </body>
+</html>
+```
+
+### `<title>` - titre de l'onglet
+
+Permet de définir le titre afficher dans l'onglet du navigateur. Se place dans le `<head>`
+
+```html
+<head>
+  <title>CatPhotoApp</title>
+</head>
+```
+
 ### `<main>`
 
 Représente le contenue principale de la page
@@ -31,6 +57,27 @@ Représente le contenue principale de la page
 </main>
 ```
 
+### `<section>`
+
+Permet de définir une section du document
+
+```html 
+<section>
+  <h2>Section Title</h2>
+  <p>Section content...</p>
+</section>
+```
+
+### `<footer>` - pied de page 
+
+Permet de définir le pied de page d'un document ou d'une section. Contient généralement les informations sur l'auteur, les copyrights, les liens vers les termes d'utilisations, etc
+
+```html
+<footer>
+  <p>No Copyright - <a href="https://www.freecodecamp.org">freeCodeCamp.org</a></p>
+</footer>
+```
+
 ### `<img />`
 
 Permet d'afficher une image
@@ -38,6 +85,20 @@ Permet d'afficher une image
 ```html
 <img src="https://cdn.freecodecamp.org/platform/universal/fcc_secondary.svg" alt="description de l'image" />
 ```
+
+#### `<figure>`
+
+Permet d'associer une image avec une phrase
+
+`<figcaption>`: permet d'ajouter une description à une image
+
+```html
+<figure>
+  <img src="image.jpg" alt="A description of the image">
+  <figcaption>A cute cat</figcaption>
+</figure>
+```
+
 
 ### `<a>` 
 
@@ -54,6 +115,34 @@ Permet de créer un lien
 ```
 
 - `target="_blank"`: ouvre la cible du lien dans un nouvel onglet
+
+### `<em>` - mise en valeur de mot 
+
+```html 
+<figcaption>Cats <em>love</em> lasagna.</figcaption>
+```
+
+### `<strong>` - texte important
+
+```html
+<figcaption>Cats <strong>hate</strong> other cats.</figcaption>  
+```
+
+### Liste 
+
+```html 
+<!-- Liste ordonnée -->
+<ol>
+  <li>catnip</li>
+  <li>laser pointers</li>
+  <li>lasagna</li>
+</ol>
+<!-- Liste non ordonnéee-->
+<ul>
+  <li>milk</li>
+  <li>cheese</li>
+</ul>
+```
 
 ---
 
@@ -95,4 +184,28 @@ Permet de charger des fichiers externes (css, site externe).
     <h1>Hello World</h1>
   </body>
 </html>
+```
+
+---
+
+## `<div>` - container 
+
+Permet de créer un container pouvant rassembler plusieurs éléments. 
+
+Cette balise n'as pas de signification particulière.
+
+```html
+<div>
+  <p>Example paragraph element.</p>
+</div>
+```
+
+---
+
+## `id`
+
+L'attribut `id` permet de désigner un élément unique dans une page.
+
+```html
+<h1 id="title">Movie Review Page</h1>
 ```
