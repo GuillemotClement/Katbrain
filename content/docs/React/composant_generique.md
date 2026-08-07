@@ -126,3 +126,84 @@ export default function InventoryLayout({
 Une page comme `app/inventory/page.tsx` ne contient alors que son propre contenu :
 
 ```tsx
+export default function InventoryPage() {
+  return <h1>Mes produits</h1>;
+}
+```
+
+Next.js transmet automatiquement cette page au `children` du layout.
+
+## Réutilisation pour les véhicules
+
+```tsx
+import type { ReactNode } from "react";
+import { Car } from "lucide-react";
+
+import { FeatureLayout } from "@/components/feature-layout";
+
+const navigation = [
+  { label: "Véhicules", href: "/vehicles" },
+  { label: "Entretiens", href: "/vehicles/maintenance" },
+  { label: "Échéances", href: "/vehicles/deadlines" },
+  { label: "Statistiques", href: "/vehicles/statistics" },
+];
+
+export default function VehicleLayout({
+  children,
+}: Readonly<{ children: ReactNode }>) {
+  return (
+    <FeatureLayout
+      title="Véhicules"
+      icon={<Car aria-hidden="true" />}
+      navigation={navigation}
+    >
+      {children}
+    </FeatureLayout>
+  );
+}
+```
+
+La structure visuelle reste identique. Seules les données transmises au composant changent.
+
+## Passer un composant ou une instance JSX
+
+Deux approches sont possibles.
+
+### Passer une instance avec `ReactNode`
+
+```tsx
+icon={<ShelvingUnit />}
+```
+
+Cette approche est flexible et permet de transmettre directement des propriétés à l'icône.
+
+### Passer le type du composant
+
+```tsx
+import type { ComponentType } from "react";
+import type { LucideProps } from "lucide-react";
+
+type Props = {
+  icon: ComponentType<LucideProps>;
+};
+
+function Example({ icon: Icon }: Props) {
+  return <Icon className="size-5" />;
+}
+```
+
+Utilisation :
+
+```tsx
+<Example icon={ShelvingUnit} />
+```
+
+Cette variante est utile lorsque le composant parent doit contrôler lui-même les propriétés de toutes les icônes.
+
+## À retenir
+
+- `children: ReactNode` permet d'insérer du contenu entre les balises du composant.
+- Les autres zones personnalisables peuvent également être typées avec `ReactNode`.
+- Les données simples, comme le titre et les liens, sont transmises avec des propriétés classiques.
+- Un fichier `layout.tsx` de l'App Router reçoit automatiquement la page courante dans `children`.
+- La structure et le style communs restent dans `FeatureLayout` ; les layouts propres aux fonctionnalités ne contiennent que leur configuration.
