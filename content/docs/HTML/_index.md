@@ -474,3 +474,89 @@ Permet d'afficher une heure ou date.
  <p>
   The graduation will be on <time datetime="2024-06-15T15:00">June 15</time>
 </p>
+```
+
+## Notation scientifique 
+
+### `<sup>` -- Exposant 
+
+Permet de passer l'élément en exposant
+
+```html
+<p>2<sup>2</sup> (2 squared) is 4.</p>
+
+<p>
+  Monseigneur is often written as <strong>M<sup>gr</sup></strong>.
+</p>
+```
+
+### `<sub> -- inverse de l'exposant 
+
+Permet de passer l'élément en dessous, l'inverse de l'exposant -> notation scientific 
+
+```html 
+<p>CO<sub>2</sub></p>
+```
+
+## Code 
+
+### `<code>`
+
+Permet de representer du code 
+
+```html
+<p>
+  To set the text color to blue in CSS, use the following code:
+  <code>color: blue;</code>
+</p>
+```
+
+Pour repésenter sur plusieurs lignes, il faut utiliser `<pre></pre>`
+
+```html
+<pre>
+  <code>
+    body {
+      color: red;
+    }
+  </code>
+</pre>
+```
+
+---
+
+## Sémentic spécifique 
+
+### `<u>` - annotation non textuel 
+
+Permet de faire une annotation non textuel, par exemple un nom propre mal othographier. Par défault l'élément est souligné.
+
+```html
+<p>
+  You can use the unarticulated annotation element to highlight
+  <u>inccccort</u> <u>spling</u> <u>issses</u>.
+</p>
+```
+
+### `<s>` - text inexact
+
+Cette balise permet d'indiquer du text inexact ou pertinent. Par défaut, l'élément est barré.
+
+```html 
+<p><s>Tomorrow's hike will be meeting at noon.</s></p>
+
+<p>Due to unforeseen weather conditions, the hike has been canceled.</p>
+```
+
+### `<ruby>` - annotation de prononciation 
+
+Cet élément permet d'ajouter la "prononciation" d'un élément. Peut être utiliser pour indiquer la prononciation de caractère 
+
+```html 
+<ruby> 明日 <rp>(</rp><rt>Ashita</rt><rp>)</rp> </ruby>
+```
+
+- `rp`: permet d'ajouter un failback 
+- `rt`: indique le text 
+
+---
