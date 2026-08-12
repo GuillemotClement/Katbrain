@@ -703,6 +703,34 @@ Permet d'afficher une lecteur video dans une page
 - `width`: permet de définir la largeur du lecteur
 - `poster`: permet de définir une image pendant le chargement de la vidéo
 
+```html
+<video
+  width="400"
+  height="300"
+  controls
+  src="https://cdn.freecodecamp.org/curriculum/labs/what-is-the-map-method-and-how-does-it-work.mp4"
+>
+  <track
+    src="captions.vtt"
+    kind="captions"
+    srclang="en"
+    label="English"
+  />
+</video>
+
+<audio controls src="sample.mp3">
+  <track
+    src="captions.vtt"
+    kind="captions"
+    srclang="en"
+    label="English"
+  />
+</audio>
+```
+
+- `<track>`: permet d'ajouter des sous titres
+- `srclang`: represente la langue du contenu
+
 ---
 
 ## Image 
@@ -943,3 +971,70 @@ Les valeur de l'attribut `name` doivent être les même pour lier les input avec
 ```
 
 - `colspan`: fusion de colonne
+
+---
+
+## Accessibilité
+
+### `<caption>` - titre de tableau
+
+L'utilisation de la balise `<caption>` permet d'améliorer l'accessibilité d'un tableau permettant de définir un titre.
+
+```html
+<table>
+  <caption>Our Pets</caption>
+  <!-- Table Rows and Columns -->
+</table>
+```
+
+### `scope` - direction de titre
+
+On peut également definir des cellule titre sur des ligne du tableau. Les attributs `scope` permet de définir dans quel sens elle définit le titre.
+
+```html
+<table>
+  <caption>Our Pets</caption>
+  <thead>
+    <tr>
+      <!-- Now they have scope -->
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Nora</th>
+      <td>5</td>
+      <td>Dog</td>
+    </tr>
+    <tr>
+      <th scope="row">Gino</th>
+      <td>2</td>
+      <td>Cat</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### ARIA
+
+Permet d'ajouter du contenu semantique a un element pour les screen reader.
+
+```html
+<div class="alert" id="exp-warning" role="alert">
+  <span class="hidden">Your log in session will expire in 3 minutes.</span>
+</div>
+```
+
+---
+
+## AccessKey 
+
+Permet d'ajouter un raccourcis clavier pour un élément 
+
+```html
+<button accesskey="s">Save</button>
+<button accesskey="c">Cancel</button>
+<a href="index.html" accesskey="h">Home</a>
+```
