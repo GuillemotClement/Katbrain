@@ -72,16 +72,22 @@ System.out.println("Entrez votre nom:");
 
 ---
 
-## Opération
+## Arithmétique
 
 ### Division
 
 La division d'un entier par un autre entier produit toujours un entier. Le reste de la division est tronqué, la partie divisionnaire et ignorée.
 
+Le résultat d'une division est toujours un nombre à virgule si au moins un des opérande est un `double`
+
 ```java
 void main()
 {
-  int a = 5 / 2; // 2
+  int a = 5, b = 2;
+  System.out.println(a / b); // 2 (le reste est ignoré)
+
+  double aa = 5, bb = 2;
+  System.out.println(aa / bb); // 2.5
 }
 ```
 
@@ -129,6 +135,80 @@ void main()
 
 - `double`: type par défaut pour stocker des nombres à virgule (précision double (15–16 chiffres))
 - `float`: plus léger et moins précis pour traiter de grands volumes de données (précision simple (7 chiffres))
+
+```java
+// déclaration
+double pi = 3.1415926;
+```
+
+##### Formatage de sortie 
+
+Par défaut, un `double` s'affiche avec pleins de zéro supperflus. Il est possible de formater la sortie
+
+```java
+double temp = 23.56789;
+System.out.println(temp); // 23.56789
+
+// 2 décimales
+System.out.println(String.format("%.2f", temp)); // 23.57
+
+// 1 décimale
+System.out.println(String.format("%.1f%n", temp)); // 23.6
+```
+
+- `%.2f`: sortie avec 2 décimales
+- `%.1f`: sortie avec 1 décimale
+
+
+##### Comparaison de float 
+
+```java
+double a = 0.1 + 0.2;
+double b = 0.3;
+double epsilon = 0.000001; // permet de définir une tolérance pour la comparaison
+
+if (Math.abs(a - b) < epsilon)
+{
+    System.out.println("Presque égal !"); // C’est plus sûr de comparer ainsi
+}
+```
+
+`Math.abs()` permet de retourner la valeur absolue. On viens calculer la différence, et si inférieur à un millionième, on considère que les nombres sont égaux.
+
+##### Valeurs spéciale de double
+
+Le type `double` stocke des nombres et des valeurs particulières.
+
+**`Infinity`**
+En Java, la division par 0 ne lève pas d'exception. A la place, le résultat devient une valeur spécial 
+
+```java
+double result = 1.0 / 0.0;
+System.out.println(result); // Infinity
+```
+
+**`-Infinity`**
+Lorsque l'on divise un nombre négatif par 0, on obtient l'infini négatif 
+
+```java
+double result = -1.0 / 0.0;
+System.out.println(result); // -Infinity
+```
+
+**`NaN`**
+Correspond à tout ce qui n'est pas un nombre
+
+```java
+double result = Math.sqrt(-1);
+System.out.println(result); // NaN
+```
+
+**Vérification des valeurs spéciales**
+
+```java
+System.out.println(Double.isInfinite(result));    // true, si infini
+System.out.println(Double.isNaN(result));         // true, si NaN
+```
 
 #### Numérique spécialisés
 
@@ -345,6 +425,18 @@ void main()
 
   int number4 = "321"; //  Ne se compile pas : variable de type int, mais valeur de type String
 }
+```
+
+#### Conversion `double` et `int`
+
+```java
+int i = 2;
+double d = i; // Tout va bien !
+System.out.println(d); // 2
+
+double dd = 3.7;
+int ii = (int) dd; // Il faut convertir explicitement le type double en type int !
+System.out.println(ii); // 3, la partie fractionnaire a été tronquée
 ```
 
 ---
