@@ -1700,3 +1700,320 @@ System.out.println(Arrays.deepToString(matrix)); // [[1, 2], [3, 4]]
 
 ---
 
+## Méthode
+
+### Classe
+
+Dans un programme Java, chaque service est une classe. Une classe gère par exemple les utilisateus, une autres les calculs, une autre pour le travail avec les fichiers.
+
+Exemple d'une structure typique d'un projet 
+- `Main.java`: on y retrouve le point d'entrée du projet
+- `User.java`: service où est stocker et traitées les données utilisateur
+- `Calculator.java`: service des calculs 
+- `FileHelper.java`: spécialiste des fichiers
+
+```java
+System.out.println("Bonjour à tous !");
+```
+
+- `System`: classe qui contient des méthodes pour travailler avec le system
+- `out`: champ qui est un objet de la classe `PrintStream`
+- `println`: méthode de la classe `PrintStream` qui affiche à l'écran 
+
+Un programme minimal Java ressemble à ceci :
+
+```java
+class Program
+{
+    // syntaxe < 21
+    public static void main(String[] args)
+    {
+        // Votre code ici
+    }
+
+    // syntaxe moderne 
+    void main()
+    {
+        // code
+    }
+}
+```
+
+Il contient au minimum une classe, qui doit définir une méthode `main`
+
+Une classe classique en Java ressemble à cela 
+
+```java
+public class MathUtils
+{
+    // Variables statiques (globales pour la classe)
+    static final double PI = 3.14159;
+    static int callCounter = 0;
+
+    // Méthode statique : calcul de l’aire d’un cercle
+    public static double circleArea(double radius)
+    {
+        callCounter++;
+        return PI * radius * radius;
+    }
+
+    // Méthode statique : trouver le maximum de deux nombres
+    public static int max(int a, int b)
+    {
+        callCounter++;
+        return (a > b) ? a : b;
+    }
+
+    // Méthode statique : combien de fois les méthodes ont été appelées
+    public static int getCallCount()
+    {
+        return callCounter;
+    }
+
+    // Accès aux champs et méthodes depuis la méthode main()
+    public static void main(String[] args)
+    {
+        System.out.println("Aire du cercle : " + circleArea(5));
+        System.out.println("Maximum : " + max(10, 42));
+        System.out.println("Les méthodes ont été appelées " + getCallCount() + " fois");
+    }
+}
+```
+
+**Champs**
+Ce sont des "variables" de la classe. Ils permettent à une classe de se souvenir de quelque chose entre les différents appels de méthodes.
+
+**Méthodes**
+Ce sont des fonctions de la classe. Elles permettent à la classe d'effectuer des actions.
+
+**Modificateurs**
+Permet de définir comment est accessible un champ ou une méthode
+- `public`: visible de tous
+- `private`: visible uniquement en interne de la classe
+
+Les champs sont `private` et les méthode nécessaire sont passé en `public`
+
+**Static**
+Indique qu'un champ ou une méthode est rattacher à la classe. On peut les utiliser sans instancier la classe.
+
+### Méthodes
+
+Les méthodes sont déclaré dans une classe.
+
+#### Déclaration 
+
+```java
+// déclaration d'une méthode
+returnType methodName(parameters)
+{
+    // ici, on écrit des instructions
+}
+
+// méthode sans paramètre
+void printHello()
+{
+    System.out.println("Bonjour, le monde !");
+}
+
+// méthode avec paramètres
+void printName(String name)
+{
+    System.out.println("Bonjour, " + name + " !");
+}
+
+// méthodes avec plusieurs paramètres
+void printSum(int a, int b)
+{
+    System.out.println("Somme : " + (a + b));
+}
+```
+
+- `returnType`: ce que retourne la méthode. `void` si la méthode ne retourne rien
+- `methodName`: le nom de la méthode
+- `parameters`: variable accessible dans la méthode
+
+#### Appel de méthode
+
+```java
+// appel de méthode 
+public class MethodsDemo
+{
+    public static void main(String[] args)
+    {
+        // appel des méthodes de la classe
+        printHello();
+        printName("Bob");
+        printSum(10, 20);
+    }
+
+    static void printHello()
+    {
+        System.out.println("Bonjour, le monde !");
+    }
+
+    static void printName(String name)
+    {
+        System.out.println("Bonjour, " + name + " !");
+    }
+
+    static void printSum(int a, int b)
+    {
+        System.out.println("Somme : " + (a + b));
+    }
+}
+```
+
+#### Return 
+
+Permet de retourner une valeur d'une méthode. Le type du retour doit être indiquer à la déclaration de la méthode.
+
+Lorsque la méthode atteint le `return`, elle stope son exécution, et renvoie la valeur indiquée et la transmet à l'endroit d'où elle à été appelée.
+
+Le type de la valeur retouner doit correspondre au type déclarée de la méthode.
+
+```java
+int sum(int a, int b)
+{
+    return a + b;
+}
+
+// utilisation de la valeur retournée
+int result = sum(5, 7); // on le stocke dans une variable
+System.out.println(result); // on affiche le résultat
+
+System.out.println(sum(10, 20)); // on affiche directement le résultat
+
+if (isEven(42))
+{
+    System.out.println("Le nombre est pair!");
+}
+
+// utilisation dans un void 
+void printPositive(int number)
+{
+    if (number <= 0)
+    {
+        System.out.println("Le nombre n'est pas positif!");
+        return; // on sort simplement de la méthode
+    }
+    System.out.println("Nombre: " + number);
+}
+```
+
+#### Passage de paramétre par valeur et par référence
+
+- **par valeur**: la fonction reçoit une copie de la valeur de la variable. Si la fonction modifie la valeur, l'orginal de change pas (type primitif)
+- **par référence**: la fonction reçoit une référence (pointeur) vers l'original. Les modifications dans la fonction se repercutent sur l'original (tableaux, objet)
+
+```java
+// type primitif
+public class Demo
+{
+    public static void main(String[] args)
+    {
+        int number = 5;
+        changeValue(number); // copie par valeur
+        System.out.println(number); // 5
+    }
+
+    public static void changeValue(int n)
+    {
+        n = 42; // modification de la copie de la valeur
+    }
+}
+
+// passage par référence
+public class Demo
+{
+    public static void main(String[] args)
+    {
+        int[] numbers = {1, 2, 3};
+        changeFirst(numbers);
+        System.out.println(numbers[0]); // 99
+    }
+
+    public static void changeFirst(int[] arr)
+    {
+        arr[0] = 99; // passage par référence -> modif de l'original
+    }
+}
+```
+
+### Modificateur d'accès
+
+- `public`: visible de tous
+- `private`: visible uniquement en interne de la classe
+- sans modificateur: interne au package
+
+```java
+public class User
+{
+    public String name;           // visible par tous
+    private int age;              // visible uniquement à l'intérieur de la classe User
+
+    public void sayHello()
+    {
+        System.out.println("Bonjour, je m'appelle " + name);
+    }
+
+    private void secretMethod()
+    {
+        System.out.println("C'est une méthode secrète !");
+    }
+}
+```
+
+### Portée des variables
+
+La portée c'est la zone du code où une variable existe et peut être utilisée. 
+
+- Variable locale: déclarée dans une fonction -> vit que dans la méthode/bloc ou elle est déclarée
+- Paramètre de méthode: déclarer dans les parenthéses de la fonction -> dans une méthode
+- Champs de classe: déclarée dans la classe -> dispo pour toutes les méthode de la classe
+
+#### Shadowing
+
+Le masquage est une situation où l'on viens déclarer une variable avec le méme nom qu'a l'exterieur. Dans ce bloc, la variable externe est masquer
+
+```java
+class ShadowDemo
+{
+    int value = 10; // champ de classe
+
+    void printValue()
+    {
+        System.out.println(value);  // 10 — affiche le champ de classe
+        int value = 5; // la variable locale masque le champ de classe
+        System.out.println(value); // affiche 5, pas 10
+    }
+}
+
+// acces au champ de classe statique
+class ShadowDemo
+{
+    static int value = 10; // champ de classe statique
+
+    void printValue()
+    {
+        System.out.println(value);      // 10 — champ de classe
+        int value = 5;
+        System.out.println(value);      // 5 — variable locale
+        System.out.println(ShadowDemo.value); // 10 — champ de classe statique, accès via 'ShadowDemo'
+    }
+}
+
+// acces champ de classe non statique 
+class ShadowDemo
+{
+    int value = 10;
+
+    void printValue()
+    {
+        System.out.println(value);      // 10 — champ de classe
+        int value = 5;
+        System.out.println(value);      // 5 — variable locale
+        System.out.println(this.value); // 10 — champ de classe, accès via 'this'
+    }
+}
+```
+
