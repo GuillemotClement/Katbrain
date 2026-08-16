@@ -234,6 +234,107 @@ int population = 146_700_000;
 long stars = 100_000_000_000L;
 ```
 
+#### Arrondi 
+
+Modifie la valeur du nombre
+
+##### `Math.round()` - arrondi à l'entier proche 
+
+Prends un nombre (**float** ou **double**) et retourne l'entier le plus proche.
+
+- `float`: retourne un `int` 
+- `double`: retourne un `long`
+
+```java
+System.out.println(Math.round(2.3)); // 2
+System.out.println(Math.round(2.7)); // 3
+System.out.println(Math.round(2.5)); // 3
+System.out.println(Math.round(-2.5)); // -2
+
+// pour obtenir un int avec avec un double
+int rounded = (int) Math.round(5.6); // 6
+```
+
+##### `Math.floor()` - arrondit vers le bas 
+
+```java
+System.out.println(Math.floor(2.7)); // 2.0
+```
+
+##### `Math.ceil()` - arrondit vers le haut 
+
+```java
+System.out.println(Math.ceil(2.1));  // 3.0
+```
+
+##### `Math.rint()` - arrondit vers l'entier le plus proche -> retourne un double 
+
+Arrondit parfois à l'entier pair le plus proche -> aide à réduire l'accumulation d'erreur lors de gros calculs.
+
+```java
+System.out.println(Math.rint(2.5));  // 2.0 (oui, oui, ce n'est pas une faute de frappe!)
+System.out.println(Math.rint(3.5));  // 4.0
+```
+
+##### Arrondis à une décimales donné
+
+Il est souvent nécessaire d'arrondir non pas à l'entier, mais par exemple à deux décimales.
+
+**Méthode 1: multiplication et division**
+
+1. Multiplier par 100 (pour deux décimale)
+2. Arrondir à l'entier avec `Math.round()`
+3. Diviser par 100 
+
+```java
+double value = 3.14159;
+double rounded = Math.round(value * 100.0) / 100.0;
+System.out.println(rounded); // 3.14
+```
+
+#### Mise en forme 
+
+Modifie l'apparence du nombre, mais pas la valeur. Celle ci reste en mémoire.
+
+##### `DecimalFormat` - cas complexe
+
+La classe `DecimalFormat` du package `java.text` permet de mettre en forme des nombres.
+
+- `"0.00"`: toujours deux décimale
+- `"0.###"`: jusqu'a trois décimale, les zéro superflues ne sont pas affichées
+- `"#,##0.00"`: ajout des séparateur de milliers -> ex: `1,234.56`
+
+```java
+import java.text.DecimalFormat;
+
+double value = 3.14159;
+
+// on passe le formatage attendu dans l'instanciation de la classe
+DecimalFormat df = new DecimalFormat("0.00");
+System.out.println(df.format(value)); // 3.14
+
+// exemple avec séparateur de millier
+DecimalFormat df = new DecimalFormat("#,##0.00");
+System.out.println(df.format(1234567.89)); // 1,234,567.89
+
+// sans zéro superflus 
+DecimalFormat df = new DecimalFormat("0.##");
+System.out.println(df.format(3.1));   // 3.1
+System.out.println(df.format(3.141)); // 3.14
+System.out.println(df.format(3.145)); // 3.15
+```
+
+##### `String.format()` - cas simple
+
+Méthode pour des cas simple. 
+
+```java
+double value = 3.14159;
+System.out.println(String.format("%.2f", value)); // 3.14
+```
+
+- `%.2f`: affiche un nombre avec deux décimales
+
 ---
 
 ### `char`
@@ -360,7 +461,93 @@ boolean isEven = age % 2 == 0; // true (20 est divisible par 2)
 
 ### Conversion de type
 
-#### Nombre -> chaine - `String.valueOf()`
+**Conversion implicite**
+
+Java convertit lui même une valeur d'un type vers une autre si c'est sur et sans perte de données
+
+Cela se produit lorsque l'on affecte une valeur d'un type plus petit à une variable d'un type plus grand. Par exemplt `int` -> `double`.
+
+```java
+// int -> double 
+int apples = 5;
+double applesWeight = apples; // int devient automatiquement double
+
+System.out.println(applesWeight); // 5.0
+
+// char -> int 
+char letter = 'A';
+int code = letter; // 'A' devient 65 (code du caractère dans Unicode)
+
+System.out.println(code); // 65
+```
+
+**Conversion explicite**
+
+La conversion explicite est requise lorsque l'on souhaite convertir une valeur d'un type plus grand vers plus petit, ou entre des types incompatible.
+
+#### `double` -> `int`
+
+Il n'y a pas d'arrondi, la partie décimale est perdue
+
+```java
+double price = 12.99;
+int roundedPrice = (int) price; // la partie fractionnaire est simplement tronquée !
+
+System.out.println(roundedPrice); // 12
+```
+
+#### `int` -> `double`
+
+```java
+int count = 10;
+double avg = count; // élargissement implicite
+
+System.out.println(avg); // 10.0
+```
+
+#### `int` -> `char`
+
+```java
+int code = 66;
+char letter = (char) code; // 66 — c’est le caractère 'B'
+
+System.out.println(letter); // B
+```
+
+#### `char` -> `int`
+
+```java
+char ch = '\u0416';
+int code = ch;
+
+System.out.println(code); // 1046
+```
+
+#### `double` -> `float`
+
+```java
+double d = 3.1415926535;
+float f = (float) d; // une partie de la précision est perdue
+
+System.out.println(f); // 3.1415927 (moins de chiffres après la virgule)
+```
+
+#### `int` -> `String` - `Integer.toString()`
+
+```java
+int x = 123;
+String s = Integer.toString(x);
+// ou tout simplement: String s = "" + x;
+```
+
+#### `String` -> `int` - `Integer.parseInt()`
+
+```java
+String s = "456";
+int x = Integer.parseInt(s);
+```
+
+#### `Nombre` -> chaine - `String.valueOf()`
 
 ```java
 void main()
