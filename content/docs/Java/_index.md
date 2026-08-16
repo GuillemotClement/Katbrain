@@ -1201,3 +1201,204 @@ MyFirstProject/
 ├── resources/
 │   └── config.txt
 ```
+
+---
+
+## Tableau 
+
+Les tableaux sont des objets spéciaux dans lesquels ont peux venir y stocker plusieurs valeurs.
+
+La taille du tableau ne peut pas être modifiées après sa création.
+
+Tous les éléments du tableaux doivent avoir le même type.
+
+Lors de la création du tableau, deux blocs de mémoire sont allouées: l'un stocke le tableau, et l'autre pour la variable qui stocke son adrese.
+
+La valeur initiale des cellules est `0`, `null` si la cellule stocke une adresse, `false` pour un boolean
+
+### Déclaration d'un tableau
+
+```java
+// création d'un array
+int[] array = new int[100];
+```
+
+- `int[]`: type -> tableau d'int 
+- `array`: nom 
+- `new int[100]`: créer un tableau de 100 élément de type `int`
+
+### Manipulation
+
+```java
+// création du tableau
+int[] a = new int[10];
+// affectation d'une valeur
+a[2] = 4;				// Nous écrivons la valeur 4 dans la cellule d’indice 2.
+// accés au valeur du tableau
+a[9] = a[2] + a[5];		// Nous écrivons dans la cellule d’indice 9 la somme des valeurs stockées dans les cellules 2
+                        // (4) et 5 (0).
+```
+
+### `length` - longueur d'un tableau 
+
+Un tableau possède une propriété spéciale `length` qui permet d'obtenir la longueur du tableau.
+
+```java
+// syntaxe
+int[] array = new int[100];
+array.length;
+
+// itérer sur un tableau 
+int[] array;			//	Nous créons une variable‑tableau de type int[]
+if (a < 10)				// Si la variable a est inférieure à 10,
+   array = new int[10];	// alors créer un tableau de 10 éléments.
+else					// Sinon
+   array = new int[20];	// créer un tableau de 20 éléments
+
+for (int i = 0; i < array.length; i++)	// Boucle sur tous les éléments du tableau : de 0 à array.length — 1
+{
+   System.out.println(array[i]);
+}
+```
+
+### `null`
+
+`null` est une référence vide. Lorsqu'une variable de type objet est crée, sa valeur initiale est `null`: une référence vers rien.
+
+Seule les types primitifs ont une valeurs par défaut.
+
+```java
+String name; 	// name contient null
+name = "Alex";  // name contient une référence vers l'objet/chaîne "Alex"
+name = null; 	// name contient null
+```
+
+Il est impossible d'appeler des méthodes sur un objet si sa référence est `null`, l'objet n'existe pas.
+
+```java
+int[] numbers = new int[10];		// {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+String[] strings = new String[10];  // {null, null, null, null, null, null, null, null, null, null}
+User[] users = new User[10];		// {null, null, null, null, null, null, null, null, null, null}
+```
+
+### Initialisation rapide de tableau 
+
+Le compilateur peut déterminer le type du conteneur à partir du type de la variable-tableau.
+
+```java
+// syntaxe longue
+int[] months = new int[12];
+months[0] = 31; // janvier
+months[1] = 28; // février
+months[2] = 31; // mars
+months[3] = 30; // avril
+months[4] = 31; // mai
+months[5] = 30; // juin
+months[6] = 31; // juillet
+months[7] = 31; // août
+months[8] = 30; // septembre
+months[9] = 31; // octobre
+months[10] = 30; // novembre
+months[11] = 31; // décembre
+
+// initialisation rapide 
+int[] months = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+// initialisation encore plus rapide 
+int[] months = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+String[] months = { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" };
+```
+
+### Boucle `for-each` - parcourir un tableau 
+
+```java
+// itérer sur les éléments du tableau -> contient une copie des éléments
+int sum = 0;
+for (int score : scores)
+{
+    sum += score;
+}
+System.out.println("Somme de tous les points: " + sum);
+
+// iterer avec index -> permet de modifier les éléments
+// exemple: augmenter toutes les valeurs de 1
+for (int i = 0; i < grades.length; i++) {
+    grades[i] = grades[i] + 1;
+}
+```
+
+#### Pattern
+
+**Somme des éléments du tableau**
+
+```java
+int sum = 0;
+for (int i = 0; i < grades.length; i++) {
+    sum += grades[i]; // équivaut à sum = sum + grades[i];
+}
+System.out.println("Somme des notes: " + sum);
+```
+
+**Recherche de la valeur maximal**
+
+```java
+int max = grades[0]; // commençons par le premier élément
+for (int i = 1; i < grades.length; i++) {
+    if (grades[i] > max) {
+        max = grades[i];
+    }
+}
+System.out.println("Note maximale: " + max);
+```
+
+**Recherche de la valeur minimale**
+
+```java
+int min = grades[0]; // commençons par le premier élément
+for (int i = 1; i < grades.length; i++) {
+    if (grades[i] < min) {
+        min = grades[i];
+    }
+}
+System.out.println("Note minimale: " + min);
+```
+
+**Calcul de la moyenne**
+
+```java
+int sum = 0;
+for (int i = 0; i < grades.length; i++) {
+    sum += grades[i];
+}
+// pour obtenir un nombre décimal pour la moyenne
+double average = (double) sum / grades.length; // il faut absolument convertir en double !
+System.out.println("Note moyenne: " + average);
+```
+
+**Saisie d'un tableau au clavier**
+
+```java
+Scanner console = new Scanner(System.in);
+
+int n = 5; // taille du tableau
+int[] numbers = new int[n];
+
+System.out.println("Saisissez " + n + " nombres:");
+for (int i = 0; i < n; i++) {
+    numbers[i] = console.nextInt();
+}
+
+System.out.println("Vous avez saisi:");
+for (int i = 0; i < n; i++) {
+    System.out.println(numbers[i]);
+}
+```
+
+**Affichage du tableau en sens inverse**
+
+```java
+for (int i = grades.length - 1; i >= 0; i--) {
+    System.out.println("Note n°" + (i + 1) + ": " + grades[i]);
+}
+```
