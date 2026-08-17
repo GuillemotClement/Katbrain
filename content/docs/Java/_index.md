@@ -55,6 +55,116 @@ String s1 = "Amigo" + " the best";
 
 Une variable doit avoir une valeur d'affecter pour pouvoir être manipulée.
 
+### `var` - inférence de type 
+
+Java fournis `var` qui vient faire une inférence de type, et d'éviter de dèfinir le type à la main.
+
+Il fonctionne uniquement pour des variables locales, dans une méthode.
+
+```java
+var age = 23;            // le compilateur déterminera le type du nombre 23 et substituera int age
+var name = "Anna";       // le compilateur déterminera le type de "Anna" et substituera String name
+var price = 99.99;       // le compilateur déterminera le type de 99.99 et substituera double price
+
+// tableau
+var numbers = new int[] { 1, 2, 3, 4 };
+
+// méthode
+var input = console.nextLine(); // input est une String (la méthode retourne String)
+```
+
+---
+
+## `final` - Constante 
+
+Le mot clé `final` permet de déclarer une constante. Celle ci ne peut plus être modifier après son initialisaiton.
+
+Par convention, le nom est en majuscule.
+
+```java
+final int DAYS_IN_WEEK = 7;
+final double PI = 3.1415926535;
+final String GREETING = "Salut, Java!";
+```
+
+### `static final` - constante de classe
+
+- `static`: la variable appartient à la classe -> une seule pour toutes
+- `final`: la valeur ne peut plus être modifier -> constante
+
+Elles sont déclaré en début de classe, avant les méthodes 
+
+```java
+public class MathUtils
+{
+    public static final double PI = 3.1415926535;
+
+    public static double circleLength(double radius)
+    {
+        return 2 * PI * radius;
+    }
+}
+
+// utilisation 
+double len = MathUtils.circleLength(5);
+System.out.println(len); // 31.4159...
+
+//exemple
+public class User
+{
+    // constante de l'objet
+    public final String name;
+    // constante de la classe                      // Chaque User a son propre nom (final)
+    public static final String COMPANY = "CodeGym"; // Une entreprise commune à tous (static final)
+
+    public User(String name)
+    {
+        this.name = name;
+    }
+}
+
+User u1 = new User("John");
+User u2 = new User("Peter");
+
+System.out.println(u1.name);      // John
+System.out.println(u2.name);      // Peter
+System.out.println(User.COMPANY); // CodeGym
+```
+
+---
+
+## Enum
+
+Une énumération est un type de donnée spéciale qui permet de déclarer un ensemble de constantes nommées.
+
+Permet d'améliorer la lisibilité du code.
+
+```java
+// Modèle générique de déclaration d’une énumération
+public enum Name
+{
+    CONSTANT1 ,
+    CONSTANT2 ,
+    CONSTANT3
+}
+
+// déclaration 
+// Fichier DayOfWeek.java
+public enum DayOfWeek {
+    MONDAY,			// 0
+    TUESDAY,		// 1
+    WEDNESDAY,		// 2
+    THURSDAY,		// 3
+    FRIDAY,			// 4
+    SATURDAY,		// 5
+    SUNDAY			// 6
+}
+```
+
+
+
+
+
 ---
 
 ## Commentaire
@@ -1055,6 +1165,95 @@ int ii = (int) dd; // Il faut convertir explicitement le type double en type int
 System.out.println(ii); // 3, la partie fractionnaire a été tronquée
 ```
 
+### Classes enveloppes
+
+Il est parfois nécessaire d'utiliser un primitif comme un objet. Dans ce cas, les classes enveloppes sont utilisée.
+
+Ce sont des classes qui contiennent en leur seins la valeur d'un primitif et permettent de la manipuler comme un objet.
+Par exemple, pour `int`, la classe `Integer`. Ces classes fournissent des méthodes comment `Integer.parseInt()`
+
+```java
+// Primitif
+int a = 10;
+
+// Objet enveloppe
+Integer b = Integer.valueOf(10);
+```
+
+##### Boxing et unboxing 
+
+Lorsque l'on créer manuellement un objet enveloppe, on prends un primitif et on l'encapsule dans un objet.
+
+```java
+int primitive = 42;
+Integer wrapper = Integer.valueOf(primitive); // boxing
+```
+
+Pour récuperer la valeur primitif, on effectue un unboxing
+
+```java
+Integer wrapper = Integer.valueOf(42);
+int primitive = wrapper.intValue(); // unboxing
+```
+
+Le compilateur est capable de réaliser ses opération automatiquement 
+
+```java
+int a = 10; // primitif
+Integer b = a; // autoboxing
+Integer c = Integer.valueOf(20);
+int d = c; // unboxing
+```
+
+#### Comparaison 
+
+Pour les comparaison, il est nécessaire d'utiliser `equals()`
+
+```java
+Integer x = 100;
+Integer y = 100;
+System.out.println(x.equals(y)); // true, comparaison par la valeur
+```
+
+#### Utilisation 
+
+```java
+// conversion d'une string en nombre
+String text = "123";
+int number = Integer.parseInt(text);
+System.out.println(number); // 123
+
+// vérification des valeurs particulière des nombres à virgule
+double d = 1.0 / 0;
+System.out.println(Double.isInfinite(d)); // true
+
+double nan = 0.0 / 0.0;
+System.out.println(Double.isNaN(nan)); // true
+
+// char 
+char ch = 'A';
+Character wrapper = ch; // autoboxing
+
+System.out.println(Character.isLetter(ch)); // true
+System.out.println(Character.isDigit(ch));  // false
+System.out.println(Character.toLowerCase(ch)); // 'a'
+
+// boolean 
+Boolean flag = null; // autorisé
+flag = Boolean.TRUE; // constante spéciale
+
+System.out.println(flag); // true
+
+// conversion de chaîne en bool 
+String s1 = "true";
+String s2 = "false";
+boolean b1 = Boolean.parseBoolean(s1);
+boolean b2 = Boolean.parseBoolean(s2);
+
+System.out.println(b1); // true
+System.out.println(b2); // false
+```
+
 ---
 
 ## Mémoire
@@ -1241,6 +1440,141 @@ System.out.println("Bonjour, " + name + " ! L'année prochaine, vous aurez " + n
 boolean adult = (age >= 18) ? true : false;
 // syntaxe courte
 boolean adult = (age >= 18);
+```
+
+### Switch 
+
+```java
+switch (expression)
+{
+    case value1:
+        // actions si expression == value1
+        break;
+    case value2:
+        // actions si expression == value2
+        break;
+    ...
+    default:
+        // actions si aucune correspondance avec un case
+        break;
+}
+
+// example 
+import java.util.Scanner;
+
+public class CoffeeShop
+{
+    public static void main(String[] args)
+    {
+        // récuération de la saisie
+        Scanner console = new Scanner(System.in);
+
+        System.out.println("Choisissez une boisson:");
+        System.out.println("1 - Espresso");
+        System.out.println("2 - Cappuccino");
+        System.out.println("3 - Latte");
+        
+        // stockage du choix dans la variable
+        int choice = console.nextInt();
+
+        // le switch évalue le choix de l'user
+        switch (choice)
+        {
+            case 1:
+                System.out.println("Vous avez choisi un espresso.");
+                break;
+            case 2:
+                System.out.println("Vous avez choisi un cappuccino.");
+                break;
+            case 3:
+                System.out.println("Vous avez choisi un latte.");
+                break;
+            // si aucun choix ne match, ce case est exécuter 
+            default:
+                System.out.println("Cette boisson n’existe pas.");
+                break;
+        }
+    }
+}
+
+// switch sur des chaîne => sensible à la casse
+import java.util.Scanner;
+
+public class CommandMenu
+{
+    public static void main(String[] args)
+    {
+        Scanner console = new Scanner(System.in);
+
+        System.out.println("Saisissez une commande (start, stop, pause):");
+        String command = console.nextLine();
+
+        switch (command)
+        {
+            case "start":
+                System.out.println("Démarrage du programme!");
+                break;
+            case "stop":
+                System.out.println("Arrêt du programme.");
+                break;
+            case "pause":
+                System.out.println("Pause.");
+                break;
+            default:
+                System.out.println("Commande inconnue.");
+                break;
+        }
+    }
+}
+
+// switch sur char
+char grade = 'B';
+
+switch (grade)
+{
+    case 'A':
+        System.out.println("Excellent!");
+        break;
+    case 'B':
+        System.out.println("Bien.");
+        break;
+    case 'C':
+        System.out.println("Satisfaisant.");
+        break;
+    default:
+        System.out.println("Essayez encore.");
+        break;
+}
+
+// regroupement de case 
+int month = 1;
+
+switch (month)
+{
+    case 12:
+    case 1:
+    case 2:
+        System.out.println("Hiver");
+        break;
+    case 3:
+    case 4:
+    case 5:
+        System.out.println("Printemps");
+        break;
+    case 6:
+    case 7:
+    case 8:
+        System.out.println("Été");
+        break;
+    case 9:
+    case 10:
+    case 11:
+        System.out.println("Automne");
+        break;
+    default:
+        System.out.println("Mois inconnu");
+        break;
+}
 ```
 
 ---
