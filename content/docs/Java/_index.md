@@ -137,7 +137,18 @@ System.out.println(User.COMPANY); // CodeGym
 
 Une énumération est un type de donnée spéciale qui permet de déclarer un ensemble de constantes nommées.
 
-Permet d'améliorer la lisibilité du code.
+Les enums appoortent ces avantages:
+- sécurité des types
+- lisibilité
+- facilité de maintenance 
+- fonctionne avec switch 
+- extensible
+- réduit les erreurs
+
+Les enums sont déclarer:
+- dans un fichier séparé, par exemple `DayOfWeek.java`
+- dans une classe si besoin d'une énumération privée uniquement pour cete classe
+- dans une méthode
 
 ```java
 // Modèle générique de déclaration d’une énumération
@@ -159,7 +170,138 @@ public enum DayOfWeek {
     SATURDAY,		// 5
     SUNDAY			// 6
 }
+
+// déclaration d'une variable enum 
+// today ne peut prendre que l'une des valeurs déclarée dans l'enum DayOfWeek
+DayOfWeek today = DayOfWeek.MONDAY;
+
+// utilisation dans un switch 
+// dans les case, on écrit le nom de la constante
+switch (today)
+{
+    case MONDAY:
+        System.out.println("Ouh, lundi...");
+        break;
+    case FRIDAY:
+        System.out.println("Youpi, vendredi !");
+        break;
+    default:
+        System.out.println("Un jour ordinaire.");
+}
+
+// itération sur les valeurs de l'enum 
+// chaque enum possède une méthode statique values() qui retourne un tableau de toutes ces valeurs
+for (DayOfWeek day : DayOfWeek.values())
+{
+    System.out.println(day);
+}
+
+// exemple dans le code =====================================
+public enum DayOfWeek
+{
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+
+System.out.println("Saisissez le jour de la semaine (par exemple, MONDAY) :");
+Scanner console = new Scanner(System.in);
+// l'utilisateur saisit un jour de la semaine et convertis en majuscule
+String input = console.nextLine().toUpperCase();
+// conversion en valeur d'enum
+DayOfWeek day = DayOfWeek.valueOf(input);
+// evaluation de la variable pour afficher le bon message
+switch (day)
+{
+    case MONDAY:
+        System.out.println("Début de la semaine de travail !");
+        break;
+    case FRIDAY:
+        System.out.println("Bientôt le week-end !");
+        break;
+    case SATURDAY:
+    case SUNDAY:
+        System.out.println("Youpi, c’est le week-end !");
+        break;
+    default:
+        System.out.println("Journée de travail ordinaire.");
+}
 ```
+
+- `enum`: indique au compilateur une déclaration d'enum 
+
+On viens déclarer entre les `{}` les noms des variantes (constante) séparé par des virgules.
+
+### Méthode d'enum
+
+#### `name()` - retourne le nom de la constante
+
+Retourne le nom de la constante sous forme de chaîne, tel qu'il est écrit dans le code
+
+```java
+DayOfWeek day = DayOfWeek.FRIDAY;
+System.out.println(day.name()); // "FRIDAY"
+```
+
+#### `ordinal()` - retourne l'indice 
+
+Retourne l'indice ordinal de la constante (à partir de zéro)
+
+```java
+System.out.println(DayOfWeek.MONDAY.ordinal()); // 0
+System.out.println(DayOfWeek.FRIDAY.ordinal()); // 4
+```
+
+#### `valueOf()` 
+
+Convertit une chaîne en valeur d'énumération si une telle constante existe 
+
+```java
+DayOfWeek day = DayOfWeek.valueOf("MONDAY");
+System.out.println(day); // MONDAY
+```
+
+#### `values()`
+
+Retourne le tableau de toutes les valeurs de l'énumération 
+
+```java
+DayOfWeek[] days = DayOfWeek.values();
+```
+
+### Champs, constructeur et méthodes
+
+On peut ajouter des champs, des constructeurs et des méthodes.
+
+```java
+public enum DayOfWeek
+{
+    MONDAY("Lundi"),
+    TUESDAY("Mardi"),
+    WEDNESDAY("Mercredi"),
+    THURSDAY("Jeudi"),
+    FRIDAY("Vendredi"),
+    SATURDAY("Samedi"),
+    SUNDAY("Dimanche");
+
+    private final String russianName;
+
+    // Constructeur (private par défaut)
+    DayOfWeek(String russianName)
+    {
+        this.russianName = russianName;
+    }
+
+    public String getRussianName()
+    {
+        return russianName;
+    }
+}
+
+// utilisation 
+DayOfWeek day = DayOfWeek.WEDNESDAY;
+System.out.println(day.getRussianName()); // "Mercredi"
+```
+
+Chaque valeur d'un enum peut porter ses propres données, dans ce cas, un nom localisé
 
 
 
@@ -1575,6 +1717,94 @@ switch (month)
         System.out.println("Mois inconnu");
         break;
 }
+```
+
+### Switch moderne 
+
+Avec > Java 14, le switch est devenu une expression :
+- Il peut désormais renvoyer une valeur 
+- nouvelle syntaxe avec une `->`
+- plusieurs `case` séparées par des virgules pour une logique identique
+- le compilateur vérifie que tous les cas sont couvert
+
+```java
+// syntaxe
+switch (value)
+{
+   case A, B -> result1;
+   case C -> {
+      // plusieurs actions
+      yield result2;
+   }
+   default -> defaultResult;
+}
+
+// example de code 
+// déclaration de l'enum
+public enum DayOfWeek
+{
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+
+DayOfWeek day = DayOfWeek.MONDAY;
+
+// variable qui récupère la valeur issue du switch
+// après le ->, on indique le résultat stocker dans la variable message
+// plusieurs case séparé par une virgule
+String message = switch (day)
+{
+    case MONDAY, FRIDAY, SUNDAY -> "Semaine courte ou jour de repos !";
+    case TUESDAY                -> "Le mardi — une journée difficile.";
+    case WEDNESDAY, THURSDAY    -> "Milieu de semaine !";
+    case SATURDAY               -> "Youpi, samedi !";
+    // default est obligatoire si toutes les possibilités ne sont pas couvertes
+    default                     -> "Jour plutôt étrange...";
+};
+
+System.out.println(message);
+
+// exemple avec nombre
+int code = 404;
+String result = switch (code)
+{
+    case 200 -> "OK";
+    case 400, 404 -> "Erreur côté client";
+    case 500 -> "Erreur serveur";
+    default -> "Code inconnu";
+};
+System.out.println(result);
+
+// exemple avec chaîne
+String command = "start";
+String status = switch (command)
+{
+    case "start" -> "Démarrage !";
+    case "stop" -> "Arrêt !";
+    case "pause" -> "Pause...";
+    default -> "Commande inconnue";
+};
+System.out.println(status);
+```
+
+#### Bloc `yield`
+
+Pour exécuter plusieurs actions pour un même case, on peut utiliser un bloc avec `yield`.
+
+Dans le bloc, il doit avoir obligatoirement un `yield` qui retourne une valeur pour ce case.
+
+```java
+int n = 7;
+String parity = switch (n % 2)
+{
+    case 0 -> "Pair";
+    case 1 ->
+    {
+        System.out.println("Nombre impair détecté : " + n);
+        yield "Impair";
+    }
+    default -> "Quelque chose d'étrange";
+};
+System.out.println(parity);
 ```
 
 ---
