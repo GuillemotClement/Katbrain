@@ -391,7 +391,22 @@ void main()
 }
 ```
 
-#### Concaténation
+#### Chaîne multi-ligne  - Text Blocks
+
+Permet de créer du texte multi-ligne sans échappements, en conserveant la mise en forme. Idéale pour le JSON, SQL et HTML
+
+```java
+// Littéral multiligne (Text Block)
+String json = """
+    {
+        "name": "Alice",
+        "age": 30,
+        "skills": ["Java", "SQL", "Cloud"]
+    }
+    """;
+```
+
+#### Concaténation manuel
 
 La concaténation permet d'assembler des string.
 
@@ -405,42 +420,456 @@ void main()
 
 ```
 
-#### Echappement de char
+#### `String.format()` - mise en forme avancée
+
+`String.format()` permet de créer une chaîne à partir d'un modèle, et d'insérer des valeurs à des positions données.
 
 ```java
-void main(){
-  String quote = "Il a dit: \"Bonjour!\"";
-  System.out.println(quote); // Il a dit: "Bonjour!"
-}
+// syntaxe
+String result = String.format("Modèle", values);
+```
+
+- `%s`: string 
+- `%d`: entier 
+- `%f`: float
+- `%n`: saut de ligne
+
+```java
+String name = "Oleg";
+int age = 25;
+double balance = 12345.6789;
+
+String info = String.format("Nom : %s, âge : %d, solde : %.2f euros.", name, age, balance);
+System.out.println(info);
+// Affichera : Nom : Oleg, âge : 25, solde : 12345.68 euros.
+
+String result = String.format("Nom : %s, âge : %d, solde : %.2f euros", name, age, balance);
+// %s — chaîne, %d — entier, %.2f — nombre avec 2 décimales
+
+// nombre à virgule avec précision fixe 
+double price = 99.999;
+System.out.println(String.format("Prix : %.2f euros.", price)); // Prix : 100.00 euros.
+
+// largeur de champ et alignement 
+// [5d] -> largueur de champ 5 aligné à droite par defaut
+// [-5d] -> largeur de champ de 5, aligné à gauche
+int n = 7;
+System.out.println(String.format("Nombre : [%5d]", n));   // Nombre : [    7]
+System.out.println(String.format("Nombre : [%-5d]", n));  // Nombre : [7    ]
+
+// pourcentage
+double percent = 0.125;
+System.out.println(String.format("Terminé : %.1f%%", percent * 100)); // Terminé : 12.5%
+```
+
+#### Mise en forme des dates
+
+```java
+import java.util.Date;
+Date now = new Date();
+System.out.println(String.format("Aujourd’hui : %tD", now)); // Aujourd’hui : 06/18/24
+System.out.println(String.format("Heure : %tT", now));       // Heure : 15:42:07
+```
+
+#### Localisation et séparateur 
+
+Par défaut, la locale du système est utilisée. Pour passer une locale 
+
+```java
+import java.util.Locale;
+double price = 1234.56;
+System.out.println(String.format(Locale.FRANCE, "%.2f", price)); // 1234,56
+```
+
+#### Echappement de caractères
+
+```java
+System.out.println("Bonjour, \"Utilisateur\"!");
+// Sortie: Bonjour, "Utilisateur"!
+
+System.out.println("C:\\Program Files\\MyApp");
+// Sortie: C:\Program Files\MyApp
+
+System.out.println("Ligne 1\nLigne 2");
+// Sortie:
+// Ligne 1
+// Ligne 2
+
+System.out.println("J'aime\tla\ttabulation!");
+// Sortie:
+// J'aime         la    tabulation!
 ```
 
 - `\n`: saut de ligne
 - `\t`: tabulation
 - `\\`: \
 - `\"`: "
+- `\'`: '
+- `\r`: retour chariot
+- `\0`: caractère null
+- `\b` : retour arriere
 
 #### Méthode de String
 
 Chacune de ses méthodes retourne une nouvelle chaîne sans modifier l'original
 
-```java
-void main()
-{
-  // longueur d'une chaine
-  String name = "Andrey";
-  int length = name.length();
-  System.out.println(length); // 6, car il y a 6 lettres
+##### `length()` - nombre de caractères d'une chaîne
 
-  // majuscule et minuscule
+Retourne le nombre de caractère d'une chaîne.
+
+```java
+String name = "Vasilisa";
+int length = name.length();
+System.out.println("Nombre de lettres dans le prénom : " + length); // 8
+
+// vérification d'une chaîne vide
+String input = "";
+if (input.length() == 0)
+{
+    System.out.println("La chaîne est vide !");
+}
+
+// vérification de mot de passe
+String password = "qwerty";
+if (password.length() < 8)
+{
+    System.out.println("Le mot de passe est trop court !");
+}
+else
+{
+    System.out.println("Le mot de passe est valide.");
+}
+```
+
+##### `substring()` - extraire une partie de chaîne
+
+- `str.substring(startIndex)`: à partir de la position `startIndex` jusqu'a la fin de la chaîne 
+- `str.substring(startIndex, endIndex)`: à partir de `startIndex` jusqu'a `endIndex` non inclut
+
+```java
+// trois premiere lettre
+tring name = "Vasilisa";
+String firstThree = name.substring(0, 3); // "Vas"
+System.out.println(firstThree);
+
+// obtenir l'extension du fichier
+String fileName = "document.pdf";
+int dotIndex = fileName.indexOf(".");
+String extension = fileName.substring(dotIndex + 1); // "pdf"
+System.out.println(extension);
+
+// 4 derniere caracteres
+String cardNumber = "1234567890123456";
+String lastFour = cardNumber.substring(cardNumber.length() - 4); // "3456"
+System.out.println("Les 4 derniers chiffres : " + lastFour);
+```
+
+##### `indexOf()` - recherche de caractère ou sous chaîne 
+
+Recherche la position de la première occurence d'un caractère ou d'une sous-chaîne donné
+
+- si non trouvé, retourne `-1`
+- si trouvé, retourne l'index
+
+```java
+// premier point d'un email 
+String email = "ivan.petrov@mail.com";
+int dotIndex = email.indexOf('.');
+System.out.println("Premier point à la position : " + dotIndex); // 4
+
+// trouver une sous chaîne
+String text = "J’adore Java !";
+int index = text.indexOf("Java");
+System.out.println(index); // 8
+
+// trouver un caractère après une position donnée
+String s = "abracadabra";
+int firstA = s.indexOf('a'); // 0
+int secondA = s.indexOf('a', firstA + 1); // 3
+System.out.println("La deuxième 'a' à la position : " + secondA);
+```
+
+##### `lastIndexOf()` - trouver la dernière occurence
+
+```java
+// recherche extension de fichier 
+String fileName = "report.final.version.docx";
+int lastDot = fileName.lastIndexOf('.');
+String extension = fileName.substring(lastDot + 1);
+System.out.println("Extension du fichier : " + extension); // "docx"
+```
+
+##### `charAt()` - obtenir un charactère par indice 
+
+Retourne le caractère à son indice. Retourne une valeur de type `char`
+
+```java
+//vérifier la premère lettre d'une chaîne 
+String city = "Minsk";
+char first = city.charAt(0); // 'M'
+System.out.println("Première lettre : " + first);
+
+// vérifier si la chaîne commence par une majuscule
+String word = "Java";
+if (Character.isUpperCase(word.charAt(0)))
+{
+    System.out.println("Le mot commence par une majuscule !");
+}
+
+// parcourir tous les caractères d'une chaîne
+String text = "Bonjour";
+for (int i = 0; i < text.length(); i++)
+{
+    System.out.println("Caractère #" + i + ": " + text.charAt(i));
+}
+```
+
+##### `toCharArray()` - conversion d'une chaîne en array
+
+Permet de transformer une chaîne en tableau de caractèrees. Utile pour du traitement caractère par caractère, trie, vérification
+
+```java
+String text = "Hello";
+char[] characters = text.toCharArray();
+
+for (char c : characters)
+{
+    System.out.println(c);
+}
+// Sortie:
+// H
+// e
+// l
+// l
+// o
+```
+
+##### `replace()` - remplacer une sous-chaîne
+
+Remplace toutes les occurences `target` par `replacement`. Elle retourne une nouvelle chaîne, l'originale ne change pas.
+
+```java
+replace(CharSequence target, CharSequence replacement)
+
+String sentence = "J’aime la programmation en Java.";
+String newSentence = sentence.replace("Java", "Java 25");
+System.out.println(newSentence);
+// Sortie: J’aime la programmation en Java 25.
+
+String email = "support@company.com";
+String cleanEmail = email.replace("@", "[at]");
+System.out.println(cleanEmail);
+// Sortie: support[at]company.com
+```
+
+##### `trim()` | `trip()` - suppression des espaces superflus 
+
+- `trim()`: supprime les espaces, tabulations, retour à la ligne
+- `strip()`: méthode moderne, prends en compte tous les types d'espaces. A privilieger
+
+```java
+String s1 = "   Bonjour, monde !   ";
+System.out.println(s1.trim());
+// Sortie: "Bonjour, monde !"
+
+String s2 = " \u2005  Java 11  \u2005 "; // \u2005 — est un espace Unicode
+System.out.println("trim(): " + s2.trim());
+System.out.println("strip(): " + s2.strip());
+// Sortie:
+// trim():  Java 11
+// strip(): Java 11
+```
+
+##### `toUpperCase()` | `toLowerCase()` - majusucle et minuscule 
+
+```java
   String original = "Bonjour";
   System.out.println(original.toUpperCase()); // BONJOUR
   System.out.println(original.toLowerCase()); // bonjour
+```
 
-  // nettoyage d'espaces
-  String messy = "   hello   ";
-  System.out.println(messy.trim()); // "hello"
+#### Comparaison de chaîne 
+
+##### `equals()` - comparaison de chaîne 
+
+```java
+String s1 = "Java";
+String s2 = new String("Java");
+System.out.println(s1.equals(s2)); // true
+
+// comparaison de mot de passe
+String inputPassword = "Secret123";
+String realPassword = "Secret123";
+if (inputPassword.equals(realPassword))
+{
+    System.out.println("Accès autorisé !");
+}
+else
+{
+    System.out.println("Mot de passe incorrect.");
 }
 ```
+
+##### `equalsIgnoreCase()` - comparaison sans casse
+
+```java
+String name1 = "Ivan";
+String name2 = "ivan";
+System.out.println(name1.equalsIgnoreCase(name2)); // true
+
+// comparaison email 
+String email1 = "User@Example.com";
+String email2 = "user@example.com";
+if (email1.equalsIgnoreCase(email2))
+{
+    System.out.println("Les adresses e-mail correspondent !");
+}
+```
+
+##### `compareTo()` - comparaison lexicographique 
+
+Effectue une comparaison lexicographique (ordre du dictionnaire). Retourne un nombre négatif si la premiere chaine est plus petite, 0 egales, et positif si plus grande 
+
+```java
+System.out.println("apple".compareTo("banana")); // < 0
+System.out.println("apple".compareTo("apple"));  // 0
+System.out.println("banana".compareTo("apple")); // > 0
+
+System.out.println("cat".compareTo("catalog")); // < 0 ("cat" est plus courte)
+System.out.println("catalog".compareTo("cat")); // > 0
+
+// trier un tableau de chaîne 
+String[] fruits = {"banana", "apple", "pear"};
+Arrays.sort(fruits); // compareTo() est utilisé en interne
+System.out.println(Arrays.toString(fruits)); // [apple, banana, pear]
+
+// compareToIgnoreCase()
+System.out.println("Java".compareToIgnoreCase("java")); // 0
+```
+
+##### `startsWith()` | `endsWith()` - vèrifier debut ou fin d'une chaîne 
+
+Vérifient le début ou la fin d'une chaîne en retournant `true` ou `false`
+
+```java
+String fileName = "document.pdf";
+String url = "https://www.google.com";
+
+System.out.println(fileName.startsWith("doc"));  // true
+System.out.println(fileName.endsWith(".txt"));   // false
+System.out.println(url.startsWith("https://"));  // true
+```
+
+##### `contains()` - recherche de sous chaîne
+
+Permet de vérifier la présence d'une sous chaîne. Sensible à la casse
+
+```java
+String text = "Bienvenue dans le monde de Java !";
+System.out.println(text.contains("monde"));   // true
+System.out.println(text.contains("C++"));   // false
+```
+
+##### `split()` - découpage de chaîne 
+
+Permet de découper une chaîne selon un séparateur et retourne un tableau `String[]`
+
+```java
+// dècoupage par virgule
+String names = "Alex,Maria,Ivan,Elena";
+String[] nameArray = names.split(",");
+for (String name : nameArray)
+{
+    System.out.println(name.trim()); // trim() supprime d’éventuels espaces
+}
+// Sortie:
+// Alex
+// Maria
+// Ivan
+// Elena
+
+// découpage par espace
+String sentence = "J'étudie Java";
+String[] words = sentence.split(" ");
+for (String word : words)
+{
+    System.out.println(word);
+}
+// Sortie:
+// J'étudie
+// Java
+```
+
+#### Construiction de chaîne
+
+##### `StringBuilder` - construction de chaîne rapide
+
+La classe `StringBuilder` du package `java.lang` est un outil permettant d'assembler et modifier efficacement des chaîne. Elle est mutable: on peut ajouter, supprimer et insérer des caractères et sous chaîne sans créer de nouvel objet à chaque opération.
+
+Méthodes principales 
+- `append()`: ajout à la fin de la chaîne
+- `insert(index, ...)`: insère à partir de l'index passer
+- `delete(start, end)`: supprime de start a end exclus
+- `replace(start, end, str)`: remplace une partie de la chaîne
+- `reverse()`: inverse la chaîne
+- `toString()`: convertis en chaîne classique
+- `setLength(newLen)`: raccourcis ou complete la chaine à la longueur definis
+- `toString()`: permet de transformer en string
+
+```java
+// création 
+StringBuilder sb = new StringBuilder(); // vide
+StringBuilder sb2 = new StringBuilder("Valeur initiale");
+
+// utilisation 
+StringBuilder sb = new StringBuilder();
+sb.append("Bonjour, ");
+sb.append("monde!");
+System.out.println(sb); // Bonjour, monde!
+
+sb.insert(9, "Java "); // inserons "Java " après "Bonjour, "
+System.out.println(sb); // Bonjour, Java monde!
+
+sb.replace(9, 13, "autre"); // remplaçons "Java" par "autre"
+System.out.println(sb); // Bonjour, autre monde!
+
+sb.reverse();
+System.out.println(sb); // !ednom ertua ,ruojnoB
+
+sb.toString() // transformation en String
+
+// comparaison 
+if (sb1.toString().equals(sb2.toString()))
+{
+    // le contenu est identique
+}
+```
+
+Dans certains scénario, l'utilisation de la classe est adaptée que `String`:
+- Modifications fréquentes d'une chaîne (ajout, supression) dans une boucle ou lors de l'assemblage de gros textes
+- Assemblage de chaîne depuis un tableau/d'une liste (CSV, HTML, rapport)
+- Anayse et traitement de texte avec un grand nombre d'opération sur la chaîne
+
+```java
+// assembler une chaîne depuis un tableau 
+String[] names = {"John", "Peter", "Maria"};
+StringBuilder sb = new StringBuilder();
+
+for (int i = 0; i < names.length; i++)
+{
+    sb.append(names[i]);
+    if (i < names.length - 1)
+    {
+        sb.append(", ");
+    }
+}
+System.out.println(sb.toString());
+```
+
+##### `StringBuffer` 
+
+Ajoute une couche de sécurité pour le multithreading. Si plusieurs threads peuvent modifier la même chaîne, il faut utiliser cette classe.
+
 
 ### Boolean
 
