@@ -3010,3 +3010,44 @@ class ShadowDemo
 }
 ```
 
+---
+
+## Exceptions
+
+Dans un programme, si on ne traite pas une exception, le programme se termine de manière anormale. Les exceptions ne sont pas des erreurs de compilation, mais des problémes qui apparaissent pendant l'exécution du programme.
+
+`Exception` est un objet crée au moment où un problème survient pendant l'exécution du programme.
+
+### `Errors`
+
+Problémes fatals et irrécupérables dus à des défaillances de la JVM:
+- `OutOfMemoryError`: mémoire épuisée
+- `StackOverflowError`: débordement de pile
+
+Il ne faut pas tenter de gérer ce type d'erreurs dans le programme.
+
+### `Exceptions`
+
+Ce sont les problèmes que le programme doit gérer. Elles surviennent à cause d'erreur de logique ou de facteur externe:
+- `NullPointerException`: tentative d'utiliser un `null` comme un objet
+- `ArrayIndexOutOfBoundsException`: dépassement des limites d'un tableau 
+- `IOException`: erreur lors du travail avec des fichiers
+
+En Java, il existe deux types d'exceptions:
+- **Checked exceptions**: le compilateur exige qu'elle soient gérées
+- **Unchecked exceptions**: le compilateur n'exige pas leur gestion
+
+### `try` - `catch`
+
+Le bloc `try` - `catch` permet d'attraper une exception et d'éviter le crash du programme en gérant proprement l'erreur.
+
+```java
+try
+{
+    // Code susceptible de lancer une exception
+}
+catch (ExceptionType variableName)
+{
+    // Code pour traiter l’exception
+}
+```
