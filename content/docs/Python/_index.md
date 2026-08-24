@@ -104,7 +104,10 @@ print(message)  # Affiche : J'ai 39 ans
 
 ---
 
+
 ## Variable 
+
+Lorsque l'on créer une variable en Python, cela vient créer une référence vers un objet en mémoire. Python alloue un objet en mémoire pour cette valeur et fait de la variable, une référence vers cette objet. Si on assigne une variable à une autre, la nouvelle variable référencera le même objet que la variable d'origine. Les modifications sur l'une des variables viendras donc modifier la seconde.
 
 ```python
 nom = "Alexander"
@@ -298,6 +301,133 @@ rounded_down = math.floor(number)  # Arrondit vers le bas, résultat 9
 print("Nombre arrondi vers le haut :", rounded_up)
 print("Nombre arrondi vers le bas :", rounded_down)
 ```
+
+### Travail avec des float 
+
+#### `round()` - arrondis de float 
+
+La fonction `round()` permet d'arrondir les nombres à virgules à l'entier le plus proche. Elle retourne le nombre arrondis. 
+
+```python 
+x = round(4.1) # 4
+x = round(4.9) # 5
+x = round(5.5) # 6
+```
+
+#### `math.ceil()` - arrondit à l'entier supérieur 
+
+```python
+x = math.ceil(4.1) # 5
+x = math.ceil(4.5) # 5
+x = math.ceil(4.9) # 5
+```
+
+#### `math.floor()` - arrondit à l'entier inférieur 
+
+```python
+x = math.floor(4.1) # 4
+x = math.floor(4.5) # 4
+x = math.floor(4.9) # 4
+
+# ===========================
+# avec int()
+# ===========================
+x = int(4.9) # 4
+```
+
+La conversion du floar vers le int avec `int()` est une autre façon de réaliser la converison.
+
+#### Comparaison de nombre flottant 
+
+Pour éviter les problème de perte de précision des nombres flottant lors de comparaison, on peut utiliser cette méthode pour s'assurer d'un résultat correct.
+
+On viens utiliser un petit nombre, et si la différence entres les nombres (en valeur absolue) est inférieur à ce petit nombre, alors ils sont considérés comme égaux.
+
+```python
+# ================================
+# comparaison de nombre à virgule
+# ================================
+a = 0.00000000012
+b = 0.000000000011
+
+if abs(a - b) < 0.00001:
+    print("égaux")
+else:
+    print("non égaux")
+```
+
+### Travail avec boolean 
+
+Les valeurs booleane utilise des valeurs `True` ou 1 et  `False` ou 0
+
+#### Opérateur logique 
+
+##### `and`
+
+```python
+a = True
+b = False
+print(a and b)  # Affichera: False
+```
+
+##### `or`
+
+```python 
+a = True
+b = False
+print(a or b)  # Affichera: True
+```
+
+##### `not` 
+
+```python 
+a = True
+print(not a)  # Affichera: False
+``` 
+
+### Travail avec `None`
+
+Cette valeur représente une absence de valeur. Il permet de désigner des variables vides ou comme valeur de retour pour les fonctions qui ne retournent rien. 
+
+`None` est une instance de la classe `NoneType`. Il permet d'indiquer qu'une variable n'a pas de valeur. Il est évalué à `False`.
+
+```python 
+# =========================
+# utilisation 
+# =========================
+a = None
+if a:
+    print("a est True")
+else:
+    print("a est None ou False")
+
+# =================================
+# comparaison avec None 
+# =================================
+# on utilise is qui permet de vérifier l'identité
+a = None
+if a is None:
+    print("a est None")
+else:
+    print("a a une valeur")
+
+# =================================
+# None dans les fonctions
+# =================================
+# utiliser dans les fonctions qui ne doivent pas retourner de valeur 
+# si une fonction ne renvoie pas de valeur, elle renvoie implicitement None
+def func():
+    print("Cette fonction renvoie None")
+
+result = func()
+print(result)  # Affichera: None
+
+# =================================
+# None dans une liste 
+# =================================
+# permet d'indiquer l'abscence d'un élément à une position donnée 
+my_list = [1, None, 3]
+print(my_list)  # Affichera: [1, None, 3]
 
 ---
 
