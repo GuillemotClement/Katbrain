@@ -888,3 +888,159 @@ for i in range(1, n + 1):
 5 * 1 = 5	5 * 2 = 10	5 * 3 = 15	5 * 4 = 20	5 * 5 = 25
 """
 ```
+
+---
+
+## Fonction 
+
+Les fonctions sont des objets de première classe, ce qui signifie qu'elle peuvent être utilisées comme n'importe quel objet.
+
+Les fonctions peuvent : 
+- être attribuées à une variable
+- passé comme argument à d'autres fonctions 
+- retournée depuis d'autres fonctions 
+- incluses dans des structures de données comme des listes, dictionnaire
+
+```python 
+# =====================
+# syntaxe de déclaration 
+# =====================
+def nom(paramètres):
+    commande1
+    commande2
+    commandeN
+
+# ===========================
+# exemple 
+# ===========================
+def greet():
+    print("Hello, World!")
+
+# =========================
+# appel de fonction 
+# ==========================
+greet()  # Affichera : Hello, World!
+
+# ========================
+# fonction avec un arguments
+# =========================
+def greet(name):
+    print("Hello,", name)
+
+greet("Alice")  # Affichera : Hello, Alice!
+
+# =================================
+# fonction à arguments multiples
+# =================================
+def print_sum(a, b):
+    print(f"Le somme de {a} et {b} est {a + b}")
+
+print_sum(10, 15)  # Affichera : Le somme de 10 et 15 est 25
+
+# =======================================
+# fonction avec expression comme argument
+# =======================================
+def print_sum(a, b):
+    print(f"Le somme de {a} et {b} est {a + b}")
+
+print_sum(10*10-123, 15//2)  # Affichera : Le somme de -23 et 7 est -16
+
+# =======================================
+# exemple d'utilisation 
+# =======================================
+def shout(text):
+    return text.upper()
+
+yell = shout # contient une référence à la fonction 
+
+def greet(func):
+    greeting = func("Hello")  # appel de la fonction
+    print(greeting)
+
+greet(shout)
+```
+
+### `return`
+
+`return` permet de retourner une valeur depuis une fonction. L'opérateur met également fin à l'exécution de la fonction.
+
+```python
+# ==========================
+# exemple 
+# ===========================
+def sum(a, b):
+    return a + b
+
+result = sum(5, 3)
+print(result)  # Affiche 8
+
+# ============================
+# retourner plusieurs valeurs 
+# ============================
+def get_user():
+    name = "Ivan"
+    age = 25
+    return name, age
+
+user_name, user_age = get_user()
+print(user_name, user_age)  # Affiche Ivan 25
+
+# ===============================
+# return pour terminer une fonction 
+# ================================
+def check_password(pswd):
+    if len(pswd) < 8:
+        return "Mot de passe trop court"
+    return "Mot de passe accepté"
+
+# ==================================
+# return None 
+# ==================================
+def print_message(text):
+    print(text)
+    return
+
+result = print_message("Salut")
+print(result)  # Affiche None
+```
+
+### `pass`
+
+L'opérateur `pass` est utilisé comme placeholder dans un bloc de code où un contenu est requis syntaxiquement, mais pas encore définis.
+
+Cela permet de préparer le programme, en permettant de structurer sans qu'il effectue encore des opération. Généralement utiliser lors du processus de dev et durant les tests. Cela permet d'organiser le code sans compromettre le fonctionnement global de l'application.
+
+```python 
+# ==================
+# définition de fonction 
+# =======================
+def my_function():
+    pass
+
+# ========================
+# dans des boucles et conditions 
+# ===============================
+for item in my_list:
+    pass
+```
+
+### Retourner une fonction - closure 
+
+Il est possible de retourner une fonction depuis une autre fonction. C'est rendu possible par le support des closure et des fonctions de premiere classe/ 
+
+```python
+# ===========
+# fonction qui genere des fonctions pour elever des nombres a une puissance donnee
+# ===================
+def power(exponent):
+    def inner(base):
+        return base ** exponent
+    return inner
+
+square = power(2)
+print(square(3))  # Affiche 9
+
+cube = power(3)
+print(cube(3))  # Affiche 27
+```
+
