@@ -1044,3 +1044,163 @@ cube = power(3)
 print(cube(3))  # Affiche 27
 ```
 
+### Valeur par défaut
+
+Les paramètres par défaut sont définis dans la définition de la fonction. Si la valeur n'est pas transmise lors de l'appel de la fonction, c'est la valeur par défaut qui sera utilisée.
+
+Les paramètres avec une valeur par défaut, doivent être passer aprés les arguments normaux.
+
+```python
+# =======================
+# valeur par défaut 
+# =======================
+def print_info(name, company='Unknown'):
+    print(f"Name: {name}, Company: {company}")
+
+# ===========================
+# ordre de passage 
+# ===========================
+def create_user(username, is_admin=False):
+    if is_admin:
+        print(f"User {username} is an admin.")
+    else:
+        print(f"User {username} is a regular user.")
+
+create_user("Alice")  # is_admin == False
+create_user("Bob", is_admin=True)  # is_admin == True
+create_user("Karl", True)  # is_admin == True
+```
+
+### Passage de paramètres par nom
+
+Il est possible de préciser le nom du paramètres lors de l'appel de la fonction.
+
+```python
+# =====================
+# syntaxe
+# =====================
+fonction(paramètre1 = valeur, paramètre2 = valeur)
+
+# ==========================
+# exemple 
+# ==========================
+def create_profile(name, age, job):
+    print(f"Name: {name}")
+    print(f"Age: {age}")
+    print(f"Job: {job}")
+
+create_profile(name = "John", age = 28, job = "Developer")
+```
+
+### Visibilité des variables
+
+Une variable est accessible à partir du moment de sa création jusqu'a la fin de son scope. Si une variable est déclarée en dehors de toutes fonctions, celle ci est globale.
+
+- **Scope local**: variable crée dans une fonction, accessible uniquement dans cette fonction
+- **Scope fonctions imbriquée**: variable crée dans une fonction imbriqué. La variable est accessible que dans celle ci
+- **Scope globale**: veriable définie au niveau du script ou du module. Accessible depuis n'importe quel partie du code dans le même module 
+- **Score intégré**: scope spécial qui inclut tous les objets et fonction intégrés de Python accessible par défaut
+
+Les variables des scopes extérieur ne peuvent être que lues. En tentant d'écrire quelque chose dans une varaible externe, une varaible locale avec le même nom sera crée, et l'accès ä la variable externe sera perdu.
+
+```python
+# ======================
+# exemple 
+# ======================
+x = 10
+
+def change_global():
+    print(x)  # Cela provoquera une erreur, car x sera considéré comme une variable locale après l'affectation
+    x = 20  # Une variable locale x sera créée ici
+    print(x)  # Affiche 20 (accès à la variable locale x)
+
+change_global()
+print(x)  # Affiche 10
+```
+
+#### `global` 
+
+Pour modifier la valeur d'une variable globale dans une fonction, il est nécessaire d'utiliser `global`. Cet opérateur indique explicitement que la modification doit se faire dans la variable globale, et non dans la locale.
+
+Pour modifier la valeur d'une variable globale depuis une fonction, il faut déclarer cette variable au début de la fonction avec `global`. Cela donne à la fonction l'accès en écriture à la variable 
+
+```python
+# =======================================
+# modification valeur variable globale
+# =======================================
+x = 10
+
+def change_global():
+    global x  # Déclare x comme variable globale
+    print(x)  # Affiche 10 (accès à la variable globale x)
+    x = 20  # Ici, on assigne une nouvelle valeur à la variable globale x
+    print(x)  # Affiche 20 (accès à la variable globale x)
+
+change_global()
+print(x)  # Affiche 20
+```
+
+#### `nonlocal`
+
+Python propose des variables provenant de scopes intermédiaire. Par exemple, lorsqu'une fonction est imbriqué dans une autre fonction. Pour travailler avec ces variables l'opérateur `nonlocal` est utilisé.
+
+```python
+# ====================
+# utilisation
+# ====================
+def create_counter():
+    count = 0
+
+    def increment():
+        nonlocal count
+        count += 1
+        return count
+
+    return increment
+
+counter = create_counter()
+print(counter())  # Affiche 1
+print(counter())  # Affiche 2
+print(counter())  # Affiche 3
+```
+
+### Nombre infini de paramètres 
+
+Les fonctions peuvent accepter un nombre infini de paramètres avec `*args` pour les paramètres ordinaires et `**args_nammed` pour les paramètres nommés
+
+
+```python
+# ===================
+# *args
+# ===================
+# passer sous forme de tuple
+def print_all(*args):
+    for item in args:
+        print(item)
+
+print_all(1, 'apple', True)  # affichera 1, apple et True.
+
+# ============================
+# **args_nammed
+# ============================
+# passer sous forme de dictionnaire
+def print_named_items(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_named_items(fruit='apple', number=1)  # affichera fruit: apple et number: 1
+```
+
+### Typage 
+
+Python propose le **type hinting** qui permet de donner un typage, mais uniquement pour information.
+
+**mypy** est un analyseur statique de type permettant de capturer les erreurs dans le code en utilisant l'indication des types.
+
+```python
+# ===================
+# type hinting
+# ===================
+def add_numbers(a: int, b: int) -> int:
+    return a + b
+```
