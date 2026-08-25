@@ -1204,3 +1204,24 @@ Python propose le **type hinting** qui permet de donner un typage, mais uniqueme
 def add_numbers(a: int, b: int) -> int:
     return a + b
 ```
+
+---
+
+## List 
+
+Une liste permet de stocker une liste d'éléments. Chacun sera placé à un index.
+
+```python
+# ======================
+# création d'une liste 
+# ======================
+empty_list = [] # création d'une liste vide
+my_list = [1, 2, 3, 'apple', 'banana']
+
+# ===============================
+# conversion d'élément en liste 
+# ===============================
+my_list = list('hello') # liste contient un élément unique 
+my_list = list((1, 2, 3, 'apple', 'banana')) # la liste contient plusieurs éléments
+empty_list = list() # création d'une liste vide
+```
