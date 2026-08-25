@@ -1225,3 +1225,667 @@ my_list = list('hello') # liste contient un élément unique
 my_list = list((1, 2, 3, 'apple', 'banana')) # la liste contient plusieurs éléments
 empty_list = list() # création d'une liste vide
 ```
+
+### `len()` - longueur d'une liste 
+
+La fonction retourne le nombre d'éléments d'une liste 
+
+```python
+# ===============
+# utilisation 
+# ===================
+my_list = [10, 20, 30, 40]
+print(len(my_list))  # Affichera 4
+```
+
+### `type()` - vérifier si c'est une list
+
+```python
+# ====================
+# vérification du type 
+# =====================
+my_list = [1, 2.5, 'string', [3, 4]]
+print(type(my_list))  # Affichera: <class 'list'>
+
+# ==============================
+# vérification avant utilisation 
+# ==============================
+my_list = [1, 2.5, 'string', [3, 4]]
+if type(my_list) == list:
+    print("Liste!")  # Affichera: Liste!'
+```
+
+### `[index]` - accès aux éléments 
+
+Chaque élément d'une liste est placer à un index. Cet index permet de récupérer un élément d'une liste 
+
+```python
+# ==============
+# accès 
+# ==============
+my_list = [10, 20, 30, 40, 50]
+print(my_list[0])  # Affichera 10
+print(my_list[1])  # Affichera 20
+print(my_list[2])  # Affichera 30
+
+# ==========================
+# accès au dernier élément d'une liste
+# ====================================
+my_list = [10, 20, 30, 40, 50]
+print(my_list[-1])  # Affichera 50
+
+# ====================================
+# accès à l'avant dernier 
+# ====================================
+my_list = [10, 20, 30, 40, 50]
+print(my_list[-2])  # Affichera 40
+```
+
+### Extraction de sous liste 
+
+Les **slices** permettent d'éxtraire des sous liste. 
+
+La syntaxe prends 3 arguments:
+- `start`: index de début inclu 
+- `stop`: index de fin exclu 
+- `step`: pas avec lequel les éléments sont sélectionnés
+
+Si `start` n'est pas spécifié, par défaut il est égale au début de la liste. Si `stop` n'est pas spécifie, il est égale à la fin de la liste, et si `step` n'est pas spécifié, il est égale à 1
+
+```python
+# ======================
+# extraction de sous list
+# =======================
+# création d'une liste 
+my_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Extraction de la sous-liste du troisième au septième élément
+sub_list = my_list[2:7]
+print(sub_list)  # [2, 3, 4, 5, 6]
+
+# Extraction de chaque deuxième élément de la liste
+step_list = my_list[0:10:2]
+print(step_list)  # [0, 2, 4, 6, 8]
+
+# Du début à l'élément troisième
+sub_list = my_list[:3]
+print(sub_list)  # [0, 1, 2]
+
+# De l'élément/index premier à la fin
+step_list = my_list[1:]
+print(step_list)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+**Index négatif**
+
+Les index négatif permettent de travailler sur les liste en partant de la fin. Les index négatif commencent à `-1`, ce qui correspond au dernier élément de la liste, `-2` l'avant dernier.
+
+```python
+# =================
+# exemple 
+# =================
+my_list = ['a', 'b', 'c', 'd', 'e']
+
+# obtenir les trois derniers
+sub_list = my_list[-3:]
+print(sub_list)  # Affichera ['c', 'd', 'e']
+
+# obtenir une sous liste entre certain élément en partant de la fin 
+sub_list = my_list[-4:3]
+print(sub_list)  # Affichera ['b', 'c']
+
+# inversion de liste 
+sub_list = my_list[::-1]
+print(sub_list)  # Affichera ['e', 'd', 'c', 'b', 'a']
+```
+
+### `in` - vérifier si un élément est dans la liste 
+
+L'opérateur `in` permet de vérifier si un élément est présent dans la liste.
+
+```python 
+# ===================
+# vérifier la présense dans la liste 
+# =====================
+my_list = [1, 2, 3, 4, 5]
+element = 3
+exists = element in my_list
+print(exists)  # Affichera True
+
+# ==========================
+# utilisation conditionel 
+# ============================
+my_list = ["apple", "banana", "cherry"]
+element = "apple"
+
+if element in my_list:
+    print("L'élément est dans la liste.")
+else:
+    print("Élément non trouvé.")
+```
+
+### Modification de liste 
+
+#### `append()` - ajout en fin de liste 
+
+```python 
+# ===========
+# utilisation 
+# ===========
+my_list = [1, 2, 3]
+my_list.append(4)
+print(my_list)  # Affichera [1, 2, 3, 4]
+```
+
+#### `extend()` - ajout de plusieurs éléments 
+
+Prends en argument un objet itérable (liste, tutple)
+
+```python 
+# ====================
+# utilisation 
+# ====================
+my_list = [1, 2, 3, 4]
+my_list.extend([5, 6])
+print(my_list)  # Affichera [1, 2, 3, 4, 5, 6]
+```
+
+#### `insert()` - ajout à un index
+
+Permet d'ajouter un élément à la position spécifier. Elle prends en argument l'indice et l'élément 
+
+```python
+# ====================
+# utilisation 
+# ====================
+my_list = [1, 2, 3, 4, 5, 6]
+my_list.insert(0, 0)
+print(my_list)  # Affichera [0, 1, 2, 3, 4, 5, 6]
+```
+
+#### Fusion de liste
+
+L'opérateur `+` permet de combiner deux listes
+
+```python
+# =================
+# combinaison 
+# =================
+my_list = [0, 1, 2, 3, 4, 5, 6]
+my_list = my_list + [7, 8]
+print(my_list)  # Affichera [0, 1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+##### `extend()`
+
+Modifie la premiere liste en ajoutant a sa fin tous les elements de la seconde liste. cela modifie la liste d'origine
+
+```python
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+list1.extend(list2)
+print(list1)  # Affichera [1, 2, 3, 4, 5, 6]
+```
+
+##### `List Comprehension` 
+
+```python
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+combined_list = [item for sublist in [list1, list2] for item in sublist]
+print(combined_list)  # Affichera [1, 2, 3, 4, 5, 6]
+```
+
+##### `append()`
+
+```python
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+for x in list2:
+    list1.append(x)
+print(list1)  # Affichera [1, 2, 3, 4, 5, 6]
+```
+
+#### Mutation d'un élément 
+
+Pour modifier un élément dans une liste, on peut utiliser son index
+
+```python
+# =====================
+# modifier un élément 
+# =====================
+my_list = [1, 2, 3, 4]
+my_list[2] = 30
+print(my_list)  # Affichera [1, 2, 30, 4]
+```
+
+#### Attribution avec slice 
+
+Les slices peuvent être utilisé pour modifier plusieurs éléments d'une liste en même temps. Par exemple, remplacer une partie de la liste par d'autres valeurs
+
+```python
+# =========================
+# modification avec slice 
+# =========================
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+numbers[2:5] = [20, 30, 40]
+print(numbers)  # Affichera [0, 1, 20, 30, 40, 5, 6, 7, 8, 9]
+```
+
+### Suppression d'éléments
+
+#### `remove()` - supprimer la premiere occurence
+
+Supprimer la premiere occurence de l'élément spécifié dans la liste. Si l'élément n'est pas trouvé, une erreur est retourner.
+
+```python
+# ===================
+# remove()
+# ===================
+my_list = ['apple', 'banana', 'cherry']
+my_list.remove('banana')
+print(my_list)  # Affichera ['apple', 'cherry']
+
+# ======================
+# cas erreur 
+# ======================
+my_list = ['apple', 'cherry']
+my_list.remove('banana')  # ValueError: list.remove(x): x not in list
+```
+
+#### `pop()` - supprime à l'index
+
+Supprimer l'élément à l'index spécifié et la retourne.
+
+Si l'index n'est pas spécifié, le dernier élément de la liste est supprimé
+
+```python
+# ===================
+# pop() 
+# ===================
+my_list = [1, 2, 3, 4, 5]
+popped_element = my_list.pop(2)
+print(popped_element)  # Affichera 3
+print(my_list)  # Affichera [1, 2, 4, 5]
+
+# ======================
+# pop() sans argument 
+# ======================
+my_list = [1, 2, 3, 4, 5]
+popped_element = my_list.pop()
+print(popped_element)  # Affichera 5
+print(my_list)  # Affichera [1, 2, 3, 4]
+```
+
+#### `del` - suppression multiple 
+
+L'opérateur `del` permet de supprimer un ou plusieurs éléments. Il supprime et libère la mémoire.
+
+```python 
+# =========================
+# suppression d'un élément 
+# =========================
+numbers = [10, 20, 30, 40, 50]
+del numbers[2]  # Supprime l'élément 30
+print(numbers)  # Affichera [10, 20, 40, 50]
+
+# =============================
+# suppression de tranches 
+# =============================
+numbers = [10, 20, 30, 40, 50]
+del numbers[1:3]  # Supprime les éléments avec indices 1 et 2
+print(numbers)  # Affichera [10, 40, 50]
+
+# =============================
+# suppression de la liste
+# ==============================
+numbers = [10, 20, 30, 40, 50]
+del numbers
+```
+
+#### `clear()` - vider une liste 
+
+La méthode est utilisée pour supprimer tous les éléments d'une liste, la laissant vide. 
+
+```python
+# ========================
+# clear()
+# ========================
+my_list = [1, 2, 3, 4, 5]
+my_list.clear()
+print(my_list)  # Affichera []
+```
+
+#### Supprimer dans une boucle 
+
+Lorsque l'on vient supprimer des éléments lors de l'itération dans la boucle, cela engendre un déplacement des éléments, et provoque des sauts.
+
+Pour résoudre ce problème, on créer une nouvelle liste avec uniquement les éléments à conserver 
+
+```python
+original_list = [1, 2, 3, 4, 5, 6]
+new_list = [x for x in original_list if x % 2 != 0]  # garder uniquement les nombres impairs
+```
+
+On peut également utiliser une boucle `for` avec un indice inverse pour supprimer les éléments sans risque de saut
+
+```python
+for i in range(len(original_list) - 1, -1, -1):
+    if original_list[i] % 2 == 0:  # condition pour suppression
+        del original_list[i]
+```
+
+**Utilisation d'une copie de la liste**
+
+On souhaite supprimer les nombres négatifs de la liste 
+
+```python 
+numbers = [1, -1, 2, -2, 3, -3]
+# Créer une copie de la liste pour une itération sûre
+for number in numbers.copy():
+    if number < 0:
+        numbers.remove(number)
+print(numbers) # Affichera [1, 2, 3]
+```
+
+
+
+### Boucles par liste
+
+#### `for`
+
+La boucle `for` parcourt chaque éléments et attribue de manière temporaire la valeur courante à une variable spécifique :
+
+```python
+# ================
+# boucle for
+# ================
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# ===================
+# parcours inverse
+# ===================
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits[::-1]:
+    print(fruit)
+
+# ======================
+# boucle for avec index 
+# =======================
+my_list = ['a', 'b', 'c', 'd']
+for i in range(len(my_list)):
+    print(f'Index: {i}, Element: {my_list[i]}')
+
+# =======================
+# modifier les éléments
+# =======================
+my_list = ['a', 'b', 'c', 'd']
+for i in range(len(my_list)):
+    my_list[i] = my_list[i] * 2
+
+# ============================
+# comparaison 
+# ============================
+my_list = [3, 5, 2, 9, 4]
+for i in range(1, len(my_list)):
+    if my_list[i] > my_list[i - 1]:
+        print(f'{my_list[i]} is greater than {my_list[i - 1]}')
+```
+
+#### `enumerate()` 
+
+Permet d'itérer sur les éléments d'une liste avec un acces au valeur et index. Elle enveloppe dans un objet spécial et retourne un itérateur qui produit des tuples, constitué de l'index et de la valeur de l'élément.
+
+L'utilisation de la méthode rends le code plus lisible et évite la nécessité de gérer manuellement les index avec `range`.
+
+```python
+# ==================
+# enumerate()
+# ==================
+my_list = ["apple", "banana", "cherry"]
+for index, element in enumerate(my_list):
+    print(f'Index: {index}, Element: {element}')
+
+# =====================
+# modifier ou comparer 
+my_list = ["apple", "banana", "cherry"]
+for index, element in enumerate(my_list):
+    if index % 2 == 0:
+        print(f'Element {element} at even index {index}')
+```
+
+#### `while` 
+
+Peut également être utilisée pour manipuler les éléments d'une liste.
+
+```python 
+# ==================
+# itération avec while 
+# ===================
+numbers = [1, 2, 3, 4, 5, -1, 6]
+i = 0
+while i < len(numbers) and numbers[i] != -1:
+    print(numbers[i])
+    i += 1
+
+# ===================
+# itération sans index
+# ====================
+tasks = [1, 2, 3, 4, 5, -1, 6]
+while len(tasks) > 0:
+    task = tasks.pop()
+    print(task)
+```
+
+### Génération de liste 
+
+#### `*` - multiplication 
+
+L'opérateur `*` permet de générer des éléments d'une liste
+
+```python
+# ================
+# génération de string
+# ====================
+print("Maman" * 5)  # affiche MamanMamanMamanMamanMaman
+print("-" * 40)  # affiche ----------------------------------------
+
+# =====================
+# augmenter le nombre d'élément d'une liste 
+# ======================
+print(["apple"] * 5)  # affiche ['apple', 'apple', 'apple', 'apple', 'apple']
+
+# =========================
+# création d'une liste de 10 éléments
+# =========================
+alist = [0] * 10
+print(alist)  # affiche [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+# ============================
+# génération d'un tableau a deux dimensions
+# ============================
+alist = [[0] * 10] * 20
+print(alist)  # affiche [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ...]
+```
+
+#### List comprehension 
+
+Python fournit un outil pour créer des listes. Il permet de générer de nouvelles listes en appliquant une expression à chaque élément d'un objet itérable.
+
+- `variable`: identifiant d'une variable 
+- `séquence`: séquence de valeurs prises par cette variable 
+- `expression`: expression dépendnat de la variable utilisée dans le générateur qui remplira les éléments de la liste 
+
+```python
+# =====================
+# syntaxe 
+# ====================
+[expression for variable in séquence]
+
+# =====================
+# créer une liste de n zéro 
+# ======================
+alist = [0 for i in range(100)]
+
+# ===========================
+# créer une liste de carrée de nombre entiers
+# ============================
+n = 5
+alist = [i ** 2 for i in range(n)]
+
+# ==============================
+# créer une liste remplis de nombre entier de 1 a n
+# ===============================
+n = 10
+alist = [i + 1 for i in range(n)]
+
+# =============================
+# créer une liste de nombres aléatoire 
+# ==============================
+from random import randrange
+
+n = 10
+alist = [randrange(1, 10) for i in range(n)]
+```
+
+**Boucle dans List Comprehension**
+
+Les List Comprehension peuvent également être utilisé pour afficher les valeurs 
+
+```python 
+# =================
+# afficher certaine valeur 
+# ==========================
+alist = ["apple", "banana", "cherry"]
+[print(x) for x in alist]
+
+# ========================
+# récupérer des saisies
+# ========================
+a = [input() for i in range(int(input()))]
+
+# ===========================
+# utilisation de condition 
+# ===========================
+[x for x in range(10) if x % 2 == 0]
+
+# ============================
+# génération de boucles imbriquées
+# =============================
+[(x, y) for x in range(3) for y in range(3)]
+```
+
+### Tri des listes 
+
+#### `sort()` - trie sur place 
+
+Modifier la liste d'origine
+
+```python
+# =================
+# utilisation
+# =================
+numbers = [5, 2, 9, 1]
+numbers.sort()
+print(numbers)  # Affichera [1, 2, 5, 9]
+
+# =======================
+# trie inverse
+# =======================
+numbers = [5, 2, 9, 1]
+numbers.sort(reverse=True)
+print(numbers)  # Affichera [9, 5, 2, 1]
+```
+
+#### `sorted()` - trie et nouvelle liste
+
+Créer une nouvelle liste qui est une version triée de l'original. La liste d'origin n'est pas modifier.
+
+```python
+# ==================
+# utilisation 
+# ==================
+numbers = [5, 2, 9, 1]
+sorted_numbers = sorted(numbers)
+print(sorted_numbers)  # Affichera [1, 2, 5, 9]
+print(numbers)  # La liste originale n'est pas modifiée [5, 2, 9, 1]
+```
+
+#### Trie par clé 
+
+On viens passer un paramètre spécial au deux méthodes. Ce paramètre sera une fonction qui sera utilisée pour comparer les éléments
+
+```python
+# =======================
+# comparaison sans casse
+# =======================
+alist = ["banana", "Orange", "Kiwi", "cherry"]
+alist.sort(key=str.lower)
+print(alist)  # Affichera ['banana', 'cherry', 'Kiwi', 'Orange']
+
+# ===========================
+# trie d'une liste de tuples
+# ===========================
+# triage par note
+students = [('Alice', 88), ('Bob', 75), ('Carol', 96)]
+
+def get_grade(student):
+    return student[1]
+
+students.sort(key=get_grade)
+print(students)  # Affichera [('Bob', 75), ('Alice', 88), ('Carol', 96)]
+
+# ===========================
+# trie de dictionnaire 
+# ===========================
+students = [
+    {'name': 'Alice', 'grade': 88},
+    {'name': 'Bob', 'grade': 75},
+    {'name': 'Carol', 'grade': 96}
+]
+
+def get_grade(student):
+    return student['grade']
+
+sorted_students = sorted(students, key=get_grade)
+print(sorted_students)  # Affichera [{'name': 'Bob', 'grade': 75}, {'name': 'Alice', 'grade': 88}, {'name': 'Carol', 'grade': 96}]
+```
+
+### Copie de liste 
+
+La copie superficielle est plus rapide et convient lorsque les éléments de la liste sont simples ou ne nécessitent pas de duplication (chaîne, nombre). La copie profonde lorsque les éléments de la liste sont eux-même des collections modifiables ou lorsque les modifications de la copie ne doivent pas se réfléter sur l'original
+
+
+#### Copie superficielle 
+
+Créer une nouvelle liste, mais les éléments restent les mêmes (si les éléments sont des références, elles sont copiées en tant que référence)
+
+```python
+# ===================
+# avec la fonction list()
+# ===================
+original = [1, 2, 3]
+copy = list(original)
+
+# ========================
+# utilisation des slice 
+# =======================
+original = [1, 2, 3]
+copy = original[:]
+```
+
+#### `copy()` - copie profonde
+
+Créer une nouvelle liste dans laquelles sont créers égalements des copies de tous les objet imbriqués. 
+
+```python
+# =========================
+# copy()
+# ==========================
+import copy
+original = [[1, 2], [3, 4]]
+deep_copy = copy.deepcopy(original)
+```
+
