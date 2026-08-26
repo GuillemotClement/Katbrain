@@ -72,38 +72,7 @@ output = "{name} travaille chez {company}"
 print(output.format(name="Sergueï", company="Google"))
 ```
 
-### f-string
-
-A partir de la version 3.6, Python à introduit un nouveau type de chaîne - les `f-strings`. 
-
-Sous le capot, elle vient utiliser la fonction `format()`
-
-```python
-# =================================
-# utilisation 
-# =================================
-force = "Côté Obscur"
-message = f"Que la force soit avec toi {force}!"
-print(message)  # Affiche : Que la force soit avec toi Côté Obscur !
-
-# ================================
-# nombre 
-# ================================
-age = 28
-message = f"J'ai {age} ans"
-print(message)  # Affiche : J'ai 28 ans
-
-# =================================
-# expression
-# =================================
-birth_year = 1985
-current_year = 2024
-message = f"J'ai {current_year - birth_year} ans"
-print(message)  # Affiche : J'ai 39 ans
-```
-
 ---
-
 
 ## Variable 
 
@@ -459,8 +428,6 @@ print("Dans 10 ans, vous aurez " + str(age + 10) + " ans.")
 age = float(input("Entrez votre âge: "))  # contient le nombre
 print("Dans 10 ans, vous aurez " + str(age + 10) + " ans.")
 ```
-
-
 
 ---
 
@@ -2555,7 +2522,9 @@ print(even_set)  # Résultat: {2, 4, 6, 8, 10}
 
 #### `List Comprehension` 
 
-Comme pour List, on peut l'utiliser pour générer des ensembles 
+Comme pour List, on peut l'utiliser pour générer des ensembles.
+
+Le premier `x` dans les List comprehension sera la valeur envoyer dans le set.
 
 ```python
 # ===============================
@@ -3026,3 +2995,381 @@ s_diff = set1.symmetric_difference(set2)
 print(s_diff)  # Affichage: {1, 2, 4, 5}
 ```
 
+---
+
+## String
+
+### Déclaration 
+
+ En Python, les chaîne sont des séquence de charactere.
+
+ ```python
+ # ======================
+ # déclaration de chaîne 
+ # ======================
+ name = 'Gizmo'
+ city = "Melrand"
+
+ # ==========================
+ # chaîne multiligne
+ # ==========================
+ multiline_string = """Première ligne
+deuxième ligne
+troisième ligne"""
+
+# ===========================
+# échappement de caractères
+# ===========================
+escaped_string = "Il a dit : \"Salut, mon pote !\""
+```
+
+#### Chaîne brutes
+
+Les chaînes brute (raw string) sont des chaîne oà l'échappement est désactivé. 
+
+```python
+# ==========================
+# déclaration de raw string
+# ==========================
+raw_string = r"Dans cette chaîne, \n n'est pas considéré comme un saut de ligne."
+```
+
+#### f-string
+
+A partir de la version 3.6, Python à introduit un nouveau type de chaîne - les `f-strings`. 
+
+Sous le capot, elle vient utiliser la fonction `format()`
+
+```python
+# =================================
+# utilisation 
+# =================================
+force = "Côté Obscur"
+message = f"Que la force soit avec toi {force}!"
+print(message)  # Affiche : Que la force soit avec toi Côté Obscur !
+
+# ================================
+# nombre 
+# ================================
+age = 28
+message = f"J'ai {age} ans"
+print(message)  # Affiche : J'ai 28 ans
+
+# =================================
+# expression
+# =================================
+birth_year = 1985
+current_year = 2024
+message = f"J'ai {current_year - birth_year} ans"
+print(message)  # Affiche : J'ai 39 ans
+```
+
+### Itérer une chaîne 
+
+```python 
+# ======================
+# parcourir une chaîne 
+# ======================
+text = "Hello"
+for char in text:
+    print(char)
+```
+
+### `len()` - longueur d'une chaîne 
+
+```python
+# ==================
+# len() 
+# ==================
+text = "Hello, world!"
+length = len(text)
+print(length)  # Affichera : 13
+```
+
+### Sélection d'un caractère spécifique 
+
+Il est possible de sélectionner un caractère d'une chaîne avec son index.
+
+```python
+# ===================
+# selectionner un character
+# =========================
+text = "Hello"
+for i in range(len(text)):
+    print(text[i])
+```
+
+### Inclusion de sous chaîne 
+
+#### `in` 
+
+Permet de vérifier la présence d'une sous-chaîne dans une chaîne.
+
+```python 
+# =====================
+# in 
+# =====================
+text = "Hello, world!"
+print("world" in text)  # Affichera : True
+```
+
+#### `find()` - index de la première occurence 
+
+Retourne l'index de la première occurence de la sous-chaîne si trouver, sinon retourne `-1`.
+
+```python 
+# =====================
+# find()
+# =====================
+text = "Hello, world!"
+position = text.find("world")
+print(position)  # Affichera : 7
+```
+
+#### `index()` - index de la première occurence
+
+Retourne l'index, et si non trouvé une erreur 
+
+```python 
+text = "Hello, world!"
+try:
+    position = text.index("world")
+    print(position)  # Affichera : 7
+except ValueError:
+    print("Sous-chaîne non trouvée.")
+```
+
+#### `count()` - nombre de fois qu'une substring est trouvé
+
+Compte le nombre de fois qu'une sous chaîne apparaît dans une chaîne. 
+
+```python 
+text = "Hello, world!"
+cnt = text.count("l")
+print(cnt)  # Affichera : 3
+```
+
+### Extraction de sous-chaîne 
+
+#### `slice` 
+
+```python
+# ========================
+# extraction  
+# ========================
+text = "Hello, world!"
+substring = text[7:12]  # Affichera 'world'
+
+# ==========================
+# 7 jusqua la fin 
+# ==========================
+text = "Hello, world!"
+substring = text[7:]  # Affichera 'world!'
+
+# ===========================
+# début au 10 eme 
+# ===========================
+text = "Hello, world!"
+substring = text[:10]  # Affichera 'Hello, wor'
+
+# ===========================
+# dernier caractère 
+# ===========================
+text = "Python"
+last_char = text[-1]
+print(last_char)  # Affichera : 'n'
+
+# ============================
+# avant dernier carctere 
+# ============================
+text = "Python"
+second_last_char = text[-2]
+print(second_last_char)  # Affichera : 'o'
+
+# ==============================
+# trois derniers 
+# ==============================
+text = "Python"
+last_three = text[-3:]
+print(last_three)  # Affichera : 'hon'
+
+# ===============================
+# exclure le dernier caractere
+# ===============================
+text = "Python"
+all_but_last = text[:-1]
+print(all_but_last)  # Affichera : 'Pytho'
+
+# =================================
+# inversion
+# =================================
+print(text[::-1])  # '!dlrow ,olleH'
+```
+
+### Modification de chaîne 
+
+Toutes les fonctions de modification vienne créer une nouvelle chaîne.
+
+#### `strip()` - nettoyage
+
+Permet de supprimer les espaces en début et fin de chaîne 
+
+```python 
+# ==========================
+# strip()
+# ==========================
+text = "  hello world!  "
+cleaned_text = text.strip()
+print(cleaned_text)  # Affichage: "hello world!"
+```
+
+#### `lower()` - minuscule 
+
+Permet de passer la chaîne en minuscule 
+
+```python 
+text = "Hello World!"
+lower_text = text.lower()
+print(lower_text)  # Affichage: "hello world!"
+```
+
+#### `upper()` - majuscule 
+
+Permet de passer la chaîne en majuscule 
+
+```python 
+text = "Hello World!"
+upper_text = text.upper()
+print(upper_text)  # Affichage: "HELLO WORLD!"
+```
+
+#### `split()` - divise une chaîne
+
+Permet de diviser une chaîne selon le séparateur donné 
+
+```python 
+text = "one,two,three"
+parts = text.split(',')
+print(parts)  # Affichage: ['one', 'two', 'three']
+```
+
+#### `join` - combinaison 
+
+Permet de combiner une collection de chaîne en une seule chaîne
+
+```python 
+parts = ['one', 'two', 'three']
+joined_text = ','.join(parts)
+print(joined_text)  # Affichage: "one,two,three"
+```
+
+#### `replace(old, new)` - remplace les occurences
+
+Remplace toutes les occurences de la sous chaîne `old` par la sous chaîne `new`
+
+```python 
+text = "hello world"
+replaced_text = text.replace("world", "everyone")
+print(replaced_text)  # Affichage: "hello everyone"
+```
+
+#### `startswith(prefix)`
+
+Vérifie si la chaîne débute par l'argument 
+
+```python 
+text = "hello world"
+print(text.startswith("hello"))  # Affichage: True
+```
+
+#### `endswith()` 
+
+Vérifie si la chaîne se termine par le suffixe
+
+```python 
+text = "hello world"
+print(text.endswith("world"))  # Affichage: True
+```
+
+### Frozenset 
+
+#### Création 
+
+La collection `frozenset` est une version immuable de `set`. Offre toutes les fonctionnalités d'un ensemble, mais ne permet pas de modifier ses éléments après sa création. Utilie pour les situations oà il est nécessaire de stocker des éléments uniques et de garantir que l'ensemble ne sera pas modifié.
+
+```python 
+# =====================
+# création depuis une liste
+# =====================
+fset1 = frozenset([1, 2, 3, 4])
+print(fset1)  # Résultat: frozenset({1, 2, 3, 4})
+
+# ========================
+# création depuis une chaîne 
+# ==========================
+fset2 = frozenset("hello")
+print(fset2)  # Résultat: frozenset({'h', 'e', 'l', 'o'})
+
+# =============================
+# création vide 
+# =============================
+fset3 = frozenset()
+print(fset3)  # Résultat: frozenset()
+```
+
+#### Méthodes 
+
+```python 
+# ====================
+# union 
+# ====================
+fset1 = frozenset([1, 2, 3, 4])
+fset2 = frozenset([3, 4, 5, 6])
+
+# Union d'ensembles (union)
+print(fset1 | fset2)  # Résultat: frozenset({1, 2, 3, 4, 5, 6})
+print(fset1.union(fset2))  # Résultat: frozenset({1, 2, 3, 4, 5, 6})
+
+# ============================
+# intersection 
+# ============================
+fset1 = frozenset([1, 2, 3, 4])
+fset2 = frozenset([3, 4, 5, 6])
+
+# Intersection d'ensembles (intersection)
+print(fset1 & fset2)  # Résultat: frozenset({3, 4})
+print(fset1.intersection(fset2))  # Résultat: frozenset({3, 4})
+
+# =========================
+# difference
+# =========================
+fset1 = frozenset([1, 2, 3, 4])
+fset2 = frozenset([3, 4, 5, 6])
+
+# Différence d'ensembles (difference)
+print(fset1 - fset2)  # Résultat: frozenset({1, 2})
+print(fset1.difference(fset2))  # Résultat: frozenset({1, 2})
+
+# =============================
+# symemetric difference
+# =============================
+fset1 = frozenset([1, 2, 3, 4])
+fset2 = frozenset([3, 4, 5, 6])
+
+# Différence symétrique (symmetric difference)
+print(fset1 ^ fset2)  # Résultat: frozenset({1, 2, 5, 6})
+print(fset1.symmetric_difference(fset2))  # Résultat: frozenset({1, 2, 5, 6})
+```
+
+#### Utilisation 
+
+```python 
+# ====================================
+# clé dans dictionnaire 
+# ====================================
+fset1 = frozenset([1, 2, 3])
+fset2 = frozenset([3, 4, 5])
+
+d = {fset1: "first", fset2: "second"}
+print(d)  # Résultat: {frozenset({1, 2, 3}): 'first', frozenset({3, 4, 5}): 'second'}
+```
