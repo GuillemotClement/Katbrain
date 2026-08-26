@@ -2411,3 +2411,618 @@ locations = (("New York", (40.7128, -74.0060)),
              ("Los Angeles", (34.0522, -118.2437)),
              ("Chicago", (41.8781, -87.6298)))
 ```
+
+---
+
+## Set (ensemble)
+
+Un set, ou ensemble est un groupe d'éléments unique non ordonner mutable
+
+On peut réaliser des opèrations:
+- **Union**: contient les élément unique des deux ensemble
+- **Intersection**: contient les éléments présent dans les deux ensemble
+- **Différence**: inclut les éléments présent dans le premier mais absent dans le second
+- **Différence symétrique**: inclut les éléments présent dans l'un ou l'autre ensemble, mais pas dans les deux em méme temps.
+
+### Création 
+
+```python
+# ==========================
+# accolade 
+# ==========================
+fruit_set = {"apple", "banana", "cherry"}
+print(fruit_set)  # Affichage : {"banana", "cherry", "apple"}
+
+# ==========================
+# set()
+# ==========================
+list_to_set = set([1, 2, 3, 4, 4, 5])
+print(list_to_set)  # Affichage : {1, 2, 3, 4, 5}
+
+tuple_to_set = set((1, 2, 3, 4, 5))
+print(tuple_to_set)  # Affichage : {1, 2, 3, 4, 5}
+
+string_to_set = set("hello")
+print(string_to_set)  # Affichage : {"h", "e", "l", "o"}
+
+original_set = {"apple", "banana", "cherry"}
+new_set = set(original_set)
+print(new_set)  # Affichage : {"banana", "cherry", "apple"}
+
+empty_set = set()
+print(empty_set)  # Affichage : set()
+
+# ===========================
+# générer des éléments dans le set
+# ===========================
+set_3 = set(range(5))
+set_4 = set(range(100))
+set_5 = set(range(1000))
+
+# =======================
+# set vide 
+# =======================
+set_empty = set()
+
+# =======================
+# afficher les éléments du set 
+# ========================
+colors = {"rouge", "bleu", "vert", "jaune", "violet", "noir", "blanc"}
+
+for color in colors:
+    print(color)
+```
+
+### Travailler avec les ensembles
+ 
+#### `len()` - nombres d'éléments 
+
+La fonction retourne le nombre d'élément du set 
+
+```python 
+# ====================
+# len()
+# ====================
+my_set = {1, 2, 3, 4, 5}
+print(len(my_set))  # Affichage: 5
+
+# ====================
+# vérification si vide
+# ====================
+my_set = set()
+
+if len(my_set) == 0:
+    print("L'ensemble est vide")
+else:
+    print("L'ensemble n'est pas vide")
+```
+
+#### `type()` 
+
+```python
+# ======================
+# type() 
+# ======================
+my_set = {1, 2, 3}
+print(type(my_set))  # Affichage: <class 'set'>
+
+# =======================
+# vérifier le type de donnée
+# ==========================
+def add_element(collection, element):
+    if type(collection) is set:
+        collection.add(element)
+    else:
+        print("Erreur : la collection fournie n'est pas un ensemble")
+
+my_set = {1, 2, 3}
+add_element(my_set, 4)  # L'élément sera ajouté
+add_element([1, 2, 3], 4)  # Affichera une erreur
+```
+
+### Obtention de sous-ensemble 
+
+#### `for` 
+
+Création d'un ensemble vide et ajoute des éléments qui satisfait une condition 
+
+```python 
+# ====================
+# for 
+# ====================
+my_set = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+even_set = set()
+
+for x in my_set:
+    if x % 2 == 0:
+        even_set.add(x)
+
+print(even_set)  # Résultat: {2, 4, 6, 8, 10}
+```
+
+#### `filter()` - applique à chaque élément
+
+La fonction applique une fonction à chaque éléments et retourne seulement ceux pour lesquels la fonction retourne `True`. Le résultat doit ensuite être converti de nouveau en ensemble
+
+```python
+# ====================
+# filter()
+# ====================
+my_set = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+even_set = set(filter(lambda x: x % 2 == 0, my_set))
+print(even_set)  # Résultat: {2, 4, 6, 8, 10}
+```
+
+#### `List Comprehension` 
+
+Comme pour List, on peut l'utiliser pour générer des ensembles 
+
+```python
+# ===============================
+# selection des éléments pairs d'un ensemble 
+# ================================
+my_set = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+even_set = {x for x in my_set if x % 2 == 0}
+print(even_set)  # Résultat: {2, 4, 6, 8, 10}
+
+# =======================================
+# selection des chaîne
+# =======================================
+my_set = {1, 2, 3, 4, 5, 6, 7, 8, 9, "apple", "banana"}
+even_set = {x for x in my_set if type(x) == str}
+print(even_set)  # Résultat: {"apple", "banana"}
+```
+
+### Vérifier la présence d'éléments 
+
+#### `in` - présence
+
+```python
+# =====================
+# in 
+# =====================
+my_set = {1, 2, 3, 4, 5}
+print(3 in my_set)  # Résultat: True
+print(6 in my_set)  # Résultat: False
+
+# =========================
+# utilisation dans des boucles
+# =========================
+my_set = {1, 2, 3, 4, 5}
+element = 3
+found = False
+
+for item in my_set:
+    if item == element:
+        found = True
+        break
+
+print(found)  # Résultat: True
+```
+
+#### `not in` - absence
+
+```python 
+# ==================
+# not in 
+# ==================
+my_set = {1, 2, 3, 4, 5}
+print(6 not in my_set)  # Résultat: True
+print(3 not in my_set)  # Résultat: False
+```
+
+### Vérification de l'inclusion d'ensemble 
+
+#### `<=` 
+
+L'opérateur `<=` permet de vérifier si un ensemble est un sous ensemble d'un autre 
+
+```python 
+# ===================
+# <= 
+# ===================
+set_a = {1, 2, 3}
+set_b = {1, 2, 3, 4, 5}
+
+print(set_a <= set_b)  # Résultat: True
+print(set_b <= set_a)  # Résultat: False
+```
+
+
+#### `issubset()`
+
+Permet de vérifier si un ensemble est un sous-ensemble d'un autre 
+
+```python 
+# ====================
+# issubset()
+# ====================
+set_a = {1, 2, 3}
+set_b = {1, 2, 3, 4, 5}
+
+print(set_a.issubset(set_b))  # Résultat: True
+print(set_b.issubset(set_a))  # Résultat: False
+```
+
+#### `>=` 
+
+Permet de vérifier qu'un ensemble est un sur-ensemble d'un autre 
+
+```python
+# =======================
+# >= 
+# =======================
+set_a = {1, 2, 3, 4, 5}
+set_b = {1, 2, 3}
+
+print(set_a >= set_b)  # Résultat: True
+print(set_b >= set_a)  # Résultat: False
+```
+
+#### `issuperset()`
+
+Permet de vérifier qu'un ensemble est un sur-ensemble d'un autre 
+
+```python 
+# ======================
+# issuperset()
+# ======================
+set_a = {1, 2, 3, 4, 5}
+set_b = {1, 2, 3}
+
+print(set_a.issuperset(set_b))  # Résultat: True
+print(set_b.issuperset(set_a))  # Résultat: False
+```
+
+### Modification d'ensemble 
+
+#### `add()` - ajouter un élément 
+
+Ajoute l'élément à l'ensemble. Si déjà présent, l'ensemble ne sera pas modifier.
+
+```python
+# ==================
+# add()
+# ==================
+my_set = {1, 2, 3}
+my_set.add(4)
+print(my_set)  # Affichage : {1, 2, 3, 4}
+```
+
+#### `update()` - ajout d'éléments multiple
+
+Cette méthode accepte n'importe quel objet itérable et ajoute ces éléments à l'ensemble. Si un élément est déjà présent, il se ne sera pas ajouté.
+
+```python
+# ========================
+# ajout depuis une liste
+# ========================
+my_set = {1, 2, 3}
+my_set.update([4, 5, 6])
+print(my_set)  # Affichage : {1, 2, 3, 4, 5, 6}
+
+# =========================
+# ajout depuis un tuple 
+# =========================
+my_set = {1, 2, 3}
+my_set.update((4, 5, 6))
+print(my_set)  # Affichage : {1, 2, 3, 4, 5, 6}
+
+# =========================
+# ajout depuis une chaîne 
+# =========================
+# chaque caractères sera ajouter en tant qu'élément distinct
+my_set = {'a', 'b', 'c'}
+my_set.update('def')
+print(my_set)  # Affichage : {'a', 'b', 'c', 'd', 'e', 'f'}
+
+# =========================
+# ajout depuis un ensemble
+# =========================
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+set1.update(set2)
+print(set1)  # Affichage : {1, 2, 3, 4, 5}
+```
+
+#### Supression de doublons 
+
+Les ensemble suppriment automatiquement les doublons.
+
+```python
+# =========================
+# suppression des doublons 
+# =========================
+my_list = [1, 2, 2, 3, 4, 4, 5]
+my_set = set(my_list)
+print(my_set)  # Affichage : {1, 2, 3, 4, 5}
+```
+
+#### Fusion de données 
+
+Les ensembles peuvent être utilisé pour fusionner des données provenant de plusieurs sources en conservant l'unicité des éléments
+
+```python 
+# ===========================
+# fusion 
+# ===========================
+set1 = {'apple', 'banana'}
+set2 = {'banana', 'cherry'}
+set3 = {'cherry', 'date'}
+
+combined_set = set1 | set2 | set3
+print(combined_set)  # Affichage : {'apple', 'banana', 'cherry', 'date'}
+```
+
+### Suppression des éléments 
+
+#### `remove()` - supprime l'élément spécifié
+
+La méthode supprimer l'élément spécifié de l'ensemble. Si l'élément n'existe pas, une erreur `KeyError` est déclenchée 
+
+```python
+# ========================
+# remove()
+# ========================
+my_set = {1, 2, 3, 4, 5}
+my_set.remove(3)
+print(my_set)  # Sortie: {1, 2, 4, 5}
+
+# Si l'élément n'est pas dans l'ensemble, une erreur est déclenchée
+my_set.remove(6)  # KeyError: 6
+```
+
+#### `discard()` - supprime l'élément spécifié
+
+Fonctionne comme `remove()` mais ne provoque pas d'erreur si l'élément n'existe pas.
+
+```python 
+# =========================
+# discard()
+# =========================
+my_set = {1, 2, 3, 4, 5}
+my_set.discard(3)
+print(my_set)  # Sortie: {1, 2, 4, 5}
+
+# Si l'élément n'est pas dans l'ensemble, il n'y aura pas d'erreur
+my_set.discard(6)
+print(my_set)  # Sortie: {1, 2, 4, 5}
+```
+
+#### `pop()` 
+
+La méthode supprime et retourne un élément aléatoire de l'ensemble. Provque une erreur si vide.
+
+```python 
+# ====================
+# pop() 
+# ====================
+my_set = {1, 2, 3, 4, 5}
+removed_element = my_set.pop()
+print(removed_element)   # Sortie: Un des éléments de l'ensemble, par exemple, 1
+print(my_set)  # Sortie: Les éléments restants de l'ensemble, par exemple, {2, 3, 4, 5}
+
+# Si l'ensemble est vide, une erreur est déclenchée
+empty_set = set()
+empty_set.pop()  # KeyError: 'pop from an empty set'
+
+# =============================
+# suppression dans une boucle 
+# =============================
+my_set = {1, 2, 3, 4, 5}
+print("Ensemble initial:", my_set)
+
+while my_set:
+    removed_element = my_set.pop()
+    print(f"Élément supprimé: {removed_element}, Éléments restants: {my_set}")
+
+print("Ensemble vide:", my_set)
+```
+
+#### `clear()` - supprime tous les éléments
+
+```python
+# =======================
+# clear()
+# =======================
+my_set = {1, 2, 3, 4, 5}
+my_set.clear()
+print(my_set)  # Sortie: set()
+```
+
+#### `del` 
+
+L'opérateur permet de supprimer l'ensemble complètement.
+
+```python
+# ==========================
+# suppression de l'ensemble 
+# ==========================
+my_set = {1, 2, 3, 4, 5}
+print("Ensemble initial:", my_set)
+
+# Suppression de l'ensemble
+del my_set
+
+# Toute tentative d'accès à l'ensemble supprimé déclenchera une erreur
+# print(my_set) # NameError: name 'my_set' is not defined
+```
+
+### Boucle sur les éléments 
+
+#### `for` 
+
+Permet d'itérer sur chacun des éléments de l'ensemble. 
+
+```python
+# =====================
+# for 
+# =====================
+my_set = {1, 2, 3, 4, 5}
+
+for element in my_set:
+    print(element)
+
+# ========================
+# somme des éléments 
+# ========================
+my_set = {1, 2, 3, 4, 5}
+total = 0
+
+for element in my_set:
+    total += element
+
+print("Somme des éléments du set :", total)
+# Somme des éléments du set : 15
+
+# ============================
+# recherche valeur max
+# ============================
+my_set = {1, 2, 3, 4, 5}
+max_element = None
+
+for element in my_set:
+    if max_element is None or element > max_element:
+        max_element = element
+
+print("Élément maximal du set :", max_element)
+# Élément maximal du set : 5
+
+# ================================
+# filtrage des éléments 
+# ================================
+my_set = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+even_set = set()
+
+for element in my_set:
+    if element % 2 == 0:
+        even_set.add(element)
+
+print("Set des nombres pairs :", even_set)
+# Set des nombres pairs: {2, 4, 6, 8, 10}
+```
+
+#### `enumerate` 
+
+Fournis également les index en plus de la valeur. Les éléments n'étant pas ordonner, l'ordre n'est pas garantis.
+
+```python
+# =========================
+# enumerate
+# =========================
+my_set = {10, 20, 30, 40, 50}
+
+for index, element in enumerate(my_set):
+    print(f"Index : {index}, Élément : {element}")
+
+# ==============================
+# sauvegarde des indices et éléments 
+# =================================
+my_set = {"apple", "banana", "cherry"}
+
+indexed_elements = [(index, element) for index, element in enumerate(my_set)]
+print(indexed_elements)
+
+# ===================================
+# traitement des éléments 
+# ===================================
+my_set = {1, 2, 3, 4, 5}
+squared_elements = {}
+
+for index, element in enumerate(my_set):
+    squared_elements[index] = element ** 2
+
+print(squared_elements)
+```
+
+#### `while` 
+
+```python
+# ========================
+# while 
+# ========================
+my_set = {"nettoyer la maison", "faire la vaisselle", "acheter du pain"}
+while len(my_set) > 0:
+    task = my_set.pop()
+    print(task)
+```
+
+### Opérations sur les ensembles 
+
+La classe `set` a surchargé tous les opérateurs pour travailler avec des ensembles et soit similaire au opération mathématique 
+
+| Opérateur | Méthode | Description |
+| --------- | ------- | ----------- |
+| `\|` | `union()` | Renvoie l'union de deux ensembles |
+| `&` | `intersection()` | Renvoie les éléments communs |
+| `-` | `difference()`  | Renvoie les éléments qui ne sont que dans le premier ensemble |
+| `^` | `symetric_difference()` | Renvoie les éléments qui sont dans l'un ou l'autre mais pas les deux |
+| `<=` | `issubset()` | Vérifie si un ensemble est un sous-ensemble d'un autre |
+| `<` | `issubset()` | Vérifie si un ensemble est un sous-ensemble d'un autre de manière strict |
+| `>=` | `issuperset()` | Vérifie si un ensemble est un sur-ensemble d'un autre |
+| `>` | `issuperset()` | Vérifie si un ensemble est un sur-ensemble d'un autre de manière strict |
+| `==` | `__eq__()` | Vérifie si les ensemble sont égaux (contient les même éléments) |
+| `!=` | `__ne__()` | Vérifie si les ensemble ne sont pas égaux (contient des éléments différents) |
+
+```python 
+# ===================
+# OR |
+# ===================
+# opérateur
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+union_set = set1 | set2
+print(union_set)  # Affichage: {1, 2, 3, 4, 5}
+
+# fonction 
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+union_set = set1.union(set2)
+print(union_set)  # Affichage: {1, 2, 3, 4, 5}
+
+# ======================
+# AND & 
+# ======================
+# opérateur 
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+intersection_set = set1 & set2
+print(intersection_set)  # Affichage: {3}
+
+# fonction 
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+intersection_set = set1.intersection(set2)
+print(intersection_set)  # Affichage: {3}
+
+# =========================
+# Difference - 
+# =========================
+# opérateur 
+set1 = {1, 2, 3, 4}
+set2 = {3, 4, 5}
+difference_set = set1 - set2
+print(difference_set)  # Affichage: {1, 2}'
+
+# fonction 
+set1 = {1, 2, 3, 4}
+set2 = {3, 4, 5}
+difference_set = set1.difference(set2)
+print(difference_set)  # Affichage: {1, 2}
+
+# =======================
+# Symetric Difference ^ 
+# =======================
+# opérateur 
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+s_diff = set1 ^ set2
+print(s_diff)  # Affichage: {1, 2, 4, 5}
+
+# fonction 
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+s_diff = set1.symmetric_difference(set2)
+print(s_diff)  # Affichage: {1, 2, 4, 5}
+```
+
