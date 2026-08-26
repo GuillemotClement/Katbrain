@@ -1889,3 +1889,525 @@ original = [[1, 2], [3, 4]]
 deep_copy = copy.deepcopy(original)
 ```
 
+---
+
+## Tuple
+
+### Créaton
+
+Permet de stocker plusieurs éléments, chaque élément possède son propre numéro d'ordre ce qui rend un tuple ordonné.
+
+Un tuple est immuable, une fois crée, il ne peut plus être modifier.
+
+```python
+# ===============
+# création directe 
+# ===============
+tuple1 = (1, 2, 3)
+tuple2 = ("apple", "banana", "cherry", "apple", "cherry")
+tuple3 = (1, "apple", True)
+
+# =============================
+# création sans parenthèses
+# =============================
+tuple1 = 1, 2, 3
+tuple2 = "apple", "banana", "cherry", "apple", "cherry"
+tuple3 = 1, "apple", True
+
+# =================================
+# créatiopn tuple avec un élément
+# =================================
+tuple1 = (1,)
+tuple2 = ("apple",)
+tuple3 = (True,)
+
+# ============================
+# génération d'éléments
+# ============================
+t100 = tuple(range(100))
+t1000 = tuple(range(1000))
+
+# ===================================
+# conversion objet itérable en tuple
+# ===================================
+list_to_tuple = tuple([1, 2, 3])
+
+# ==================================
+# remplissage avec saisis user
+# ==================================
+elements = tuple(input(f"Entrez l'élément {i+1} : ") for i in range(5))
+```
+
+### Décomposition des éléments d'un tuple 
+
+Lorsque l'on travail avec des tuples, on peut empacter plusieurs éléments dans un seul tuple, ou décomposer un tuple en plusieurs variables
+
+```python
+# ========================
+# décomposition basique 
+# ========================
+my_tuple = (1, 2, 3)
+x, y, z = my_tuple
+
+# =========================
+# décomposition avancée
+# =========================
+# a et b obtienne la premiere et derniere valeur 
+# b devient une liste avec les autres valeurs
+a, *b, c = (1, 2, 3, 4, 5)  # a = 1, b = [2, 3, 4], c = 5
+
+# ==================================
+# utilisation dans les fonctions 
+# ==================================
+def func(a, b, c):
+    print(a, b, c)
+
+values = (1, 2, 3)
+func(*values)
+```
+
+### `count()` - comptage
+
+La fonction retourne le nombre de fois que l'élément passer en argument apparait dans le tuple 
+
+```python
+# ====================
+# count()
+# ====================
+t = (1, 2, 3, 2, 4, 2)
+print(t.count(2)) # Affichera 3
+```
+
+### `index()` - recherche
+
+Retourne l'index de la premiere occurence de l'élément passer en argument. Si l'élément n'est pas trouvé, une exception est levée
+
+```python
+# =====================
+# index()
+# =====================
+t = (1, 2, 3, 2, 4, 2)
+print(t.index(3)) # Affichera 2
+```
+
+### `len()` - nombre d'éléments 
+
+```python
+# ====================
+# len()
+# ====================
+my_tuple = (1, 2, 3, 4, 5)
+print(len(my_tuple))  # Affichera 5
+```
+
+### `type()` - determiner le type 
+
+```python 
+# ====================
+# type() 
+# ====================
+my_tuple = (1, 2, 3)
+print(type(my_tuple))  # Affichera <class 'tuple'>
+
+# ================================
+# vérifier le type de la variable
+# ================================
+my_tuple = (1, 2.5, 'string', [3, 4])
+if type(my_tuple) == tuple:
+    print("Tuple!")  # Affichera : Tuple!
+```
+
+### Obtenir un élément 
+
+L'obtention d'un élément d'un tuple se fait par indexation. 
+
+```python
+# ============================
+# obtenir un élément 
+# ============================
+my_tuple = ('pomme', 'banane', 'cerise')
+print(my_tuple[1])  # Affichera 'banane'
+print(my_tuple[2])  # Affichera 'cerise'
+
+# ==============================
+# obtenir le dernier élément 
+# ==============================
+my_tuple = ('pomme', 'banane', 'cerise')
+print(my_tuple[-1])  # Affichera 'cerise'
+
+# ==============================
+# obtenir l'avant dernier élément 
+# ===============================
+my_tuple = ('pomme', 'banane', 'cerise')
+print(my_tuple[-2])  # Affichera 'banane'
+```
+
+### `slice` - obtenir des sous ensemble 
+
+```python 
+# ====================
+# extraire un sous ensemble
+# ==========================
+my_tuple = (0, 1, 2, 3, 4, 5)
+sub_tuple = my_tuple[1:4]  # Obtenir un sous-tuple avec les éléments de l'index 1 à 3
+print(sub_tuple) # Affiche (1, 2, 3)
+
+sub_tuple_with_step = my_tuple[0:6:2]  # Obtenir chaque deuxième élément de 0 à 5
+print(sub_tuple_with_step) # Affiche (0, 2, 4)
+
+# Créer un tuple avec les éléments de 0 à 5
+my_tuple = (0, 1, 2, 3, 4, 5)
+
+# Créer un nouveau tuple, à partir du deuxième élément du tuple d'origine
+sub_tuple = my_tuple[1:]
+print(sub_tuple)  # Affiche : (1, 2, 3, 4, 5)
+
+# Créer un nouveau tuple, incluant les éléments du début jusqu'au quatrième élément
+# (index 4) du tuple d'origine, avec un pas de 1 (par défaut)
+sub_tuple_with_step = my_tuple[:5]
+print(sub_tuple_with_step)  # Affiche : (0, 1, 2, 3, 4)
+
+# =========================
+# indice négatif 
+# =========================
+my_tuple = (10, 20, 30, 40, 50, 60, 70, 80)
+
+sub_tuple = my_tuple[-3:-1] # du 3eme en partant de la fin jusqu'a l'avant dernier
+print(sub_tuple) # Affiche (60, 70)
+
+# ========================
+# dernier élément
+# ========================
+my_tuple = (10, 20, 30, 40, 50)
+last_element = my_tuple[-1]
+print(last_element) # Affiche 50
+
+# ============================
+# inverser l'ordre des éléments 
+# =============================
+my_tuple = (10, 20, 30, 40, 50)
+reversed_tuple = my_tuple[::-1]
+print(reversed_tuple) # Affiche (50, 40, 30, 20, 10)
+```
+
+### `in` - recherche d'un élément 
+
+L'operateur `in` permet de rechercher un élément dans le tuple. Retour `True` si présent 
+
+```python
+# ====================
+# in
+# ====================
+my_tuple = (1, 2, 3, 4, 5)
+element = 3
+if element in my_tuple:
+    print(f"{element} est dans le tuple.")
+else:
+    print(f"{element} n'est pas dans le tuple.")
+
+# ===========================
+# vérifier l'abscence
+# ===========================
+names = ('Alice', 'Bob', 'Charlie')
+search_name = 'Alice'
+if search_name not in names:
+    print(f"{search_name} n'est pas dans le tuple.")
+else:
+    print(f"{search_name} est dans le tuple.")
+```
+
+### Ajout d'éléments 
+
+Un tuple étant immuable, il est impossible de le modifier avec l'avoir créer. Pour la modification, on vient créer une nouvelle copie de celui ci avec les modifications.
+
+```python
+# ==================
+# modification principe 
+# =====================
+liste = list(tuple)
+on modifie liste ici
+tuple2 = tuple(liste)
+
+# ==========================
+# ajout avec append()
+# ==========================
+my_tuple = (1, 2, 3)
+my_list = list(my_tuple)
+my_list.append(4)  # on ajoute un élément à la liste
+my_new_tuple = tuple(my_list)
+
+# ================================
+# ajout d'un groupe avec extend()
+# ================================
+my_tuple = (1, 2, 3, 4)
+my_list = list(my_tuple)
+my_list.extend((5, 6))  # on ajoute des éléments à la liste
+my_new_tuple = tuple(my_list)
+
+# ===================================
+# insertion au milieu - insert()
+# ===================================
+# prends l'index au premier argument et la valeur au second
+my_tuple = (1, 2, 3, 4)
+my_list = list(my_tuple)
+my_list.insert(0, 0)  # on ajoute 0 au début de la liste
+my_new_tuple = tuple(my_list)
+```
+
+### Modification 
+
+Même principe, on crer une copie pour faire la modification.
+
+```python 
+# ==========================
+# modification 
+# ==========================
+my_tuple = (1, 2, 3, 4)
+
+my_list = list(my_tuple) # copie au format de list 
+my_list[0], my_list[-1] = my_list[-1], my_list[0]  # on échange les valeurs
+my_new_tuple = tuple(my_list) # conversion en tuple
+print(my_new_tuple)  # (4, 2, 3, 1)
+```
+
+### Suppression 
+
+```python 
+# =============================
+# suppression d'une valeur
+# =============================
+atuple = ("apple", "banana", "cherry")
+
+alist = list(atuple) # copie en list
+alist.remove("apple") # suppression
+atuple = tuple(alist) # conversion en tuple
+
+print(atuple)  # ('banana', 'cherry')
+
+# ==============================
+# suppression du dernier élément 
+# ==============================
+atuple = ("apple", "banana", "cherry")
+
+alist = list(atuple)
+alist.pop() # on supprime le dernier élément
+atuple = tuple(alist)
+
+print(atuple)  # ('apple', 'banana')
+```
+
+### Itération de tuple 
+
+#### `for` 
+
+```python
+# ===================
+# itération avec for
+# ===================
+my_tuple = (1, 2, 3, 4, 5)
+for number in my_tuple:
+    print(number)
+
+# ========================
+# somme des valeurs
+# ========================
+my_tuple = (10, 20, 30, 40, 50)
+total = 0
+
+for number in my_tuple:
+    total += number
+
+print(f"Somme des éléments du tuple : {total}")
+
+# ==========================
+# recherche valeur max
+# ==========================
+my_tuple = (5, 17, 23, 11, 2)
+max_value = my_tuple[0]
+
+for number in my_tuple:
+    if number > max_value:
+        max_value = number
+
+print(f"Valeur maximale dans le tuple : {max_value}")
+```
+
+#### Itération sur un tuple imbriqué 
+
+Les tuples peuvent contenir d'autre tuples
+
+```python 
+# ============================
+# itération tuple imbriqué
+# ============================
+nested_tuple = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
+
+for inner_tuple in nested_tuple:
+    for number in inner_tuple:
+        print(number, end=' ')
+    print()
+
+# résultat
+1 2 3
+4 5 6
+7 8 9
+```
+
+#### Boucle avec index 
+
+```python 
+# ======================
+# itération avec index
+# ======================
+my_tuple = ('a', 'b', 'c', 'd')
+for i in range(len(my_tuple)):
+    print(f'index: {i}, Élément: {my_tuple[i]}')
+
+# =============================
+# comparaison 
+# ==============================
+my_tuple = (15, 20, 23, 18, 22, 19, 21)
+for i in range(1, len(my_tuple)):
+    if my_tuple[i] > my_tuple[i - 1]:  # Compare l'élément avec le précédent
+        print(f'{my_tuple[i]} est supérieur à {my_tuple[i - 1]}')
+
+# ====================================
+# traitement des données - calcul température moyenne
+# ====================================
+temperatures = (15, 20, 23, 18, 22, 19, 21)
+sorted_temps = sorted(temperatures)
+
+# Exclure la première et la dernière température
+filtered_temps = sorted_temps[1:-1]
+
+average_temp = sum(filtered_temps) / len(filtered_temps)
+print(f"Température moyenne de la semaine (sans valeurs extrêmes) : {average_temp}")
+
+# =================================
+# valeur et index avec enumerate
+# =================================
+my_tuple = ('apple', 'banana', 'cherry')
+for index, element in enumerate(my_tuple):
+    print(f'index: {index}, Élément: {element}')
+
+# ==============================
+# trouver l'index d'une valeur rechercher
+# ======================================
+my_tuple = (1, 2, 3, 2, 4, 2, 5)
+search_value = 2
+indices = []
+
+for index, value in enumerate(my_tuple):
+    if value == search_value:
+        indices.append(index)
+
+print(f"La valeur {search_value} se trouve aux index : {indices}")
+
+# La valeur 2 se trouve aux index : [1, 3, 5]
+
+# =============================================
+# Filtrage de donnée basé sur l'index
+# =============================================
+my_tuple = ('a', 'b', 'c', 'd', 'e', 'f')
+
+filtered_tuple = tuple(value for index, value in enumerate(my_tuple) if index % 2 == 0)
+print(f"Tuple avec des éléments aux index pairs : {filtered_tuple}")
+
+# Tuple avec des éléments aux index pairs : ('a', 'c', 'e')
+```
+
+### Copie de tuple 
+
+```python
+# ========================
+# assignation directe - copie de référence
+# ========================
+original_tuple = (1, 2, 3, 4, 5)
+copied_tuple = original_tuple
+print(copied_tuple)
+
+# ==============================
+# tuple() - création d'un nouvel objet
+# ==============================
+original_tuple = (1, 2, 3, 4, 5)
+copied_tuple = tuple(original_tuple)
+print(copied_tuple)
+
+# ===================================
+# conversion via une liste
+# ===================================
+original_tuple = (1, 2, 3, 4, 5)
+
+temp_list = list(original_tuple)
+temp_list.append(6)
+copied_tuple = tuple(temp_list)
+
+print(copied_tuple)
+```
+
+### Fusion de tuple
+
+```python
+# =====================
+# Concaténation 
+# =====================
+tuple1 = (1, 2, 3)
+tuple2 = (4, 5, 6)
+combined_tuple = tuple1 + tuple2
+
+print(combined_tuple)
+
+# =========================
+# multiplication par entier
+# ==========================
+tuple1 = (1, 2, 3)
+multiplied_tuple = tuple1 * 3
+
+print(multiplied_tuple) #  (1, 2, 3, 1, 2, 3, 1, 2, 3)
+
+# ===============================
+# fusion d'un nombre inconnu de tuple - chain()
+# ================================
+from itertools import chain
+
+tuple1 = (1, 2, 3)
+tuple2 = (4, 5, 6)
+tuple3 = (7, 8, 9)
+
+combined_tuple = tuple(chain(tuple1, tuple2, tuple3))
+print(combined_tuple) # (1, 2, 3, 4, 5, 6, 7, 8, 9)
+```
+
+### Tuple imbriqué
+
+```python 
+# =======================
+# création 
+# =======================
+nested_tuple = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
+
+# =========================
+# création depuis type ordinaire
+# ==========================
+tuple1 = (1, 2, 3)
+tuple2 = (4, 5, 6)
+nested_tuple = (tuple1, tuple2)
+
+print(nested_tuple)  #  ((1, 2, 3), (4, 5, 6))
+
+# ============================
+# accès aux éléments 
+# ============================
+nested_tuple = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
+
+# Accès à l'élément 5 dans le deuxième tuple imbriqué
+element = nested_tuple[1][1]
+print(element)  # Affiche: 5
+
+# =========================
+# structuration de données
+# ==========================
+locations = (("New York", (40.7128, -74.0060)),
+             ("Los Angeles", (34.0522, -118.2437)),
+             ("Chicago", (41.8781, -87.6298)))
+```
