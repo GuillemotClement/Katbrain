@@ -5386,3 +5386,186 @@ def fib(n):
 
 print(fib(35))
 ```
+
+---
+
+## 15 - POO
+
+### Création de classes et objets
+
+```python 
+# ====================
+# syntaxe de déclaration de classe 
+# ==================================
+class NomDeClasse:
+    # déclaration des attributs
+    variable1 = valeur1
+    variableN = valeurN
+    
+    # déclaration des méthodes
+    def fonction1(self):
+        code de la fonction
+
+    def fonctionM(self):
+        code de la fonction
+
+# instanciation de classe 
+variableX = NomDeClasse()
+
+# accès aux attributs
+variableX.variable1 = 10
+
+# accès au méthodes
+variableX.fonctionM()
+```
+
+### Type de méthodes
+
+#### Méthodes d'objet - `self`
+
+Lors de la déclaration d'une méthode d'un objet, il faut transmettre le premier paramètre obligatoire `self`. Lors de l'appel de la méthodem ce paramètre reçoit la référence à l'objet.
+
+```python 
+class MyClass:
+
+    def instance_method(self):
+        print(type(self))  # <class 'MyClass'>
+
+
+my_object = MyClass()
+my_object.instance_method()
+```
+
+#### Méthode de classe - `cls`
+
+Lors de la déclaration d'une méthode de classem il faut transmettre le paramètre obligatoire `cls`. Lors de l'appel de la méthode, ce paramètre reçoit la référence à la classe. Il faut également marquer la méthode  de classe avec le décorateur `@classMethod`
+
+```python 
+class MyClass:
+    # méthode d'objet
+    def instance_method(self):
+        print(type(self))  # <class 'MyClass'>
+
+    # méthode de classe
+    @classmethod
+    def class_method(cls):
+        print(type(cls))  # <class 'type'>
+
+
+my_object = MyClass()
+# référence à l'objet
+my_object.instance_method()
+# référence à la classe
+MyClass.class_method()
+```
+
+#### Méthode statique - `@staticmethod` 
+
+Lors de la déclaration d'une méthode statiquem il n'y a rien à transmettre, mais elle ne peut pas accèder aux données interne de la classe. La méthode doit être marquée avec le décorateur `@staticmethod`
+
+```python 
+class MyClass:
+    def instance_method(self):
+        print(type(self))  # <class 'MyClass'>
+
+    @classmethod
+    def class_method(cls):
+        print(type(cls))  # <class 'type'>
+
+    # méthode statique
+    @staticmethod
+    def static_method():
+        return "Cette méthode ne dépend ni de l'instance ni de la classe"
+
+my_object = MyClass()
+my_object.instance_method()
+MyClass.class_method()
+
+# référence à l'objet
+MyClass.static_method()
+```
+
+### Types de champs 
+
+#### Champ de classe 
+
+Déclarer dans la classe, avant la déclaration des méthodes de classe.
+
+Pour lire ou écrire une valeur dans variable de classe, on utilise l'objet `cls`
+
+```python 
+class MyClass:
+    attribute = "Je suis un attribut de classe"
+
+    @classmethod
+    def class_method(cls):
+        print(MyClass.attribute)  # Je suis un attribut de classe
+
+my_object = MyClass()
+
+print(MyClass.attribute)  # Je suis un attribut de classe
+```
+
+#### Champ d'objet 
+
+Les varaibles d'objet sont les champs de l'objet `self`. On y accède avec `self.name`.
+
+```python 
+class MyClass:
+    attribute = "Je suis un attribut de classe"
+
+    def set_name(self, name):
+        self.name = name
+
+    # self permet d'accèder au champs de l'instance
+    def print_name(self):
+        print(self.name)
+
+my_object = MyClass()
+my_object.set_name("Champ d'objet appelé name")
+my_object.print_name()  # "Champ d'objet appelé name"
+```
+
+### Constructeur - `__init__`
+
+Un constructeur est une méthode spéciale qui se déclenche lors de l'instanciation de l'objet. Il permet d'initialiser les champs de l'objet, et peut venir réaliser toutes les actions initiales nécessaire à la configuration de l'objet.
+
+La méthode `__init__` prends au minimim un paramètre `self` qui fait référence à l'objet en cours de création. D'autres paramètres peuvent être ajouter.
+
+```python 
+# ====================
+# utilisation de __init__
+# =======================
+class Cat:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+# Création d'un objet Cat avec un nom et un âge
+barsik = Cat("Barsik", 5)
+
+print(f"Nom du chat : {barsik.name}, âge : {barsik.age}")  # Affiche: Nom du chat : Barsik, âge : 5
+
+# ================================
+# initialisation avec validation de donnée
+# ==================================
+class Cat:
+    def __init__(self, name, age):
+        if age < 0: raise ValueError("L'âge ne peut pas être négatif")
+        self.name = name
+        self.age = age
+
+
+# Création d'un objet Cat avec vérification de l'âge
+try:
+    barsik = Cat("Barsik", -3)
+except ValueError as e:
+    print(e)  # Affiche: L'âge ne peut pas être négatif
+```
+
+### Niveaux d'accès
+
+En Python, il existe différents niveaux d'accès aux attributs et méthodes de classes.
+
+
