@@ -655,9 +655,335 @@ min = a if a < b else b
 ```
 ---
 
-## Environnement virtuel `.venv`
+## Environnement Python
+
+### Environnement virtuel `.venv`
 
 `.venv` est un module Python qui offre la possibilité de créer différents environnement virtuels légers et isolés pour les projets python. Il permet de gérer les dépendances du projet en les isolant des lib systme.
+
+### Librairie standard 
+
+#### `os` - interaction systeme d'exploitation 
+
+La lib `os` fournit des fonctions pour intéragir avec l'os comme la gestion du system file, la gesiton des procession, les variable env, etc 
+
+##### `os.getcwd()` - repertoire actuel 
+
+Cette fonction permet de récupérer le répertoire actuel 
+
+```python 
+import os
+
+cwd = os.getcwd()
+print("Current Working Directory:", cwd)
+```
+
+##### `os.chdir()` - changer le repertoire 
+
+```python 
+os.chdir('/path/to/directory')
+```
+
+##### `os.mkdir()` - nouveau repertoire 
+
+```python 
+os.mkdir('new_directory')
+```
+
+##### `os.rmdir()` - supprimer un repertoire 
+
+```python 
+os.rmdir('new_directory')
+```
+
+##### `os.listdir()` - lister fichier et repertoire 
+
+```python 
+files = os.listdir('.')
+print("Files and directories:", files)
+```
+
+##### `os.getenv()` - obtenir une variable env 
+
+```python 
+home_dir = os.getenv('HOME')
+print("Home Directory:", home_dir)
+```
+
+##### `os.environ()` - définir une variable env 
+
+```python 
+os.environ['MY_VAR'] = 'my_value'
+```
+
+#### `platform` - information plateforme 
+
+Cette lib fournit des fonctions pour obtenri des information sur la plateforme où Python s'exécute. 
+
+##### `platform.system()` - systeme information 
+
+```python 
+import platform
+
+os_name = platform.system()
+print("Operating System:", os_name)
+```
+
+##### `platform.node()` - nom 
+
+```python 
+node_name = platform.node()
+print("Node Name:", node_name)
+```
+
+##### `platform.release()` - version os 
+
+```python 
+os_release = platform.release()
+print("OS Release:", os_release)
+```
+
+##### `platform.version()` - version os 
+
+```python 
+os_version = platform.version()
+print("OS Version:", os_version)'
+```
+
+##### `platform.architecture()` - architecture du proc 
+
+```python 
+architecture = platform.architecture()
+print("Architecture:", architecture)
+```
+
+##### `platform.processor()` - type de proc 
+
+```python 
+processor = platform.processor()
+print("Processor:", processor)
+```
+
+##### `platform.python_version()` - version de python 
+
+```python 
+python_version = platform.python_version()
+print("Python Version:", python_version)
+```
+
+##### `platform.python_compiler()` - compileur 
+
+```python 
+python_compiler = platform.python_compiler()
+print("Python Compiler:", python_compiler)
+```
+
+#### `sys` - interpréteur 
+
+Fournis des fonctions pour intérafir avec l'interpreteur. 
+
+##### `sys.arggv` - argument ligne de commande 
+
+Permet de récupérer les arguments de la CLI passé au script via une liste
+
+##### `sys.exit()` - terminer l'exécution 
+
+Permet de terminer l'exécution du programme avec un code de sortie. Zero indique une exécution réuisse.
+
+```python 
+import sys
+
+if len(sys.argv) < 2:
+    print("Erreur : pas assez d'arguments")
+    sys.exit(1)
+
+print("Tous les arguments sont correctement spécifiés")
+sys.exit(0)
+```
+
+##### `sys.path()` - chemin de recherche des modules 
+
+La liste conteint les chemions ou l'interpréteur Python recherche les modules à importer. Il est possible d'ajouter de nouveaux cheminx à cette liste pour configurer la recherche de module 
+
+```python 
+import sys
+
+print("Chemins de recherche des modules:")
+for path in sys.path:
+    print(path)
+
+# Ajout d'un nouveau chemin
+sys.path.append('/path/to/my/modules')
+print("Liste mise à jour des chemins de recherche des modules:", sys.path)
+```
+
+##### Information sur le systèmne 
+
+```python 
+import sys
+
+# Version de Python
+print("Version de Python:", sys.version)
+
+# Informations sur la plateforme
+print("Plateforme:", sys.platform)
+
+# Taille d'un nombre en octets
+print("Taille int:", sys.getsizeof(0), "octets")
+```
+
+##### `sys.modules()` - module installés
+
+Dictionnaire qui contient les informations sur les modules chargés.
+
+```python 
+import sys
+
+# Liste des modules chargés
+print("Modules chargés:")
+for module in sys.modules:
+    print(module)
+```
+
+#### `datetime` - travail avec les dates et heures 
+
+Cette lib permet de travailler avec les dates et les heures. Elle permet de créer, manipuler, et formater des dates et des heures.
+
+##### `datetime.date` - date sans temps
+
+Cette classe représente une date temps
+
+```python 
+import datetime
+
+# Création d'un objet date
+d = datetime.date(2023, 5, 24)
+print(d)  # Résultat : 2023-05-24
+
+# Obtention de la date actuelle
+today = datetime.date.today()
+print(today)
+
+# Accès aux attributs année, mois et jour
+print(d.year)  # Résultat : 2023
+print(d.month)  # Résultat : 5
+print(d.day)  # Résultat : 24
+```
+
+##### `datetime.time` - travail sur heure 
+
+Cette classe représente le temps sans date. 
+
+```python 
+import datetime
+
+# Création d'un objet temps
+t = datetime.time(14, 30, 45)
+print(t)  # Résultat : 14:30:45
+
+# Accès aux attributs heures, minutes et secondes
+print(t.hour)  # Résultat : 14
+print(t.minute)  # Résultat : 30
+print(t.second)  # Résultat : 45
+```
+
+##### `datetime.datetime` - date et heure 
+
+```python 
+import datetime
+
+# Création d'un objet date et temps
+dt = datetime.datetime(2023, 5, 24, 14, 30, 45)
+print(dt)  # Résultat : 2023-05-24 14:30:45
+
+# Obtention de la date et l'heure actuelles
+now = datetime.datetime.now()
+print(now)
+
+# Accès aux attributs date et temps
+print(dt.year)  # Résultat : 2023
+print(dt.month)  # Résultat : 5
+print(dt.day)  # Résultat : 24
+print(dt.hour)  # Résultat : 14
+print(dt.minute)  # Résultat : 30
+print(dt.second)  # Résultat : 45
+```
+
+##### `datetime.timedelta` - différence entre deux moments 
+
+Permet de réaliser des opérations avec les dates et les heures 
+
+```python 
+import datetime
+
+# Création d'un objet timedelta
+delta = datetime.timedelta(days=10, hours=5, minutes=30)
+print(delta)  # Résultat : 10 days, 5:30:00
+
+# Ajout de timedelta à une date
+dt = datetime.datetime(2023, 5, 24, 14, 30)
+new_dt = dt + delta
+print(new_dt)  # Résultat : 2023-06-03 20:00:00
+
+# Soustraction de timedelta d'une date
+earlier_dt = dt - delta
+print(earlier_dt)  # Résultat : 2023-05-14 09:00:00
+```
+
+##### `strftime()` - formater des datetime
+
+```python 
+import datetime
+
+dt = datetime.datetime(2023, 5, 24, 14, 30, 45)
+
+# Formatage de la date et l'heure
+formatted_dt = dt.strftime("%Y-%m-%d %H:%M:%S")
+print(formatted_dt)  # Résultat : 2023-05-24 14:30:45
+
+# Formatage de la date uniquement
+formatted_date = dt.strftime("%d-%m-%Y")
+print(formatted_date)  # Résultat : 24-05-2023
+
+# Formatage de l'heure uniquement
+formatted_time = dt.strftime("%H:%M:%S")
+print(formatted_time)  # Résultat : 14:30:45
+```
+
+##### `strptime()` - analyse de chaîne datetime
+
+```python 
+import datetime
+
+# Parsing d'une chaîne en un objet datetime
+date_str = "24-05-2023 14:30:45"
+dt = datetime.datetime.strptime(date_str, "%d-%m-%Y %H:%M:%S")
+print(dt)  # Résultat : 2023-05-24 14:30:45
+
+# Parsing d'une chaîne en un objet date
+date_str = "24-05-2023"
+d = datetime.datetime.strptime(date_str, "%d-%m-%Y").date()
+print(d)  # Résultat : 2023-05-24
+
+# Parsing d'une chaîne en un objet time
+time_str = "14:30:45"
+t = datetime.datetime.strptime(time_str, "%H:%M:%S").time()
+```
+
+##### `timezone` - travail avec fuseau 
+
+```python 
+import datetime
+
+# Création d'un objet datetime avec le fuseau horaire UTC
+utc_dt = datetime.datetime(2023, 5, 24, 14, 30, 45, tzinfo=datetime.timezone.utc)
+print(utc_dt)  # Résultat : 2023-05-24 14:30:45+00:00
+
+# Conversion dans un autre fuseau horaire
+tokyo_tz = datetime.timezone(datetime.timedelta(hours=9))
+tokyo_dt = utc_dt.astimezone(tokyo_tz)
+print(tokyo_dt)  # Résultat : 2023-05-24 23:30:45+09:00
+```
 
 ---
 
@@ -1135,6 +1461,8 @@ print(counter())  # Affiche 3
 
 Les fonctions peuvent accepter un nombre infini de paramètres avec `*args` pour les paramètres ordinaires et `**args_nammed` pour les paramètres nommés
 
+#### `args` - paramètre multiples
+
 
 ```python
 # ===================
@@ -1146,7 +1474,10 @@ def print_all(*args):
         print(item)
 
 print_all(1, 'apple', True)  # affichera 1, apple et True.
+```
 
+#### `**kwargs` - paramètres multiple nommé
+```python
 # ============================
 # **args_nammed
 # ============================
@@ -1170,6 +1501,77 @@ Python propose le **type hinting** qui permet de donner un typage, mais uniqueme
 # ===================
 def add_numbers(a: int, b: int) -> int:
     return a + b
+```
+
+### Obtenir tous les arguments d'une fonction 
+
+Il existe plusieurs maniére d'obtenir depuis l'intérieur d'une fonction la liste des paramètres passée
+
+#### `*args` 
+
+Empacté sous forme de tuple
+
+```python 
+def print_numbers(*args):
+    for arg in args:
+        print(arg)
+
+print_numbers(1, 2, 3, 4, 5)
+```
+
+#### `**kwargs`
+
+Empacté sous forme de dictionnaire 
+
+```python 
+def print_person_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_person_info(name="Alice", age=30, city="New York")
+```
+
+### Type d'arguments
+
+#### Argument positionnels - `/`
+
+Il est possible de définir des fonctions avec des arguments positionnels qui peuvent être passés uniquement par position. 
+
+```python 
+def greet(name, /, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+greet("Alice")  # Sortie: Hello, Alice!
+greet("Alice", greeting="Hi")  # Sortie: Hi, Alice!
+# greet(name="Alice")  # Erreur: TypeError
+```
+
+`greet` accepte l'argument `name` qui ne peut être passé que par position. Les arguments avant `/` peuvent être passés uniquement par position.
+
+#### Argument uniquement nommé - `*`
+
+Définis un argument qui ne peut être passé que par nom avec le symbole `*`
+
+```python 
+def greet(*, name, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+greet(name="Alice")  # Sortie: Hello, Alice!
+greet(name="Alice", greeting="Hi")  # Sortie: Hi, Alice!
+# greet("Alice")  # Erreur: TypeError
+```
+
+La fonction accepte l'argument `name` qui ne peut être passè que par nom. Les arguments après `*` peuvent être passés uniquement par nom
+
+#### Combinaison 
+
+```python 
+def greet(name, /, *, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+greet("Alice")  # Sortie: Hello, Alice!
+greet("Alice", greeting="Hi")  # Sortie: Hi, Alice!
+# greet(name="Alice")  # Erreur: TypeError
 ```
 
 ---
@@ -4731,4 +5133,256 @@ Générateur:
   Temps: 1.13 sec
   Mémoire: 200 octets
 """
+```
+
+## 14 - Décorateurs
+
+Fonctions qui prennent une autre fonction en tant qu'argument et retourne une nouvelle fonction, modifiant ou étendant le comportement de la fonction d'origine. 
+
+Ils permettent de modifier le comportement des fonctions ou méthodes sans changer leur code source. Il sont utilisé pour ajouter des fonctionnalités, faire du logging, du contrôle d'accès, etc 
+
+Python utilise le symbole `@` avant le nom du décorateur, qui est placé avant la définition de la fonction.
+
+```python 
+# =========
+# syntaxe 
+# ===============
+@decorator
+def my_function():
+    pass
+
+# équivalent :
+def my_function():
+    pass
+
+my_function = decorator(my_function)
+```
+
+Dans ce code, on déclare la fonction `my_function()`, mais ensuite on la remplace par la fonction `decorator`, où la fonction est passée en paramètre. La fonction `decorator` peut appeler notre fonction.
+
+### Déclarateur du décorateur
+
+Le décorateur affiche un message avant et après l'appel de la fonction
+
+```python 
+# défintion du décorator
+def my_decorator(func):
+    def wrapper():
+        print("Avant l'appel de la fonction")
+        func()
+        print("Après l'appel de la fonction")
+
+    return wrapper
+
+# utilisation du décorateur
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+
+"""
+sortie:
+# Avant l'appel de la fonction
+Hello!
+# Après l'appel de la fonction
+"""
+```
+
+### Décorateur avec argument 
+
+```python 
+def repeat(num_times):
+    def decorator_repeat(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(num_times):
+                func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator_repeat
+
+@repeat(num_times=3)
+def say_hello(name):
+    print(f"Hello, {name}!")
+
+say_hello("Alice")
+
+"""sortie
+Hello, Alice!
+Hello, Alice!
+Hello, Alice!
+"""
+```
+
+### Décorateur de méthodes de classe 
+
+```python 
+def log_method_call(func):
+    def wrapper(self, *args, **kwargs):
+        print(f"Appel de la méthode {func.__name__}")
+        return func(self, *args, **kwargs)
+
+    return wrapper
+
+class MyClass:
+    @log_method_call
+    def say_hello(self):
+        print("Hello from MyClass!")
+
+obj = MyClass()
+obj.say_hello()
+```
+
+### Décorateur multiple 
+
+Appliquer dans l'ordre de đéclaration
+
+```python 
+def decorator1(func):
+    def wrapper():
+        print("Décorateur 1")
+        func()
+
+    return wrapper
+
+def decorator2(func):
+    def wrapper():
+        print("Décorateur 2")
+        func()
+
+    return wrapper
+
+@decorator1
+@decorator2
+def say_hello():
+    print("Hello!")
+
+say_hello()
+```
+
+### Décorateur intégré
+
+#### `@staticmethod` - créer une méthode statique 
+
+Le décorateur est utilisé pour créer une méthode statique qui ne nécessite pas d'instance de classe 
+
+```python 
+class MyClass:
+    @staticmethod
+    def static_method():
+        print("Ceci est une méthode statique.")
+
+MyClass.static_method()
+```
+
+#### `@classmethod` - classe qui accepte la classe 
+
+Le décorateur est utilisé pour créer une méthode qui accepte la classe (et non une instance) en tant que premier argument 
+
+```python 
+class MyClass:
+    @classmethod
+    def class_method(cls):
+        print(f"Ceci est une méthode de classe {cls.__name__}.")
+
+MyClass.class_method()
+```
+
+#### `@property` - création de getters, setters, deleters
+
+Permet de créer des getters, setters, et deleters pour les attributs
+
+```python 
+class MyClass:
+    def __init__(self, value):
+        self.hidden_value = value
+
+    @property
+    def value(self):
+        return self.hidden_value
+
+    @value.setter
+    def value(self, new_value):
+        self.hidden_value = new_value
+
+obj = MyClass(10)
+print(obj.value)  # Sortie : 10
+obj.value = 20
+print(obj.value)  # Sortie : 20
+```
+
+### Pattern d'utilisation 
+
+#### Journalisation 
+
+Permet de log les appels de fonction et de méthodes 
+
+```python 
+def log_call(func):
+    def wrapper(*args, **kwargs):
+        print(f"Appel de la fonction {func.__name__} avec les arguments {args} et {kwargs}")
+        return func(*args, **kwargs)
+
+    return wrapper
+
+@log_call
+def add(x, y):
+    return x + y
+
+print(add(2, 3))
+```
+
+#### Contrôle d'accés
+
+Permet de contrôler l'accès aux fonctions et méthodes
+
+```python 
+def require_authentication(func):
+    def wrapper(*args, **kwargs):
+        if not args[0].is_authenticated:
+            raise PermissionError("Utilisateur non authentifié.")
+        return func(*args, **kwargs)
+
+    return wrapper
+
+class User:
+    def __init__(self, is_authenticated):
+        self.is_authenticated = is_authenticated
+
+    @require_authentication
+    def view_profile(self):
+        print("Profil utilisateur")
+
+user = User(is_authenticated=True)
+user.view_profile()  # Appel réussi
+
+user2 = User(is_authenticated=False)
+user2.view_profile()  # PermissionError: Utilisateur non authentifié.
+```
+
+#### Mise en cache 
+
+Permet de mettre en cache des résultats d'une fonction 
+
+```python 
+def cache(func):
+    cached_results = {}
+
+    def wrapper(*args):
+        if args in cached_results:
+            return cached_results[args]
+        result = func(*args)
+        cached_results[args] = result
+        return result
+
+    return wrapper
+
+@cache
+def fib(n):
+    if n < 2:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+print(fib(35))
 ```
