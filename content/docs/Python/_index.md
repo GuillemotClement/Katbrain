@@ -3373,3 +3373,855 @@ fset2 = frozenset([3, 4, 5])
 d = {fset1: "first", fset2: "second"}
 print(d)  # Résultat: {frozenset({1, 2, 3}): 'first', frozenset({3, 4, 5}): 'second'}
 ```
+
+---
+
+## 11 - Dictionnaire 
+
+Collection de paires clé-valeur, oà chaque clé est unique.
+
+Si une paire clé valeur qui existe déjà est ajoutée au dictionnaire, la valeur ancienne sera remplacé par la nouvelle.
+
+A partir de python 3.7, le dictionnaire est ordonnée. L'ordre d'ajout des éléments est conservé.
+
+Le dictionnaire est mutable.
+
+Il sont optimnisé pour la recherche rapide, l'ajout et la supression de paire clé-valeur.
+
+### Création 
+
+```python
+# ========================
+# dict vide
+# =========================
+empty_dict = {}
+
+# ==========================
+# dict avec éléments
+# ==========================
+person = {
+    "name": "John",
+    "age": 30,
+    "city": "New York"
+}
+
+# ===========================
+# dict()
+# ===========================
+# Création d'un dictionnaire à partir d'une liste de tuples
+person = dict([("name", "John"), ("age", 30), ("city", "New York")])
+
+# Création d'un dictionnaire avec des arguments nommés
+person = dict(name="John", age=30, city="New York")
+
+# ============================
+# dict.fromkeys()
+# ============================
+# crée un dictionnaire avec les clé données et une valeur par défaut 
+# le dict aura trois clé mais elle contiendront toutes la même valeur
+keys = ["name", "age", "city"]
+default_value = None
+person = dict.fromkeys(keys, default_value)
+
+# ==============================
+# création à partir de variables
+# ==============================
+name = "John"
+age = 30
+city = "New York"
+
+person = {"name": name, "age": age, "city": city}
+
+# ==============================
+# comprehension 
+# ==============================
+squares = {x: x**2 for x in range(1, 6)}
+```
+
+### Accés aux valeurs 
+
+Si une clé n'est pas trouvée, une erreur `KeyError` se produit.
+
+```python 
+# ========================
+# accés 
+# ========================
+person = {"name": "John", "age": 30, "city": "New York"}
+print(person["name"])  # Affichera : John
+```
+
+#### `get()` - accés sans erreur 
+
+Permet d'obtenir une valeur du dictionnaire sans risque d'erreur si la clé n'est pas présente. Si la clé est absente, la valeur par défaut est retournée, `None` si le deuxième argument pour cette valeur n'est pas passé.
+
+```python
+# =========================
+# accès par get()
+# =========================
+person = {"name": "John", "age": 30, "city": "New York"}
+print(person.get("name"))  # Affichera : John
+print(person.get("address", "Adresse non trouvée"))  # Affichera : Adresse non trouvée
+```
+
+#### `setdefault()` - retourne et ajout
+
+Fonctionne comme `get()`, mais si la valeur n'est pas trouvée, retourne la valeur par défaut et ajoute une nouvelle paire clé valeur .
+
+```python
+# =======================
+# setdefault()
+# =======================
+person = {"name": "Alice", "age": 25}
+city = person.setdefault("city", "New York")
+print(city)  # Sortie : New York
+print(person)  # Sortie : {'name': 'Alice', 'age': 25, 'city': 'New York'}
+```
+
+### Modification 
+
+#### Ajout d'éléments 
+
+```python 
+# =============================
+# ajout d'élément unique 
+# =============================
+person = {"name": "Alice", "age": 25}
+
+# Ajout d'un nouvel élément au dictionnaire
+person["city"] = "New York"
+
+# Affichage du dictionnaire mis à jour
+print(person)  # Sortie : {'name': 'Alice', 'age': 25, 'city': 'New York'}
+
+# ===================================
+# ajout si clé absente 
+# ===================================
+person = {"name": "Alice", "age": 25}
+
+# Ajout de l'élément uniquement si la clé est absente
+if "city" not in person:
+    person["city"] = "New York"
+
+# Affichage du dictionnaire mis à jour
+print(person)  # Sortie : {'name': 'Alice', 'age': 25, 'city': 'New York'}
+
+# =======================================
+# ajout multiple avec update()
+# =======================================
+person = {"name": "Alice", "age": 25}
+updates = {"city": "New York", "country": "USA"}
+
+# Mise à jour du dictionnaire avec de nouveaux éléments
+person.update(updates)
+
+# Affichage du dictionnaire mis à jour
+print(person)  # Sortie : {'name': 'Alice', 'age': 25, 'city': 'New York', 'country': 'USA'}
+
+# ===========================================
+# ajout multiple avec update et arguments nommés
+# ===============================================
+person = {"name": "Alice", "age": 25}
+
+# Utilisation d'arguments nommés pour ajouter des éléments
+person.update(city="New York", country="USA")
+
+# Affichage du dictionnaire mis à jour
+print(person)  # Sortie : {'name': 'Alice', 'age': 25, 'city': 'New York', 'country': 'USA'}
+```
+
+#### Modification des éléments 
+
+```python 
+# ===============================
+# update par clé 
+# ===============================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Mise à jour de la valeur par clé
+person["age"] = 26
+
+# Affichage du dictionnaire mis à jour
+print(person)  # Sortie : {'name': 'Alice', 'age': 26, 'city': 'New York'}
+
+# =======================================
+# update avec setdefault()
+# =======================================
+person = {"name": "Alice", "age": 25}
+
+# Utilisation de setdefault pour ajouter un élément
+city = person.setdefault("city", "New York")
+
+# Affichage de la valeur de la ville
+print(city)  # Sortie : New York
+
+# Affichage du dictionnaire mis à jour
+print(person)  # Sortie : {'name': 'Alice', 'age': 25, 'city': 'New York'}
+
+# =========================================
+# update avec update()
+# =========================================
+person = {"name": "Alice", "age": 25}
+updates = {"age": 30, "city": "New York"}
+
+# Mise à jour du dictionnaire en utilisant la méthode update()
+person.update(updates)
+
+# Affichage du dictionnaire mis à jour
+print(person)  # Sortie : {'name': 'Alice', 'age': 30, 'city': 'New York'}
+```
+
+### Suppression 
+
+```python 
+# ======================
+# del 
+# ======================
+person = {"name": "John", "age": 30, "city": "New York"}
+del person["age"]
+print(person)  # Affichera : {'name': 'John', 'city': 'New York'}
+
+# =========================
+# pop()
+# =========================
+person = {"name": "John", "age": 30, "city": "New York"}
+age = person.pop("age")
+print(person)  # Affichera : {'name': 'John', 'city': 'New York'}
+print(age)     # Affichera : 30
+
+# ==============================
+# popitem() - supprime et renvoie la derniere paire clé valeur ajoutée 
+# ==============================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Suppression et obtention de la dernière paire clé-valeur ajoutée
+last_item = person.popitem()
+
+# Affichage de la paire supprimée
+print(last_item)  # Sortie : ('city', 'New York')
+
+# Affichage du dictionnaire mis à jour
+print(person)  # Sortie : {'name': 'Alice', 'age': 25}
+
+# ================================
+# clear() - nettoyage
+# ================================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Nettoyage du dictionnaire
+person.clear()
+
+# Affichage du dictionnaire nettoyé
+print(person)  # Sortie : {}
+```
+
+### Vérifier la présence d'élément
+
+#### Vérifier la présence de clé
+
+```python 
+# ================================
+# in
+# ================================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Vérifions la présence des clés "name" et "country" dans le dictionnaire
+print("name" in person)  # Résultat : True
+print("country" in person)  # Résultat : False
+
+# Exemple d'utilisation dans une instruction conditionnelle
+if "age" in person:
+    print("La clé 'age' est présente dans le dictionnaire.")
+else:
+    print("La clé 'age' est absente du dictionnaire.")
+
+# =================================
+# get()
+# =================================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Obtenons la valeur pour la clé "age"
+value = person.get("age")
+
+# Vérifions si la clé "age" est présente dans le dictionnaire
+if value is not None:
+    print("La clé 'age' est présente dans le dictionnaire.")
+else:
+    print("La clé 'age' est absente du dictionnaire.")
+
+# =========================================
+# keys()
+# =========================================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Vérifions la présence de la clé "name" dans la vue des clés du dictionnaire
+if "name" in person.keys():
+    print("La clé 'name' est présente dans le dictionnaire.")
+else:
+    print("La clé 'name' est absente du dictionnaire.")
+```
+
+#### Vérifier la présence de valeur
+
+```python
+# ================================
+# values()
+# ================================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Vérifions la présence de la valeur 25 dans le dictionnaire
+if 25 in person.values():
+    print("La valeur 25 est présente dans le dictionnaire.")
+else:
+    print("La valeur 25 est absente du dictionnaire.")
+
+# ==================================
+# set()
+# ==================================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Convertissons la vue des valeurs en un ensemble
+values_set = set(person.values())
+
+# Vérifions la présence de la valeur "New York" dans l'ensemble des valeurs
+if "New York" in values_set:
+    print("La valeur 'New York' est présente dans le dictionnaire.")
+else:
+    print("La valeur 'New York' est absente du dictionnaire.")
+
+# =======================================
+# utilisation d'un générateur 
+# =======================================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+value_to_find = 25
+
+# Utilisons un générateur pour vérifier la présence d'une valeur
+if any(value == value_to_find for value in person.values()):
+    print(f"La valeur {value_to_find} est présente dans le dictionnaire.")
+else:
+    print(f"La valeur {value_to_find} est absente du dictionnaire.")
+```
+
+### Parcourir les éléments 
+
+```python 
+# =========================
+# itération 
+# =========================
+# Parcours des clés du dictionnaire
+person = {"name": "John", "age": 30, "city": "New York"}
+for key in person:
+    print(key)
+
+# Parcours des valeurs du dictionnaire
+for value in person.values():
+    print(value)
+
+# Parcours des paires clé-valeur du dictionnaire
+for key, value in person.items():
+    print(f"{key}: {value}")
+```
+
+#### `enumerate()`
+
+Itère le dictionnaire en fournissant l'accés aux indices, clé et valeurs 
+
+```python 
+# ===================================
+# parcourt le dictionnaire 
+# ==================================
+# Dictionnaire avec des données sur une personne
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Itération sur les clés et valeurs du dictionnaire avec indices
+for index, (key, value) in enumerate(person.items()):
+    print(f"Index : {index}, Clé : {key}, Valeur : {value}")
+    # Affiche l'indice, la clé et la valeur de chaque élément du dictionnaire
+
+"""
+Résultat 
+Index : 0, Clé : name, Valeur : Alice
+Index : 1, Clé : age, Valeur : 25
+Index : 2, Clé : city, Valeur : New York
+"""
+
+# ====================================
+# modification avec indice 
+# ====================================
+# Dictionnaire initial
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Nouveau dictionnaire avec des indices dans les valeurs
+indexed_person = {}
+for index, (key, value) in enumerate(person.items()):
+    indexed_person[key] = f"{value}_{index}"
+    # Associe à la valeur du dictionnaire un indice sous forme de chaîne
+
+print(indexed_person)
+# {'name': 'Alice_0', 'age': '25_1', 'city': 'New York_2'}
+
+# ====================================
+# création nouveau dict 
+# ====================================
+# Dictionnaire initial
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Nouveau dictionnaire où les indices sont utilisés comme clés
+indexed_person = {index: (key, value) for index, (key, value) in enumerate(person.items())}
+print(indexed_person)
+# {0: ('name', 'Alice'), 1: ('age', 25), 2: ('city', 'New York')}
+
+
+```
+
+
+
+```
+
+### Utilisation 
+
+```python 
+# ===============================
+# compter la fréquence des mots 
+# ===============================
+text = "hello world hello"
+word_count = {}
+
+for word in text.split():
+    if word in word_count:
+        word_count[word] += 1
+    else:
+        word_count[word] = 1
+
+print(word_count)  # Affichera : {'hello': 2, 'world': 1}
+
+# ======================================
+# stockage des données 
+# =======================================
+students = {
+    "123": {"name": "John", "age": 20, "major": "Computer Science"},
+    "124": {"name": "Alice", "age": 22, "major": "Mathematics"}
+}
+print(students["123"]["name"])  # Affichera : John
+
+# ===========================================
+# annuaire 
+# ===========================================
+phone_book = {
+    "John": "123-456-7890",
+    "Alice": "987-654-3210"
+}
+print(phone_book["Alice"])  # Affichera : 987-654-3210
+```
+
+### Travail avec le dictionnaire 
+
+#### `len()`
+
+Retourne le nombre de paire clé-valeur 
+
+```python 
+# ===========================
+# len()
+# ===========================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+num_elements = len(person)
+print(num_elements)  # Sortie : 3 
+
+# =============================
+# check si vide 
+# =============================
+empty_dict = {}
+print(len(empty_dict))  # Sortie : 0
+
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+if len(person) > 0:
+    print("Le dictionnaire n'est pas vide")
+else:
+    print("Le dictionnaire est vide")
+
+# ======================================
+# dictionnaire avec structures imbriquées 
+# =======================================
+# len() prends en compte seulement les clé de niveau supérieur
+complex_dict = {
+    name: "Alice",
+    details: {
+        age: 25,
+        city: "New York"
+    },
+    hobbies: ["reading", "traveling"]
+}
+print(len(complex_dict))  # Sortie : 3
+```
+
+#### `type()`
+
+Retourne le type de la variable.
+
+```python 
+# ==============================
+# check type 
+# ==============================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+print(type(person))  # Sortie : <class 'dict'>
+
+# ==============================
+# vérification conditionnelle
+# ==============================
+data = {"name": "Alice", "age": 25, "city": "New York"}
+
+if type(data) is dict:
+    print("C'est un dictionnaire.")
+else:
+    print("Ce n'est pas un dictionnaire.")
+
+# =====================================
+# check avec fonction 
+# =====================================
+def process_data(data):
+    if type(data) is dict:
+        print("Traitement du dictionnaire...")
+        # Réalisation d'opérations sur le dictionnaire
+    else:
+        print("Erreur : un dictionnaire était attendu.")
+
+data = {"name": "Alice", "age": 25, "city": "New York"}
+process_data(data)
+```
+
+### Vues de dictionnaire
+
+Des méthodes permettent d'accèder aux données. Ces méthodes ne retourne pas simplement des listes d'éléments, mais des `view`. Elles offrent une repésentation dynamique des clés, valeurs et paire clé valeur contenues dans le dictionnaire.
+Ces vue se mettent à jour lorsque le dictionnaire change.
+
+#### `keys()` - retourne les clés
+
+Retourne une vue des clé du dictionnaire. Le résultat est un objet `dict_keys` qui supporte l'itération et autres opérations similaire aux sets.
+
+```python 
+# =========================
+# keys()
+# =========================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+keys = person.keys()
+print(keys)  # dict_keys(['name', 'age', 'city'])
+
+# =============================
+# itération 
+# =============================
+for key in person.keys():
+    print(key)
+# Sortie : # name # age # city
+```
+
+#### `values()` - retournes les valeurs 
+
+Retourne une vue de toutes les valeurs du dictionnaire. 
+
+```python 
+# ========================
+# values()
+# =========================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+values = person.values()
+print(values)  # dict_values(['Alice', 25, 'New York'])
+
+# ============================
+# itération 
+# ============================
+for value in person.values():
+    print(value)
+# Sortie : # Alice # 25 # New York
+```
+
+#### `items()` - retourne les clé-valeur 
+
+Retourne une vue de toutes les paires clé valeur du dictionnaire.
+
+```python 
+# ==========================
+# items()
+# ==========================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+items = person.items()
+print(items)  # dict_items([('name', 'Alice'), ('age', 25), ('city', 'New York')])
+
+# ===========================
+# itération 
+# ===========================
+for key, value in person.items():
+    print(f"{key}: {value}")
+# Sortie : # name: Alice # age: 25 # city: New York
+```
+
+#### Mise à jours dynamique 
+
+Avec les vues, le contenue est mis à jour dynamiquemenet. Si le dictionnaire change, les vues refletent automatiquement ces changements.
+
+```python 
+# =======================
+# mise à jour 
+# =======================
+person = {"name": "Alice", "age": 25}
+keys = person.keys()
+print(keys)  # dict_keys(['name', 'age'])
+
+# Ajouter un nouvel élément
+person["city"] = "New York"
+print(keys)  # dict_keys(['name', 'age', 'city'])
+```
+
+#### Conversion des vue en collections 
+
+Les vues peuvent être convertis en listes, lets ou tuples pour réaliser des opérations supplémentaires 
+
+```python 
+# ======================
+# conversion 
+# ======================
+person = {"name": "Alice", "age": 25, "city": "New York"}
+
+# Conversion de keys() en liste
+keys_list = list(person.keys())
+print(keys_list)  # ['name', 'age', 'city']
+
+# Conversion de values() en set
+values_set = set(person.values())
+print(values_set)  # {'Alice', 25, 'New York'}
+
+# Conversion de items() en liste de tuples
+items_list = list(person.items())
+print(items_list)  # [('name', 'Alice'), ('age', 25), ('city', 'New York')]
+```
+
+### Génération 
+
+#### Dictionary Comprehension 
+
+```python 
+# syntaxe 
+{expression1: expression2 for variable in sequence if condition}
+```
+
+- `variable`: variable qui prends la valeur de chaque élément 
+- `sequence`: objet itérable qui est parcouru par la variable 
+- `expression1`: expression pour générer les cle. Dépend de la variable
+- `expression2`: expression pour générer les valeurs du dict
+- `condition`: optionnel - condition qui doit être remplie pour inclure l'élément
+
+```python
+# ===================================
+# génération avec carré des nombres 
+# =====================================
+# Création d'un dictionnaire où les clés sont les nombres de 1 à 5 et les valeurs leurs carrés
+squares = {x: x ** 2 for x in range(1, 6)}
+print(squares)  # Affiche : {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+# ====================================
+# création depuis une liste de tuples
+# =====================================
+# Liste de tuples contenant des paires clé-valeur
+pairs = [("name", "Alice"), ("age", 25), ("city", "New York")]
+
+# Génération d'un dictionnaire à partir d'une liste de tuples
+person = {key: value for key, value in pairs}
+print(person)  # Affiche : {'name': 'Alice', 'age': 25, 'city': 'New York'}
+
+# =========================================
+# filtrage lors de la création 
+# =========================================
+# Création d'un dictionnaire où les clés sont les nombres de 1 à 10 et les valeurs leurs carrés
+# Uniquement pour les nombres pairs
+even_squares = {x: x ** 2 for x in range(1, 11) if x % 2 == 0}
+print(even_squares)  # Affiche : {2: 4, 4: 16, 6: 36, 8: 64, 10: 100}
+
+# ========================================
+# transformation lors de la création 
+# ========================================
+# Liste de chaînes
+words = ["apple", "banana", "cherry"]
+
+# Génération d'un dictionnaire où les clés sont des chaînes et les valeurs leur longueur
+word_lengths = {word: len(word) for word in words}
+print(word_lengths)  # Affiche : {'apple': 5, 'banana': 6, 'cherry': 6}
+
+# =======================================
+# Dictionary imbriqué 
+# =======================================
+# Liste de listes avec des paires clé-valeur
+nested_pairs = [[("a", 1), ("b", 2)], [("c", 3), ("d", 4)]]
+
+# Génération d'un dictionnaire à partir d'une liste imbriquée
+nested_dict = {key: value for sublist in nested_pairs for key, value in sublist}
+print(nested_dict)  # Affiche : {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+
+# =============================================
+# méthode combiné
+# =============================================
+# Fusion de plusieurs dictionnaires en un
+dict1 = {"name": "John", "age": 30}
+dict2 = {"city": "New York", "country": "USA"}
+# ** avant le nom permet de décomposer ses éléments 
+# ici on combine les éléments des deux dictionnaires
+combined_dict = {**dict1, **dict2}
+print(combined_dict)  # Affiche : {'name': 'John', 'age': 30, 'city': 'New York', 'country': 'USA'}
+```
+
+### Dictionnaire imbriqués 
+
+#### Création 
+
+```python 
+# ============================
+# création 
+# ============================
+person = {
+    "name": "Alice",
+    "details": {
+        "age": 25,
+        "city": "New York",
+        "address": {
+            "street": "123 Main St",
+            "zip": "10001"
+        },
+        "mother": "Jane Smith"
+    },
+    "gender": "female"
+}
+print(person)  
+# Sortie : {'name': 'Alice', 'details': {'age': 25, 'city': 'New York', 'address': {'street': '123 Main St', 'zip': '10001'}, 'mother': 'Jane Smith'}, 'gender': 'female'}
+
+# ================================
+# création depuis des morceaux 
+# ================================
+address = {
+    "street": "123 Main St",
+    "zip": "10001"
+}
+
+details = {
+    "age": 25,
+    "city": "New York",
+    "address": address
+}
+
+person = {
+    "name": "Alice",
+    "details": details,
+    "gender": "female"
+}
+print(person)  
+# Sortie : {'name': 'Alice', 'details': {'age': 25, 'city': 'New York', 'address': {'street': '123 Main St', 'zip': '10001'}}, 'gender': 'female'}
+```
+
+#### Accès aux éléments 
+
+```python
+# ===========================
+# accès aux éléments de niveau supérieur 
+# ============================
+name = person["name"]
+print(name)  # Sortie : Alice
+
+# ===================================
+# accés aux dictionnaire imbriqué
+# ====================================
+age = person["details"]["age"]
+city = person["details"]["city"]
+print(age)  # Sortie : 25
+print(city)  # Sortie : New York
+
+# ====================================
+# accés aux niveau plus profond
+# =====================================
+street = person["details"]["address"]["street"]
+zip_code = person["details"]["address"]["zip"]
+print(street)  # Sortie : 123 Main St
+print(zip_code)  # Sortie : 10001
+```
+
+#### Modification 
+
+```python 
+# ==========================
+# modification niveau supérieur 
+# ============================
+person["name"] = "Bob"
+print(person["name"])  # Sortie : Bob
+
+# ==============================
+# modification imbrique
+# ===============================
+person["details"]["age"] = 26
+print(person["details"]["age"])  # Sortie : 26
+
+# =================================
+# modification profonde
+# =================================
+person["details"]["address"]["city"] = "Los Angeles"
+print(person["details"]["address"]["city"])  # Sortie : Los Angeles
+
+# ====================================
+# ajout dans imbriqué 
+# ===================================
+person["details"]["phone"] = "123-456-7890"
+print(person["details"]["phone"])  # Sortie : 123-456-7890
+
+# ===================================
+# suppression niveau sup
+# ===================================
+# Suppression de l'élément 'country' du dictionnaire 'person'
+del person["country"]
+print(person)  # L'élément 'country' sera supprimé du dictionnaire
+
+# ===============================
+# supression dict imbrique
+# ================================
+# Suppression de l'élément 'phone' du dictionnaire 'details'
+del person["details"]["phone"]
+print(person["details"])  # L'élément 'phone' sera supprimé du dictionnaire 'details'
+```
+
+#### Parcours 
+
+```python 
+# ==========================
+# iteration dict imbriqué
+# ===========================
+for key, value in person.items():  # On parcourt le dictionnaire parent
+    if isinstance(value, dict):  # Si la valeur est un dictionnaire
+        for key2, value2 in value.items():  # On parcourt les éléments du dictionnaire enfant
+            print(f"{key} --> {key2}: {value2}")
+
+# =================================
+# iteration recursive
+# =================================
+def print_dict(d, indent=0):
+    for key, value in d.items():
+        print("  " * indent + str(key) + ": ", end="")
+        if isinstance(value, dict):
+            print()
+            print_dict(value, indent + 1)
+        else:
+            print(value)
+
+print_dict(person)
+
+# ===============================
+# recherche recursive 
+# ===============================
+def find_key(d, key):
+    if key in d:
+        return d[key]
+    for k, v in d.items():
+        if isinstance(v, dict):
+            result = find_key(v, key)
+            if result:
+                return result
+    return None
+
+phone = find_key(person, "phone")
+print(phone)  # Sortie : None (puisque l'élément 'phone' a été supprimé)
+```
+
