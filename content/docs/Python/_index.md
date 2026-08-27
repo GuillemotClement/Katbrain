@@ -4225,3 +4225,510 @@ phone = find_key(person, "phone")
 print(phone)  # Sortie : None (puisque l'élément 'phone' a été supprimé)
 ```
 
+## 13 - Fonction d'ordre supérieur 
+
+### Fonctions intégrées 
+
+#### `id()` - identifiant unique d'un objet 
+
+La fonction renvoie l'identifiant unique d'un objet. Cet identifiant est un entier et reste unique pour l'objet pendant toute sa durée d'existence. Il correspond généralement à l'adresse de l'objet en mémoire.
+
+```python 
+# =====================
+# id()
+# =====================
+a = [1, 2, 3]
+b = a
+print(id(a))  # Affiche l'identifiant de l'objet 'a'
+print(id(b))  # Affiche le même identifiant, car 'b' fait référence au même objet
+```
+
+#### `hash()` - hash d'un objet 
+
+La fonction renvoie la valeur de hachage pour l'objet spécifié si celui ci est hachage. Ces objets doivent être immuables et avoir une valeur de hachage constante pendant leur cycle de vie.
+
+Ces valeurs sont utilisées dans les dictionnaire et les ensembles pour une recherche rapide. Utilisé pour optimiser la recherche et le stockage des données, où des vérifications rapides d'égalité et d'unicité sont nécessaire.
+
+```python 
+# ==========================
+# hash()
+# ==========================
+print(hash("hello"))  # Renvoie la valeur de hachage de la chaîne "hello"
+print(hash(42))       # Renvoie la valeur de hachage du nombre 42
+print(hash((1, 2, 3)))  # Renvoie la valeur de hachage du tuple (1, 2, 3)
+```
+
+#### `dir()` - liste des attributs et méthodes d'un objet 
+
+La fonction retourne une liste des attributs et méthodes d'un objet. Si aucun objet n'est spécifié, retourne la liste des noms dans le scope local actuel. Cette fonction permet d'explorer la structure des objets et leurs attributs.
+
+```python 
+# =======================
+# dir()
+# =======================
+class MyClass:
+    def __init__(self):
+        self.name = "Alice"
+
+    def greet(self):
+        print("Hello, " + self.name)
+
+obj = MyClass()
+print(dir(obj))  # Affiche la liste des attributs et méthodes de l'objet 'obj'
+print(dir())     # Affiche la liste des noms dans le scope local actuel
+```
+
+### Travailler avec les collections 
+
+#### `zip()` 
+
+La fonction regroupe plusieurs objets itérable (listes, tuples, chaînes) et renvoie un itérateur de tuples. Chaque tuple contient des éléments rassemblés à partir de positions de mêne index de tous les objets itérables.
+
+```python
+# ===========================
+# zip()
+# ===========================
+names = ["Alice", "Bob", "Charlie"]
+ages = [25, 30, 35]
+combined = zip(names, ages)
+print(list(combined))  # Affiche : [('Alice', 25), ('Bob', 30), ('Charlie', 35)]
+```
+
+#### `max()` 
+
+Retourne le plus grand élément d'un objet itérable passé en argument ou parmis plusieurs arguments fournis. On peut spécifier une fonction clé pour déterminer la règle de comparaison 
+
+```python 
+# ========================
+# max()
+# ========================
+numbers = [1, 2, 3, 4, 5]
+print(max(numbers))  # Affiche : 5
+
+# Avec une fonction clé
+words = ["apple", "banana", "cherry"]
+print(max(words, key=len))  # Affiche : 'banana'
+```
+
+#### `min()`
+
+Renvoie le plus petit élément d'un objet itérable passé en argument ou parmis plusieurs arguments fournis. On peut spécifier une fonction clé pour déterminer la règle de comparaison 
+
+```python 
+# ========================
+# min()
+# ========================
+numbers = [1, 2, 3, 4, 5]
+print(min(numbers))  # Affiche : 1
+
+# Avec une fonction clé
+words = ["apple", "banana", "cherry"]
+print(min(words, key=len))  # Affiche : 'apple'
+```
+
+#### `count()`
+
+La fonction permet de compter le nombre d'occurence d'un élément dans un objet itérable, tel qu'uyne liste ou une chaîne de caractères. Appelée sur une liste, une collection ou un itérateur 
+
+```python 
+# =========================
+# count()
+# =========================
+numbers = [1, 2, 2, 3, 4, 2, 5]
+print(numbers.count(2))  # Affiche : 3
+
+text = "hello world"
+print(text.count("o"))  # Affiche : 2
+```
+
+#### `sum()`
+
+Retourne la somme de tous les éléments d'un objet itérable. On peut optionnellement spècifier une valeur initial qui sera ajoutée à la somme 
+
+```python 
+# ====================
+# sum()
+# ====================
+numbers = [1, 2, 3, 4, 5]
+print(sum(numbers))  # Affiche : 15
+
+# Avec une valeur initiale
+print(sum(numbers, 10))  # Affiche : 25'
+```
+
+### Exécution de code 
+
+#### `eval()`
+
+La fonction prend une chaîne et l'exécute comne une expression Python. Elle renvoie le résultat de l'exécution de cette expression. Utilisée pour évaluer des expressions sous forme de chaîne 
+
+```python 
+# ========================
+# eval()
+# =========================
+x = 10
+result = eval("x + 5")
+print(result)  # Affiche : 15
+```
+
+#### `exec()` 
+
+La fonction prend une chaîne et l'exécute comme du code Python. Peut exécuter n'importe quel instruction Python, y compris les définitions de fonctions, boucles et importation de module. La fonction ne retourne aucune valeur.
+
+Utilisée pour exécuter des scripts dynamique et définir de nouvelles fonctions ou classes pendant l'exécution du programme
+
+```python 
+# ===================
+# exec()
+# ===================
+code = """
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("Alice")
+"""
+exec(code)
+# Affiche : Hello, Alice!
+```
+
+### Fonction anonyme | lambda
+
+Fonctions compactes en une seule ligne sans nom. Elles sont crées à la volée et sont généraledment utilisées pour des opérations simple.
+
+#### Déclaration 
+
+```python
+# ======================
+# fonction anonyme
+# ======================
+# syntaxe
+lambda arguments: expression
+
+# lambda 
+square = lambda x: x ** 2
+print(square(5))  # Affiche: 25
+
+# normal 
+def square(x):
+    return x ** 2
+print(square(5))  # Affiche: 25
+
+# lambda
+sum = lambda a, b: a + b
+# normal 
+def sum(a, b):
+    return a + b
+```
+
+#### Utilisation 
+
+Les fonctions lambda sont généralement utiliser en combinaison avec d'autres fonctions ou comme arguments pour d'autres fonctions 
+
+##### `map()` 
+
+Applique une fonction donnée à chaque élément d'un objet itérable et renvoie un itérateur avec les résultats.
+
+```python 
+numbers = [1, 2, 3, 4, 5]
+squared_numbers = list(map(lambda x: x ** 2, numbers))
+print(squared_numbers)  # Affiche: [1, 4, 9, 16, 25]
+```
+
+##### `filter()`
+
+Retourne un itérateur composé des éléments d'un objet itérable pour lesquels une fonction donnée renvoie True.
+
+```python 
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+print(even_numbers)  # Affiche: [2, 4, 6, 8, 10]
+```
+
+##### `sorted()`
+
+Trie les éléments d'un objet itérable.
+
+```python 
+words = ["banana", "apple", "cherry", "date"]
+sorted_words = sorted(words, key=lambda x: len(x))
+print(sorted_words)  # Affiche: ['date', 'apple', 'banana', 'cherry']
+```
+
+##### Fonction anonyme comme argument 
+
+```python 
+pairs = [(1, 'one'), (2, 'two'), (3, 'three'), (4, 'four')]
+pairs.sort(key=lambda pair: pair[1])
+print(pairs)  # Affiche: [(4, 'four'), (1, 'one'), (3, 'three'), (2, 'two')]
+```
+
+### Closure 
+
+Une closure est une fonction qui capture les variables de son environnement immédiat, même après que cet environnement a terminé son exécution. La closure peut se souvenir des valeurs des variables de son environnement extérieur et continuer à travailler avec elles, même lorsque son environnement n'est plus actif
+
+```python 
+# exemple 
+def outer_function(x):
+    def inner_function(y):
+        return x + y
+
+    return inner_function
+
+closure = outer_function(10)
+print(closure(5))  # Sortie: 15
+```
+
+La fonction exterieur `outer_function` prends un argument `x` et définit une fonction interne `inner_function` qui prend un argument `y` et retourne la somme de `x` et `y`. La fonction `inner_function` n'est pas appelée à l'intérieur de `outer_function` mais seulement déclarè
+
+La fonction interne `inner_function` est retournée par `outer_function` et conserve une référence à la valeur de `x` qui à été passée à `outer_function`.
+
+La variable `closure` devient une closure qui se souvient de la valeur de `x` et peut l'utiliser.
+
+#### Fonction généractrice 
+
+Les closures peuvent être utilisées pour créer des fonction génératrice qui génèrent des séquence de valeurs 
+
+```python 
+def make_counter():
+    # variable 
+    count = 0
+
+    # closure
+    def counter():
+        # nonlocal pour modifier la valeur de la variable
+        nonlocal count
+        count += 1
+        return count
+
+    return counter
+
+counter = make_counter()
+print(counter())  # Sortie: 1
+print(counter())  # Sortie: 2
+print(counter())  # Sortie: 3
+```
+
+`make_counter` est la fonction génératrice. Elle créer une variable `count` et renvoie une fonction interne `counter` qui augmente la valeur de `count` et la retourne.
+
+La fonction `counter` conserve l'état de la variable `count` et peut modifier à chaque appel.
+
+#### Fonction avec configuration 
+
+```python 
+def make_multiplier(factor):
+    def multiplier(x):
+        return x * factor
+
+    return multiplier
+
+double = make_multiplier(2)
+triple = make_multiplier(3)
+
+print(double(5))  # Sortie: 10
+print(triple(5))  # Sortie: 15
+```
+
+La fonction configuratrice `make_multiplier` prends un multiplicator `factor` et retourne une fonction interne `multiplier` qui multiplie la valeur d'entrée par `factor`
+
+Les fonctions `double ` et `triple` sont des closures qui conservent leur propre valeurs de `factor` et les utilisent pour la multiplication.
+
+#### Filtrage de données avec paramètres 
+
+```python 
+def make_filter(threshold):
+    def filter_func(value):
+        return value > threshold
+
+    return filter_func
+
+filter_above_10 = make_filter(10)
+data = [5, 10, 15, 20]
+filtered_data = list(filter(filter_above_10, data))
+print(filtered_data)  # Sortie: [15, 20]
+```
+
+La fonction filtre `make_filter` prend une valeur seuil `thresold` et retourne une fonction interne `filter_func` qui vérifie si la valeur dépasse le seuil
+
+La fonction `filter_func` conserve la valeur de `threshold` et l'utilise pour filtrer les données
+
+### Générateurs 
+
+Fonctions qui retourne un objet itérateurs. Ces itérateurs génèrent des valeurs à la demande, ce qui permet de gérer de grandes quantités de données sans les charger entièrement en mémoire.
+
+#### Générateur avec fonctions - `yield`
+
+Utilise `yield` dans la fonction. Lorsque la fonction est appelée, elle retourne un objet générateur, mais n'exécute pas immédiatement le code dans la fonction. L'exécution est suspendue à l'expression `yield` et reprends à chaque appel de la méthode `__next__()` de l'objet générateur.
+
+Si une fonction contient une instruction `yield`, Python créer un objet générateur qui gère l'état d'exécution de la fonction au lieu de l'exécuter.
+
+```python 
+def count_up_to(max):
+    count = 1
+    while count <= max:
+        yield count
+        count += 1
+
+counter = count_up_to(5)
+print(next(counter))  # Sortie: 1
+print(next(counter))  # Sortie: 2
+print(next(counter))  # Sortie: 3
+print(next(counter))  # Sortie: 4
+print(next(counter))  # Sortie: 5
+```
+
+#### Expression génératrice 
+
+Retourne un objet générateur 
+
+```python 
+squares = (x ** 2 for x in range(10))
+
+print(next(squares))  # Sortie: 0
+print(next(squares))  # Sortie: 1
+print(next(squares))  # Sortie: 4
+```
+
+### Avantage 
+
+**Utilisation efficase de la mémoire**
+
+Les générateurs calculent les valeurs à la volée, ce qui permet de traiter de grandes quantités de données sans les charger entièrement en mémoire. Cela rend les générateurs idéaux pour travailler avec de grands ensembles de données ou des flux de données.
+
+```python 
+def large_range(n):
+    for i in range(n):
+        yield i
+
+for value in large_range(1000000):
+    # Traiter les valeurs une par une
+    print(value)
+```
+
+**Calculs paresseux**
+Les générateurs effectuent des calculs paresseux, ce qui signifie qu'ils calculent les valeurs uniquement lorsqu'elles sont nécessaires. Cela permet d'éviter des calculs inutiles et d'améliorer les performances.
+
+```python 
+def fibonacci():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+fib = fibonacci()
+for _ in range(10):
+    print(next(fib))
+```
+
+### Utilisation 
+
+#### Séquence infinie
+
+Permet de générer des flux de données infinis
+
+```python 
+def natural_numbers():
+    n = 1
+    while True:
+        yield n
+        n += 1
+
+naturals = natural_numbers()
+for _ in range(10):
+    print(next(naturals))
+```
+
+#### Utilisation de `send()` et `close()`
+
+```python
+def echo():
+    while True:
+        received = yield
+        print(received)
+
+e = echo()
+next(e)  # Lancer le générateur
+e.send("Hello, world!")  # Sortie: Hello, world!
+e.close()
+```
+
+#### Générateurs et exceptions 
+
+Les générateurs peuvent gérer les exceptions
+
+```python 
+def controlled_execution():
+    try:
+        yield "Start"
+        yield "Working"
+    except GeneratorExit:
+        print("Generator closed")
+
+gen = controlled_execution()
+print(next(gen))  # Sortie: Start
+print(next(gen))  # Sortie: Working
+gen.close()  # Sortie: Generator closed
+```
+
+#### Générateur imbriqués
+
+```python 
+def generator1():
+    yield from range(3)
+    yield from "ABC"
+
+for value in generator1():
+    print(value)
+
+"""
+# Sortie
+0
+1
+2
+A
+B
+C
+"""
+```
+
+#### Générateur et performance 
+
+```python
+import time
+import sys
+
+def memory_usage(obj):
+    return sys.getsizeof(obj)
+
+n = 10_000_000
+
+# Utilisation d'une liste
+start_time = time.time()
+list_comp = [x ** 2 for x in range(n)]
+list_time = time.time() - start_time
+list_memory = memory_usage(list_comp)
+
+# Utilisation d'un générateur
+start_time = time.time()
+gen_comp = (x ** 2 for x in range(n))
+gen_result = sum(gen_comp)  # Calculer la somme pour comparer les résultats
+gen_time = time.time() - start_time
+gen_memory = memory_usage(gen_comp)
+
+print(f"Liste:")
+print(f"  Temps: {list_time:.2f} sec")
+print(f"  Mémoire: {list_memory:,} octets")
+
+print(f"\nGénérateur:")
+print(f"  Temps: {gen_time:.2f} sec")
+print(f"  Mémoire: {gen_memory:,} octets")
+
+"""
+Liste:
+  Temps: 0.62 sec
+  Mémoire: 89,095,160 octets
+
+Générateur:
+  Temps: 1.13 sec
+  Mémoire: 200 octets
+"""
+```
