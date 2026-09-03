@@ -1,6 +1,6 @@
 # Python 
 
-## Affichage
+## 01 - Affichage
 
 ### `print()` - affichage
 
@@ -74,7 +74,7 @@ print(output.format(name="Sergueï", company="Google"))
 
 ---
 
-## Variable 
+## 02 - Variable 
 
 Lorsque l'on créer une variable en Python, cela vient créer une référence vers un objet en mémoire. Python alloue un objet en mémoire pour cette valeur et fait de la variable, une référence vers cette objet. Si on assigne une variable à une autre, la nouvelle variable référencera le même objet que la variable d'origine. Les modifications sur l'une des variables viendras donc modifier la seconde.
 
@@ -431,7 +431,7 @@ print("Dans 10 ans, vous aurez " + str(age + 10) + " ans.")
 
 ---
 
-## Commentaire 
+## 03 - Commentaire 
 
 ```python
 # Ceci est un commentaire sur une seule ligne
@@ -453,7 +453,7 @@ def add(a, b):
 
 ---
 
-## Arithmetique 
+## 04 - Arithmetique 
 
 ### Opérateur mathématique 
 
@@ -514,7 +514,7 @@ print(5 <= 4)  # Affiche : False (Faux)
 
 ---
 
-## Conversion de type 
+## 05 - Conversion de type 
 
 ### `int()` - conversion en entier 
 
@@ -584,7 +584,7 @@ print(float(false_bool))  # Affiche: 0.0
 
 ---
 
-## Condition 
+## 06 - Condition 
 
 ### `if`, `elif`, `else`
 
@@ -655,7 +655,7 @@ min = a if a < b else b
 ```
 ---
 
-## Environnement Python
+## 07 - Environnement Python
 
 ### Environnement virtuel `.venv`
 
@@ -987,7 +987,7 @@ print(tokyo_dt)  # Résultat : 2023-05-24 23:30:45+09:00
 
 ---
 
-## Boucle 
+## 08 - Boucle 
 
 ### `for` - boucler sur une liste
 
@@ -1184,7 +1184,7 @@ for i in range(1, n + 1):
 
 ---
 
-## Fonction 
+## 09 - Fonction 
 
 Les fonctions sont des objets de première classe, ce qui signifie qu'elle peuvent être utilisées comme n'importe quel objet.
 
@@ -1576,7 +1576,7 @@ greet("Alice", greeting="Hi")  # Sortie: Hi, Alice!
 
 ---
 
-## List 
+## 10 - List 
 
 Une liste permet de stocker une liste d'éléments. Chacun sera placé à un index.
 
@@ -2258,9 +2258,21 @@ original = [[1, 2], [3, 4]]
 deep_copy = copy.deepcopy(original)
 ```
 
+### Conversion de liste 
+
+#### `.join()` - conversion en string 
+
+`.join()` permet de convertir une liste en string. Devant la méthode est placer le sépérateur à utiliser entre chaque élément, et en argument on vient passer la liste à convertir.
+
+```python 
+a = ["Python", "is", "simple"]
+res = " ".join(a)
+print(res)
+```
+
 ---
 
-## Tuple
+## 11 - Tuple
 
 ### Créaton
 
@@ -2783,7 +2795,7 @@ locations = (("New York", (40.7128, -74.0060)),
 
 ---
 
-## Set (ensemble)
+## 12 - Set (ensemble)
 
 Un set, ou ensemble est un groupe d'éléments unique non ordonner mutable
 
@@ -3399,7 +3411,7 @@ print(s_diff)  # Affichage: {1, 2, 4, 5}
 
 ---
 
-## String
+## 13 - String
 
 ### Déclaration 
 
@@ -3778,7 +3790,7 @@ print(d)  # Résultat: {frozenset({1, 2, 3}): 'first', frozenset({3, 4, 5}): 'se
 
 ---
 
-## 11 - Dictionnaire 
+## 14 - Dictionnaire 
 
 Collection de paires clé-valeur, oà chaque clé est unique.
 
@@ -4627,7 +4639,7 @@ phone = find_key(person, "phone")
 print(phone)  # Sortie : None (puisque l'élément 'phone' a été supprimé)
 ```
 
-## 13 - Fonction d'ordre supérieur 
+## 15 - Fonction d'ordre supérieur 
 
 ### Fonctions intégrées 
 
@@ -5135,7 +5147,7 @@ Générateur:
 """
 ```
 
-## 14 - Décorateurs
+## 16 - Décorateurs
 
 Fonctions qui prennent une autre fonction en tant qu'argument et retourne une nouvelle fonction, modifiant ou étendant le comportement de la fonction d'origine. 
 
@@ -5389,7 +5401,7 @@ print(fib(35))
 
 ---
 
-## 15 - POO
+## 17 - POO
 
 ### Création de classes et objets
 
@@ -5568,4 +5580,701 @@ except ValueError as e:
 
 En Python, il existe différents niveaux d'accès aux attributs et méthodes de classes.
 
+- `_`: itilisé pour les attributs et méthodes ne devant pas être utilisée en dehors de la classe ou du module.
+- `__`: utilisés pour les attributs et méthodes devant être privés et protégé contre un accès accidentiel ou intentionnel depuis l'extérieur. 
 
+#### Accés public 
+
+Les attributs et méthodes publiques sont accessible de n'importe où dans le code. Par défaut, tous les attributs et méthodes sont publics si leurs nom ne commence pas par un soulignement.
+
+```python 
+class MyClass:
+    def __init__(self):
+        self.public_attribute = "I am public"
+
+    def public_method(self):
+        return "This is a public method"
+
+
+obj = MyClass()
+print(obj.public_attribute)  # Disponible
+print(obj.public_method())  # Disponible
+```
+
+#### Champs et méthodes protégés - `protected` 
+
+Les champs et méthodes sont protégé par un souligmenent `_` devant leur nom, et sont destiné à une utilisation interne dans la classe et sous classe. C'est une convention qui indique au dev que les données ne sont pas destinées à être utilisées en dehors de la classe.
+
+```python 
+class MyClass:
+    def __init__(self):
+        self._protected_attribute = "I am protected"
+
+    # soulignement indique une méthode protected
+    def _protected_method(self):
+        return "This is a protected method"
+
+
+obj = MyClass()
+print(obj._protected_attribute)  # Disponible, mais déconseillé
+print(obj._protected_method())  # Disponible, mais déconseillé
+```
+
+#### Champs et méthodes privés - `private`
+
+Les attributs et méthodes private sont désignés par deux soulignements `__` devant le nom. Ces attributs et méthodes sont destiné à une utiliser interne de la classe. Permettent de cacher l'implémentation interne et protégée les données contre des modifications de l'extérieur.
+
+```python
+class MyClass:
+    def __init__(self):
+        # soulignement double indique un attiribut private 
+        self.__private_attribute = "I am private"
+
+    def __private_method(self):
+        return "This is a private method"
+
+    def access_private_method(self):
+        return self.__private_method()
+
+
+obj = MyClass()
+# print(obj.__private_attribute)  # Erreur, inaccessible directement
+# print(obj.__private_method())  # Erreur, inaccessible directement
+print(obj.access_private_method())  # Accessible via la méthode publique de la classe
+
+# ==================================================
+# accès direct 
+# ==================================================
+class MyClass:
+    def __init__(self):
+        self.__private_attribute = "I am private"
+
+obj = MyClass()
+print(obj._MyClass__private_attribute)  # Affiche : I am private
+
+# ==================================================
+# affichage des noms déformés
+# ==================================================
+class MyClass:
+    def __init__(self):
+        self.__private_attribute = "I am private"
+
+obj = MyClass()
+print(dir(obj))  # Affiche tous les attributs et méthodes de l'objet, y compris les noms "déformés"
+```
+
+### `__str__` 
+
+Cette méthode est appelée automatiquement lorsque l'on essaie de convertir un objet en chaîne avec `print()` et `str()`
+
+```python 
+class Cat:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"{self.name} is {self.age} years old"
+
+
+cat = Cat("Barsik", 5)
+print(cat)  # Affiche : Barsik is 5 years old
+```
+
+### `__len__`
+
+Cette méthode est appeler automatiquement lorsque l'on souhaite obtenir la longueur d'un objet avec `len()`
+
+```python 
+class MyList:
+    def __init__(self, items):
+        self.items = items
+
+    def __len__(self):
+        return len(self.items)
+
+
+my_list = MyList([1, 2, 3])
+print(len(my_list))  # Affiche : 3
+```
+
+### Héritage 
+
+L'héritage permet à une classe d'hériter des champs et méthodes d'une autre classe. On peut venir utiliser une classe parent qui contient des méthodes également utiliser dans une classe enfant, et ajouter de nouvelle méthodes et attributs spécifique à la classe enfant.
+
+Lors de la déclaration de la classe enfant, on vient passer en argument la classe parent.
+
+```python 
+# ==================================
+# héritage simple 
+# ==================================
+# définition d'une classe parent 
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+# défintion des clase enfants
+class Dog(Animal):
+    def speak(self):
+        return f"{self.name} dit Woof!"
+
+class Cat(Animal):
+    def speak(self):
+        return f"{self.name} dit Meow!"
+
+dog = Dog("Buddy")
+cat = Cat("Whiskers")
+
+print(dog.speak())  # Affiche: Buddy dit Woof!
+print(cat.speak())  # Affiche: Whiskers dit Meow!
+```
+
+#### Hiérarchie d'héritage 
+
+```python 
+# classe de base parent abstraite
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    # lance une erreur lorsque cette méthode n'est pas implémenter par une classe enfant
+    def speak(self):
+        raise NotImplementedError("Subclass must implement abstract method")
+
+# défintion des classes intermédiaire qui correspondent au catérgorie d'animaux 
+class Mammal(Animal):
+    def __init__(self, name, fur_color):
+        super().__init__(name)  # Appel du constructeur de la classe parente
+        self.fur_color = fur_color
+
+
+class Bird(Animal):
+    def __init__(self, name, wing_span):
+        super().__init__(name)  # Appel du constructeur de la classe parente
+        self.wing_span = wing_span
+
+    def fly(self):
+        return f"{self.name} vole avec une envergure de {self.wing_span} mètres."
+
+# définition des classes enfant qui hérite de la classe Animal et de leur espèce spécifique 
+# dans chacune d'elle ont implémente la méthode absatraite speak()
+class Dog(Mammal):
+    def speak(self):
+        return f"{self.name} dit Woof!"
+
+
+class Cat(Mammal):
+    def speak(self):
+        return f"{self.name} dit Meow!"
+
+class Parrot(Bird):
+    def speak(self):
+        return f"{self.name} dit Squawk!"
+
+# utilisation 
+animals = [Dog("Buddy", "brown"), Cat("Whiskers", "white"), Parrot("Polly", 0.5)]
+
+for animal in animals:
+    print(animal.speak())
+
+print(f"{dog.name} a un pelage {dog.fur_color}.")  # Affiche: Buddy a un pelage marron.
+print(f"{cat.name} a un pelage {cat.fur_color}.")  # Affiche: Whiskers a un pelage blanc.
+print(parrot.fly())  # Affiche: Polly vole avec une envergure de 0.5 mètres.
+```
+
+### `super()` - appel du parent 
+
+La méthode `super()` permet d'appeler des méthodes de la classe parent depuis l'intérieur d'une classe enfant. 
+
+#### Appel du constructeur du parent 
+
+Le constructeur parent doit être appelé explicitement. Il est souvent nécessaire de leur passer des arguments spécifique.
+
+```python 
+class Animal:
+    # le constructeur parent possède deux paramètres
+    def __init__(self, type, name):
+        self.type = type
+        self.name = name
+
+# le constructeur de la classe enfant ne possède qu'un paramètre
+class Dog(Animal):
+    def __init__(self, name):
+        # premier argument correspond au type 
+        # deuxieme argument correspond au name de l'enfant
+        super().__init__("Chien", name)  # Appel du constructeur de la classe de base
+
+class Cat(Animal):
+    def __init__(self, name):
+        super().__init__("Chat", name)  # Appel du constructeur de la classe de base
+
+
+# Création d'un objet Dog
+dog = Dog("Buddy")
+print(dog)
+```
+
+#### Appel de méthode du parent 
+
+**Appel d'une méthode parent dans une méthode dérivée**
+
+```python 
+class Animal:
+    def speak(self):
+        return "Un son animal générique"
+
+
+class Dog(Animal):
+    def speak(self):
+        parent_speech = super().speak()  # Appel de la méthode de la classe parente
+        return f"{parent_speech} Et le chien aboie !"
+
+dog = Dog()
+print(dog.speak())  # Affichera : Un son animal générique Et le chien aboie !
+```
+
+**Appel d'une méthode parent pour vérifier un état**
+
+```python 
+class Animal:
+    def check_health(self):
+        return "L'animal est en bonne santé"
+
+
+class Dog(Animal):
+    def check_health(self):
+        parent_check = super().check_health()  # Appel de la méthode de la classe parente
+        return f"{parent_check}. Le chien a besoin d'une promenade !"
+
+dog = Dog()
+print(dog.check_health())  # Affichera : L'animal est en bonne santé. Le chien a besoin d'une promenade !
+```
+
+**Appel d'une méthode parent dans une méthode modifiant l'état**
+
+```python
+class BankAccount:
+    def __init__(self, balance):
+        self.balance = balance
+
+
+    def withdraw(self, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+            return f"Retrait de {amount}. Nouveau solde : {self.balance}"
+        return "Fonds insuffisants"
+
+
+class SavingsAccount(BankAccount):
+    def withdraw(self, amount):
+        if amount > 1000:
+            return "Limite de retrait dépassée"
+        return super().withdraw(amount)  # Appel de la méthode de la classe parente
+
+
+savings = SavingsAccount(1500)
+print(savings.withdraw(500))  # Affichera : Retrait de 500. Nouveau solde : 1000
+print(savings.withdraw(1500))  # Affichera : Limite de retrait dépassée
+```
+
+### Polymorphisme 
+
+Le polymorphisme permet aux objets de différentes classes d'utiliser la même interface. On utilise la surchage de méthode et la substitution des méthodes de la classe de base par des méthodes de la classe dérivée.
+
+Dans l'exemple, les trois classes ont une méthode du même nom `moove()`. Cela signifie que l'on peut écrire du code qui fonctionne avec ces trois objets.
+
+Dans ce cas, l'interface commune est le nom de la méthode
+
+```python 
+class Car:
+    def move(self):
+        pass
+
+class Human:
+    def move(self):
+        pass
+
+class Bird:
+    def move(self):
+        print("Cui-cui!")
+
+car = Car()
+human = Human()
+bird = Bird()
+
+for it in [car, human, bird]:
+    it.move()
+```
+
+#### Redéfinition de méthodes 
+
+La classe parent définit une interface commune, et les sous classes implémentent des détails spécifique. 
+
+Dans cet exemple, les classes ne sont pas obligées d'avoir la méthode `get_salary()` car elle n'existe pas toujours dans la classe parent. L'interface commune de toutes les classes n'est plus la méthode `get_salary()` mais la classe `Employee` avec toutes ses méthodes et attributs.
+
+```python 
+class Employee:
+    # méthode de base
+    def get_salary(self):
+        return 1000
+
+class FullTimeEmployee(Employee):
+    # redéfinition de méthode
+    def get_salary(self):
+        return 5000
+
+class PartTimeEmployee(Employee):
+    def get_salary(self):
+        return 3000
+
+class Intern(Employee):
+    pass
+
+def print_salary(employee):
+    print(employee.get_salary())
+
+employees = [FullTimeEmployee(), PartTimeEmployee(), Intern()]
+
+for employee in employees:
+    print_salary(employee)
+```
+
+#### Appel de méthodes de classe dérivée
+
+```python 
+class Employee:
+    def print_salary(self):
+        salary = self.get_salary()
+        print(salary)
+
+    def get_salary(self):
+        return 1000
+
+class FullTimeEmployee(Employee):
+    # on peut tuiliser print_salary() -> c'est la méthode parent qui sera utiliser
+    # print_salary() appelle alors get_salary de l'objet self - FullTimeEmployee
+    def get_salary(self):
+        return 5000
+
+class PartTimeEmployee(Employee):
+    def get_salary(self):
+        return 3000
+
+    # retourne le salaire en pourcentage du taux de base
+    def get_pourcent_salaire_base(self):
+        base_salary - super().get_salary() # appel du champ de la class parent
+        return base_salary * 5 
+
+class Intern(Employee):
+    pass
+
+employees = [FullTimeEmployee(), PartTimeEmployee(), Intern()]
+
+for employee in employees:
+    employee.print_salary()
+```
+
+#### Surcharge de méthode 
+
+Capacitée de créer plusieurs méthodes avec le même nom mais avec des paramètres différents. On utilise `*args` et `**kwargs` 
+
+```python 
+# ============================
+# exemple surcharge de méthode en fonction du nombre d'argument
+# ============================
+class Example:
+    def display(self, a=None, b=None):
+        if a is not None and b is not None: print(a, b)
+        elif a is not None: print(a)
+        else: print("Pas d'arguments")
+
+
+obj = Example()
+obj.display(1, 2)  # Output: 1 2
+obj.display(1)  # Output: 1
+obj.display()  # Output: Pas d'arguments
+
+# =======================================
+# surchage en fonction du type 
+# =======================================
+class Example:
+    def mod(self, a, b):
+        if type(a) == int and type(b) == int: print(a % b)
+        elif type(a) == float or type(b) == float: print(round(a / b))
+        else: print("Instruction d'aide : a et b doivent être int ou float")
+
+
+obj = Example()
+obj.mod(5, 2)  # Output: 1
+obj.mod(5.0, 2)  # Output: 2
+obj.mod("5", 2)  # Output: Instruction d'aide : a et b doivent être int ou float
+```
+
+### Vérification des types 
+
+Python fournit des fonctions pour vérifier les types et les classes d'objets.
+
+#### `type()`
+
+Retourne le type d'un objet. Elle permet également de créer de nouvelle classe.
+
+```python 
+# ===============================
+# vérification de type 
+# ===============================
+x = 10
+print(type(x))  # Output: <class 'int'>
+```
+
+Lorsqu'on vient lui passer trois argument, elle vient créer un nouveau type (classe):
+- `name`: nom de la classe créer 
+- `bases`: tuple de classes de base dont la nouvelle classe hérite
+- `dict`: dictionnaire contenant les attributs et méthodes de la nouvelle classe
+
+```python
+# ================================
+# syntaxe
+# ================================
+type(name, bases, dict)
+
+# ================================
+# création d'une classe simple 
+# ================================
+MyClass = type('MyClass', (), {'say_hello': lambda self: print("Hello!")})
+
+instance = MyClass()
+instance.say_hello()  # Output: Hello!
+
+# =================================
+# création d'une classe complexe
+# =================================
+MyClass = type('MyClass', (), {
+    'attribute': 42,
+    '__init__': lambda self, value: setattr(self, 'value', value),
+    'display_value': lambda self: print(self.value)
+})
+
+# Créons une instance de la classe
+instance = MyClass(10)
+print(instance.attribute)  # Output: 42
+instance.display_value()  # Output: 10
+```
+
+#### `isinstance()`
+
+Permet de vérifier si un objet appartient à une classe spécifique ou à un tuple de classes. Elle retourne `True` si l'objet est une instance de la classe spécifiée ou de n'importe laquelle des classes spécifiée dans le tuple.
+
+Fonctionne avec l'héritage.
+
+- `object`: objet à vérifier 
+- `classinfo`: classe, type ou tuple de classe et de types auxquels l'objet sera comparé
+
+```python
+# ===============================
+# syntaxe
+# ===============================
+isinstance(object, classinfo)
+
+# ================================
+# vérification appartenance à une seule classe 
+# ================================
+x = 10
+print(isinstance(x, int))  # Output: True
+
+y = "Hello"
+print(isinstance(y, str))  # Output: True
+
+# =================================
+# vérification d'appartenance à plusieurs classes 
+# ==================================
+x = 10
+print(isinstance(x, (int, float)))  # Output: True
+
+y = "Hello"
+print(isinstance(y, (int, str)))  # Output: True
+
+z = 3.14
+print(isinstance(z, (int, str)))  # Output: False
+
+# ========================================
+# vérification d'appartenance à des classes personnalisées
+# ==========================================
+class Animal:
+    pass
+
+class Dog(Animal):
+    pass
+
+dog = Dog()
+
+print(isinstance(dog, Dog))  # Output: True
+print(isinstance(dog, Animal))  # Output: True
+```
+
+#### `issubclass()`
+
+Permet de vérifier si une classe est une classe enfant d'une autre classe. Retourne `True` ou `False`
+
+```python 
+# ===================================
+# vérification appartenance à une seule classe 
+# =====================================
+class Animal:
+    pass
+
+class Dog(Animal):
+    pass
+
+print(issubclass(Dog, Animal))  # Output: True
+print(issubclass(Animal, Dog))  # Output: False 
+
+# =============================================
+# vérification appartenance à plusieurs classes
+# =============================================
+class Animal:
+    pass
+
+class Dog(Animal):
+    pass
+
+class Cat(Animal):
+    pass
+
+print(issubclass(Dog, (Animal, Cat)))  # Output: True
+print(issubclass(Dog, (Cat,)))  # Output: False
+
+# =============================================
+# classe personnalisée
+# =============================================
+class MyInt(int):
+    pass
+
+print(issubclass(MyInt, int))  # Output: True
+print(issubclass(int, MyInt))  # Output: False
+
+# ==============================================
+# hiérarchie d'héritage
+# ==============================================
+class A:
+    pass
+
+class B(A):
+    pass
+
+class C(B):
+    pass
+
+print(issubclass(C, A))  # Output: True
+print(issubclass(C, B))  # Output: True
+print(issubclass(B, A))  # Output: True
+print(issubclass(A, C))  # Output: False
+```
+
+### Héritage multiple 
+
+Une classe peut hériter de plus d'une classe parente. Les classes parents sont énumérer dans les parenthèses lors de l'implémentation de la classe enfant.
+
+```python
+# =========================================
+# héritage multiple 
+# =========================================
+class Base1:
+    def method1(self):
+        print("Method1 from Base1")
+
+class Base2:
+    def method2(self):
+        print("Method2 from Base2")
+
+class Derived(Base1, Base2):
+    pass
+
+obj = Derived()
+obj.method1()
+obj.method2()
+
+# ========================================================
+# appel de méthode dans plusieurs classe parent
+# ========================================================
+class Base1:
+    def method(self):
+        print("Method from Base1")
+
+class Base2:
+    def method(self):
+        print("Method from Base2")
+
+class Derived(Base1, Base2):
+    pass
+
+
+obj = Derived()
+obj.method() # appel de la méthode la premiere classe parent -> Base1 car passer en première
+
+# ============================================================
+# utilisation de super()
+# ============================================================
+class Base1:
+    def method(self):
+        print("Method from Base1")
+        super().method()
+
+class Base2:
+    def method(self):
+        print("Method from Base2")
+        super().method()
+
+class Derived(Base1, Base2):
+    def method(self):
+        print("Method from Derived")
+        super().method()
+
+
+obj = Derived()
+obj.method()
+
+""" sortie
+Method from Derived
+Method from Base1
+Method from Base2
+"""
+```
+
+### Method Resolution Order (MRO)
+
+Le MRO détermine la séquence dans laquelle Python recherche les méthodes et attributs dans la hiérarchie des classes. 
+
+L'algo détermine le MRO en comnbinant la classe, la liste des classes parent dans l'ordre et le MRO des classes parent.
+
+#### `__mro__` et `mro()`
+
+Permet de vérifier l'ordre de recherche des méthodes et attributs d'une classe.
+
+```python 
+class A:
+    def method(self):
+        print("A")
+
+class B(A):
+    def method(self):
+        print("B")
+
+class C(A):
+    def method(self):
+        print("C")
+
+class D(B, C):
+    def method(self):
+        print("D")
+
+
+# Vérification du MRO
+print(D.__mro__)
+
+"""sortie
+(<class '__main__.D'>,
+<class '__main__.B'>,
+<class '__main__.C'>,
+<class '__main__.A'>,
+<class 'object'>)"""
+```

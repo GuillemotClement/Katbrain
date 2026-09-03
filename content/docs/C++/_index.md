@@ -105,31 +105,6 @@ int main()
 }
 ```
 
-### Utilisation pour des calculs
-
-- `+`: addition
-- `-`: soustraction
-- `*`: multiplication
-- `/`: division
-- `%`: modulo
-
-La division de nombre entier aura pour résultat un nombre entier. La partie décimal sera ignoré
-
-```c++
-#include <iostream>
-using namespace std;
-
-int main()
-{
-  int resultat(0), a(5), b(8);
-
-  resultat = a + b;
-
-  cout << "5 + 8 = " << resultat << endl;
-  return 0;
-}
-```
-
 ## Référence
 
 C++ permet d'utiliser d'autre "etiquette" pour faire référence à un emplacement mémoire. IT's like alias.
@@ -243,5 +218,241 @@ int main()
   cout << "Vous vous appelez " << username << " et vous pensez que pi vaut " << piUser << "." << endl;
 
   return 0;
+}
+```
+
+---
+
+## Mathématique 
+
+- `+`: addition
+- `-`: soustraction
+- `*`: multiplication
+- `/`: division
+- `%`: modulo
+
+La division de nombre entier aura pour résultat un nombre entier. La partie décimal sera ignoré
+
+```c++
+#include <iostream>
+using namespace std;
+
+int main()
+{
+  int resultat(0), a(5), b(8);
+
+  resultat = a + b;
+
+  cout << "5 + 8 = " << resultat << endl;
+  return 0;
+}
+```
+
+Syntaxe courte :
+
+```c++
+double nombre(5.3);
+nombre += 4.2;       //'nombre' vaut maintenant 9.5
+nombre *= 2.;        //'nombre' vaut maintenant 19
+nombre -= 1.;        //'nombre' vaut maintenant 18
+nombre /= 3.;        //'nombre' vaut maintenant 6
+return 0;
+```
+
+### Incrémentation et décrémentation
+
+```c++
+// incrémentation
+int nombreJoueur(4); //Il y a 4 joueurs dans la partie
+nombreJoueur++;
+//À partir d'ici, il y a 5 joueurs
+
+// décrémentation
+int nombreJoueur(4); //Il y a 4 joueurs dans la partie
+nombreJoueur--; //On en enlève un
+//À partir d'ici, il y a 3 joueurs
+```
+
+### `<cmath>` - lib 
+
+```c++
+// racine carré
+#include <iostream>
+#include <cmath>  //Ne pas oublier cette ligne 
+using namespace std;
+
+int main()
+{
+    double const nombre(16); //Le nombre dont on veut la racine
+                             //Comme sa valeur ne changera pas on met 'const'
+    double resultat;         //Une case mémoire pour stocker le résultat
+
+    resultat = sqrt(nombre);  //On effectue le calcul !
+
+    cout << "La racine de " << nombre << " est " << resultat << endl;
+
+    return 0;
+}
+```
+
+---
+
+## Condition 
+
+- `==` : égalité
+- `>`: supérieur
+- `>=`: supérieur ou égale
+- `<`: inférieur 
+- `<=`: inférieur ou égale 
+- `!=`: différent
+
+### `if else`
+
+```c++
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int nbAnimaux(2);
+
+    if (nbAnimaux == 0)
+    {
+        cout << "Vous n'avez pas d'animaux de compagnie" << endl;
+    }
+    else if (nbAnimaux == 1)
+    {
+        cout << "C'est super d'avoir un fidele compagnon !" << endl;
+    }
+    else if (nbAnimaux == 2)
+    {
+        cout << "Ca doit en faire du monde a la maison !" << endl;
+    }
+    else
+    {
+        cout << "Votre budget croquettes doit etre important" << endl;
+    }
+
+    cout << "Fin du programme" << endl;
+    return 0;
+}
+```
+
+### `switch`
+
+```c++
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int nbAnimaux(2);
+
+    switch (nbAnimaux)
+    {
+        case 0:
+            cout << "Vous n'avez pas d'animaux de compagnie" << endl;
+            break;
+
+        case 1:
+            cout << "C'est super d'avoir un fidele compagnon !" << endl;
+            break;
+
+        case 2:
+            cout << "Ca doit en faire du monde a la maison !" << endl;
+            break;
+
+        default:
+            cout << "Votre budget croquettes doit etre important" << endl;
+            break;
+    }
+
+    return 0;
+}
+```
+
+### Vérification avec boolean 
+
+```c++
+bool adulte(true);
+
+if (adulte)
+{
+    cout << "Vous etes un adulte !" << endl;
+}
+```
+
+### Opérateur conditionelle 
+
+- `&&`: ET 
+- `||`: OU 
+- `!`: NOT 
+
+```c++
+// ET 
+if (adulte and nbEnfants >= 1)
+
+// OR 
+if (nbEnfants == 1 or nbEnfants == 2)
+
+// NOT 
+if (not adulte)
+```
+
+---
+
+## Boucle
+
+### `while` 
+
+```c++
+int main()
+{
+    int nbEnfants(-1); // Nombre négatif pour pouvoir entrer dans la boucle
+
+    while (nbEnfants < 0)
+    {
+        cout << "Combien d'enfants avez-vous ?" << endl;
+        cin >> nbEnfants;
+    }
+
+    cout << "Merci d'avoir indique un nombre d'enfants correct. Vous en avez " << nbEnfants << endl;
+
+    return 0;
+}
+```
+
+### `do ...while`
+
+```c++
+int main()
+{
+    int nbEnfants(0);
+
+    do
+    {
+        cout << "Combien d'enfants avez-vous ?" << endl;
+        cin >> nbEnfants;
+    } while (nbEnfants < 0);
+
+    cout << "Merci d'avoir indique un nombre d'enfants correct. Vous en avez " << nbEnfants << endl;
+
+    return 0;
+}
+```
+
+### `for`
+
+```c++
+int main()
+{
+    for (int compteur(0) ; compteur < 10 ; compteur++)
+    {
+        cout << compteur << endl;
+    }
+
+    return 0;
 }
 ```
