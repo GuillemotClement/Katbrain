@@ -6278,3 +6278,20 @@ print(D.__mro__)
 <class '__main__.A'>,
 <class 'object'>)"""
 ```
+
+--- 
+
+## 18 - Erreurs et exceptions 
+
+Les erreurs et exceptions sont une partie intégrante d'un programme. Elles surviennent lorsque le programme rencontre des situations imprévue qu'il ne peut pas gérer. En Python, il existe un système de gestion des exceptions qui permet de capturer et gérer les erreurs, empêchant le programme de se terminer.
+
+Les exceptions surviennent le plus souvent dans ces situations :
+
+- **Erreurs de syntaxe**
+Détecté lors de la compilation du code. 
+
+- **Erreur d'exécution**
+Surviennent pendant l'exécution du programme et pouvant être causé par différentes raison comme la division par zéro, accès à une index de liste inexistant, etc 
+
+- **Erreur logique**
+Lorsque le programme retourne des résultats incrorrect en raison d'une erreur de logique.
