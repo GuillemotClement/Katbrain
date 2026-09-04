@@ -6687,3 +6687,187 @@ def function_a():
 
 function_a()
 ```
+
+### Lancement d'exception 
+
+L'instruction `raise` permet de lancer des exceptions. Cela permet de signaler une erreur ou une situation incorrect dans le programme.
+
+```python 
+# ==============================
+# lancer une exception standard
+# ==============================
+def check_number(value):
+    if value < 0:
+        raise Exception("Désolé, pas de nombres en dessous de zéro")
+
+try:
+    check_number(-5)
+except Exception as e:
+    print(f"Exception capturée : {e}")
+```
+
+#### Remballage d'exception 
+
+Il est parfois nécessaire de capture une exception, puis d'en lancer une autre en fournissant des informations plus spécifique. 
+
+```python 
+# =================================
+# syntaxe
+# =================================
+raise nouvelle_exception from ancienne_exception 
+
+# ==================================
+# remballage d'exception 
+# ==================================
+class EmptyVariableError(Exception):
+    pass
+
+def check_non_empty(value):
+    if value == "":
+        raise ValueError("La variable est vide")
+
+try:
+    check_non_empty("")
+except ValueError as e:
+    # remballage 
+    raise EmptyVariableError("Variable vide détectée") from e
+```
+
+Dans l'exemple, si la variable est vide, une `ValueError` est lancé avec un message. Cette exception est ensuite capturée, et une nouvelle exception `EmptyVarialeError` est lancée avec le mnessage "Variable vide détecté", tout en transmettant l'exception d'origine avec `from`
+
+### Exception personnalisée
+
+Créer une exception personnalisée implique de définir une nouvelle classe qui hérite de la class `Exception`. Il est possible d'ajouter ces propres méthodes et attributs à la classe d'exception pour fournir des informations supplémentaire sur l'erreur.
+
+```python
+# =========================
+# 1. Définition d'une exception perso 
+# =======================
+class MyCustomError(Exception):
+    """Classe pour une exception personnalisée."""
+    pass
+
+# ===================================
+# 2. Utilisation de l'excption 
+# ===================================
+def check_value(value):
+    if value < 0:
+        # lance l'exception perso 
+        raise MyCustomError("La valeur ne doit pas être inférieure à zéro")
+
+try:
+    check_value(-1)
+except MyCustomError as e:
+    print(f"Une exception personnalisée s'est produite : {e}")
+```
+
+**Ajout d'attribut**
+
+Il est possible d'ajouter des attributs et méthodes supplémentaire sur la nouvelle classe 
+
+```python 
+# ===============================
+# définition de la nouvelle exception 
+# ===============================
+class NegativeValueError( Exception ):
+    """Classe pour une exception personnalisée lors d'une valeur négative."""
+    def __init__(self, value, message = "La valeur ne doit pas être inférieure à zéro"):
+        self.value = value
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self):
+        return f'{self.message}: {self.value}'
+
+# ============================================
+# utilisation 
+# ============================================
+def check_value(value):
+    if value < 0:
+        raise NegativeValueError(value)
+
+try:
+    check_value(-1)
+except NegativeValueError as e:
+    print(f"Une exception personnalisée s'est produite : {e}")
+```
+
+**Création d'une hérarchie d'exceptions**
+
+Pour des cas plus complexe, il est possible de créer des hiérarchies d'exceptions personnalisées. Cela permet de regrouper des exceptions connexes et de simplifier leur gestion.
+
+Pour l'utilisation des exception, il faut utiliser l'ordre inverse de l'héritage. L'exception la plus globale capture toutes les descendantes. Du plus spécifique au moins large.
+
+```python 
+# ============================================
+# implèmentation de la hiérarchie 
+# ============================================
+class ApplicationError(Exception):
+    """Classe de base pour toutes les exceptions de l'application."""
+    pass
+
+class NegativeValueError(ApplicationError):
+    """Classe pour une exception personnalisée lors d'une valeur négative."""
+    def __init__(self, value, message="La valeur ne doit pas être inférieure à zéro"):
+        self.value = value
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self):
+        return f'{self.message}: {self.value}'
+
+class ValueTooLargeError(ApplicationError):
+    """Classe pour une exception personnalisée lors d'une valeur trop élevée."""
+    def __init__(self, value, message="La valeur est trop élevée"):
+        self.value = value
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self):
+        return f'{self.message}: {self.value}'
+
+
+# =================================================
+# utilisation 
+# =================================================
+def check_value(value):
+    if value < 0:
+        raise NegativeValueError(value)
+    elif value > 100:
+        raise ValueTooLargeError(value)
+
+try:
+    check_value(150)
+except NegativeValueError as e:
+    print(f"Une exception s'est produite : {e}")
+except ValueTooLargeError as e:
+    print(f"Une exception s'est produite : {e}")
+except ApplicationError as e:
+    print(f"Exception générale de l'application : {e}")
+```
+
+### `logging` 
+
+Python fournit un lib `logging` qui permet de suivre l'exécution du programme. 
+
+```python 
+import logging
+
+# Configuration de la journalisation pour afficher les informations de débogage
+logging.basicConfig(level=logging.DEBUG)
+
+
+def divide(a, b):
+    # Journaliser la tentative de division
+    logging.debug(f"Division de {a} par {b}")
+    if b == 0:
+        # Journaliser l'erreur si b est égal à 0
+        logging.error("Tentative de division par zéro!")
+        return None
+
+    # Effectuer la division si b n'est pas égal à 0
+    return a / b
+
+result = divide(10, 2)
+print(result)
+```
