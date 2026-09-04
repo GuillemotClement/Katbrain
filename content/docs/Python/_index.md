@@ -6294,4 +6294,396 @@ Détecté lors de la compilation du code.
 Surviennent pendant l'exécution du programme et pouvant être causé par différentes raison comme la division par zéro, accès à une index de liste inexistant, etc 
 
 - **Erreur logique**
-Lorsque le programme retourne des résultats incrorrect en raison d'une erreur de logique.
+Lorsque le programme retourne des résultats incorrect en raison d'une erreur de logique.
+
+### Chemin des exceptions 
+
+Lorsque Python rencontre une erreur, celle ci se propage à travers la pile des appels, jusqu'a ce qu'elle soit gérée. La pile des appels est une séquence d'appel de fonctions qui ont conduit à l'apparition de l'exception.
+
+1. **Apparition d'une exception**: Lorsqu'une erreur se produit, Python crée un objet d'exception
+2. **Recherche du gestionnaire d'exception**: L'interpréteur commence à recherche un gestionnaire d'exception dans le bloc de code. Si un gestionnaire n'est pas trouvé, il passe au bloc suivant qui a appelé la fonction actuelle.
+3. **Propagation de l'exception dans la pile**: Ce processus se répète jusqu'a ce qu'un gestionnqire soit trouvé ou jusqu'a ce que la pile des appels soit épuisée.
+4. **Fin du programme**: Si un gestionnaire n'est pas trouvé, le programme se termine et affiche le message d'erreur.
+
+### Exceptions populaire 
+
+| Exception | Description |
+| --------- | ----------- |
+| `Exception` | Classe de base pour toutes les exceptions |
+| `IndexError` | Accés à un indice inexistant dans une séquence |
+| `KeyError` | Accés à une clé inexistante dans un dictionnaire | 
+| `NameError` | Accés à une variable inexistante |
+| `RuntimeError` | Erreur générale d'exécution |
+| `StopIteration` | Signale la fin de l'itération |
+| `SyntaxError` | Erreur de syntaxe |
+| `IndentationError` | Erreur d'indentation |
+| `TabError` | Mélange de tab et d'espaces pour les indentation |
+| `TypeError` | Tentative d'opération avec des donnée non compatible |
+| `UnboundLocalError` | Accès à une varaible local avant sa déclaration |
+| `ValueError` | Transmission d'un argument avec une valeur incorrecte à une fonction ou une opération |
+| `ZeroDivisionError`| Division par zéro |
+
+### Gestion des exceptions 
+
+Les exceptions sont des objets spéciaux avec lesquels le programme peut travailler.
+
+#### `try-except`
+
+Le bloc `try-except` est utilisé pour capturer et gérer les exceptions. Le bloc `try` contient le code qui peut déclencher une exception, et le bloc `except` contient le code exécuté en cas d'exception.
+
+```python 
+# ===========================
+# try-except
+# ===========================
+try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Erreur : division par zéro.")
+
+# ================================
+# gestion de plusieurs exceptions
+# ================================
+try:
+    result = int("abc")
+except ZeroDivisionError:
+    print("Erreur : division par zéro.")
+except ValueError:
+    print("Erreur : valeur incorrecte.")
+
+# ===================================
+# capture de toutes les exceptions 
+# ===================================
+try:
+    result = 10 / 0
+except:
+    print("Une erreur est survenue.")
+```
+
+#### `try-except-else` 
+
+Le bloc `else` est utilisé pour exécuter du code si aucune exception n'a été levée dans le bloc `try`
+
+```python 
+# =============================
+# try-except-else
+# =============================
+try:
+    result = 10 / 2
+except ZeroDivisionError:
+    print("Erreur : division par zéro.")
+else:
+    print(f"Résultat : {result}")
+```
+
+#### `try-except-finally`
+
+Le bloc `finally` contient du code qui sera exécuté qu'une exception ait été levée ou non. C'est utilise pour libérer des ressources ou effectuer des opérations de fermeture
+
+```python 
+# =====================================
+# try-except-finally
+# =====================================
+try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Erreur : division par zéro.")
+finally:
+    print("Ce bloc s'exécute toujours.")
+
+# ============================================
+# exemple complet 
+# ============================================
+try:
+    result = 10 / 2
+except ZeroDivisionError:
+    print("Erreur : division par zéro.")
+else:
+    print(f"Résultat : {result}")
+finally:
+    print("Ce bloc s'exécute toujours.")
+
+# =====================================
+# exemple d'utilisation avec lecture de fichier 
+# ======================================
+try:
+    # tentative d'ouverture du ficheir
+    file = open("non_existent_file.txt", "r")
+    content = file.read()
+except FileNotFoundError:
+    # si le fichier n'est pas trouvé
+    print("Erreur : fichier non trouvé.")
+except IOError:
+    # erreur de lecture
+    print("Erreur : erreur d'entrée-sortie.")
+else:
+    # affiche le contenu si aucune exception
+    print(content)
+finally:
+    # libération de la mémoire peut importe si exception ou non 
+    if 'file' in locals() and not file.closed:
+        file.close()
+        print("Fichier fermé.")
+```
+
+### Gestion d'exception multiple 
+
+Il existe plusieurs approche pour gérer des exceptions multiples.
+
+#### `expect`
+
+```python 
+# ========================
+# bloc multiple
+# ========================
+try:
+    # Code qui peut provoquer une exception
+    result = int("abc")
+except ValueError:
+    print("Erreur : valeur incorrecte.")
+except ZeroDivisionError:
+    print("Erreur : division par zéro.")
+
+# ==============================
+# tuple d'exception 
+# ==============================
+try:
+    # Code qui peut provoquer une exception
+    result = int("abc")
+except (ValueError, ZeroDivisionError) as e:
+    print(f"Une erreur est survenue : {e}")
+```
+
+#### `<ExceptionType>`
+
+Il est possible d'utiliser la syntaxe `except <ExceptionType> as <variable>` pour obtenir l'objet exceptionnel. Cela permet d'obtenir plusieurs informations sur l'exception comme le message d'erreur 
+
+```python 
+try:
+    # Code qui peut provoquer NameError
+    print(undeclared_variable)
+except NameError as e:
+    print(f"Une erreur est survenue : {e}")
+    print(f"Type d'erreur : {type(e)}")
+```
+
+La variable dans laquelle l'exception est stockée `e` est disponible uniquement dans son propre bloc `except`. Pour l'utiliser en dehors, il faut la stocker dans une variable séparée.
+
+```python 
+exception = None
+try:
+    # Code qui peut provoquer une exception
+    result = int("abc")
+except ValueError as e:
+    exception = e # stocke la variable d'erreur 
+    print("Erreur : valeur incorrecte.")
+except ZeroDivisionError as e:
+    exception = e
+    print("Erreur : division par zéro.")
+
+print(exception)
+```
+
+La variable `exception` strocke la derniere exception survenue.
+
+#### Contenue d'une erreur 
+
+L'objet exception contient des informations sur l'erreur. Selon le type d'exceptionm l'objet peut contenir différents attributs.
+
+- **args**: tuple contenant les arguments passées lors de la création de l'exception. Généralement c'est le message d'erreur 
+- **message**: string contenant le message d'erreur 
+- **__str__**: méthode qui retourne la représentation sous forme de string de l'exception. 
+
+```python
+try:
+    # Code qui peut provoquer ValueError
+    result = int("abc")
+except ValueError as e:
+    print(f"Une erreur est survenue : {e}")
+    print(f"Arguments de l'erreur : {e.args}")
+    print(f"Message d'erreur : {str(e)}")
+
+# ========================
+# exception multiple 
+# ========================
+try:
+    # Code qui peut provoquer plusieurs types d'exceptions
+    result = 10 / 0
+except (ValueError, ZeroDivisionError) as e:
+    print(f"Une erreur est survenue : {e}")
+    print(f"Type d'erreur : {type(e)}")
+    print(f"Arguments de l'erreur : {e.args}")
+```
+
+### Traceback 
+
+Le Traceback est l'info qui montre la séquence d'appels de fonction ayant conduit à l'exception. Il fournit des fonctions permettant d'extraire, de formater et d'afficher les informations sur le traceback.
+
+Pour travailler avec le traceback, il est necessaire de l'importer.
+
+```python 
+import traceback
+
+def function_c():
+    return 1 / 0  # Cela va provoquer ZeroDivisionError
+
+def function_b():
+    function_c()
+
+def function_a():
+    try:
+        function_b()
+    except ZeroDivisionError as e:
+        print("Une exception est survenue :")
+        traceback.print_exc()  # Imprime le traceback
+
+function_a()
+
+"""sortie
+Une exception est survenue :
+Traceback (most recent call last):
+    File "example.py", line 12, in function_a
+      function_b()
+    File "example.py", line 8, in function_b
+      function_c()
+    File "example.py", line 4, in function_c
+      return 1 / 0
+ZeroDivisionError: division by zero
+"""
+```
+
+#### `traceback.print_exc()`
+
+Imprime le traceback de l'exception courante dans le flux d'erreur 
+
+```python 
+try:
+    1 / 0
+except ZeroDivisionError:
+    traceback.print_exc()
+```
+
+#### `traceback.format_exc()`
+
+Retourne une chaîne contenant le traceback formaté de l'exception courante 
+
+```python 
+try:
+    1 / 0
+except ZeroDivisionError:
+    error_message = traceback.format_exc()
+    print("Traceback reçu sous forme de chaîne :")
+    print(error_message)
+```
+
+#### `traceback.extract_tb(tb)`
+
+Extrait les informations brutes sur le traceback de l'objet traceback.
+
+#### `traceback.format_tn(tb)`
+
+Retourne une liste formaté de chaîne représentant le traceback 
+
+```python 
+import sys
+import traceback
+
+def function_c():
+    return 1 / 0  # Cela va provoquer ZeroDivisionError
+
+def function_b():
+    function_c()
+
+def function_a():
+    try:
+        function_b()
+    except ZeroDivisionError:
+        tb = sys.exc_info()[2]
+        formatted_tb = traceback.format_tb(tb)
+        print("Traceback formaté :")
+        for line in formatted_tb:
+            print(line, end="")
+
+function_a()
+```
+
+#### `traceback.format_exception(exc_type, exc_value, exc_tb)`
+
+Retourne une liste complète formatée de string représentant l'exception et le traceback 
+
+```python 
+import sys
+import traceback
+
+def function_c():
+    return 1 / 0  # Cela va provoquer ZeroDivisionError
+
+def function_b():
+    function_c()
+
+def function_a():
+    try:
+        function_b()
+    except ZeroDivisionError as e:
+        exc_type, exc_value, exc_tb = sys.exc_info()
+        full_tb = traceback.format_exception(exc_type, exc_value, exc_tb)
+        print("Traceback complet formaté :")
+        for line in full_tb:
+            print(line, end="")
+
+function_a()
+```
+
+Il peut etre utile d'examiner en detail chaque frame pour obtenir des informations spécifique sur l'endroit ou l'exceptioon s'est produite et sur le contexte de cet endroit 
+
+```python 
+import traceback
+import sys
+
+def function_c():
+    return 1 / 0  # Cela va provoquer ZeroDivisionError
+
+def function_b():
+    function_c()
+
+def function_a():
+    try:
+        function_b()
+    except ZeroDivisionError:
+        tb = sys.exc_info()[2]
+        for frame in traceback.extract_tb(tb):
+            print(f"Fichier : {frame.filename}")
+            print(f"Ligne : {frame.lineno}")
+            print(f"Nom de la fonction : {frame.name}")
+            print(f"Texte : {frame.line}")
+            print("-" * 40)
+
+function_a()
+```
+
+#### Journalisation 
+
+Il est parfois important de conserver l'information du traceback dans une fichier log pour analyse. 
+
+```python 
+import logging
+import traceback
+import sys
+
+logging.basicConfig(filename='error.log', level=logging.ERROR)
+
+def function_c():
+    return 1 / 0  # Cela va provoquer ZeroDivisionError
+
+def function_b():
+    function_c()
+
+def function_a():
+    try:
+        function_b()
+    except ZeroDivisionError as e:
+        exc_type, exc_value, exc_tb = sys.exc_info()
+        full_tb = traceback.format_exception(exc_type, exc_value, exc_tb)
+        logging.error("Une exception est survenue :\n%s", ''.join(full_tb))
+
+function_a()
+```
