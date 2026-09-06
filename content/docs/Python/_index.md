@@ -7033,3 +7033,70 @@ non_existent_attr = getattr(math, 'non_existent', 'default_value')
 
 print(non_existent_attr)  # Sortie : default_value
 ```
+
+### Package 
+
+Un package est un repertoire contenant un fichier `__init__.py` et un ou plusieurs modules. Le fichier peut être vide ou contenir du code d'initialisation du package.
+
+`__init__.py` est nécessaire dans un repertoire pour que Python considère ce repertoire comme un package.
+Dans ce fichier, on place les imports de fonction pour qu'elle soit disponible au niveau du package.
+
+```python
+# =========================
+# exemple de structure 
+# =========================
+mypackage/ # nom du repertoire du package
+    __init__.py
+    module1.py
+    module2.py
+
+# ===========================
+# contenu de __init__.py
+# ===========================
+# __init__.py
+# ce code permet d'importer les fonctions des modules au niveau du package
+from .module1 import func1
+from .module2 import func2
+
+# ===========================
+# contenu module1.py
+# ===========================
+# module1.py
+def func1():
+    return "Function 1"
+
+# ============================
+# contenu module2.py
+# ============================
+# module2.py
+def func2():
+    return "Function 2"
+    
+# ============================
+# code utilisant les fonctions du package 
+# =============================
+import mypackage
+
+print(mypackage.func1())  # Affichage: Function 1
+print(mypackage.func2())  # Affichage: Function 2
+```
+
+#### `dir()`
+
+Cette fonction permet de lister les attributs et méthodes disponible dans le module.
+
+```python 
+# ========================
+# exploration module math
+# ==========================
+import math
+
+print(dir(math))
+
+"""sortie
+['__doc__', '__loader__', '__name__', '__package__', '__spec__', 'acos', 'acosh', 'asin', 'asinh', 'atan',
+'atan2', 'atanh', 'ceil', 'comb', 'copysign', 'cos', 'cosh', 'degrees', 'dist', 'e', 'erf', 'erfc', 'exp', 'expm1',
+'fabs', 'factorial', 'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'gcd', 'hypot', 'inf', 'isclose', 'isfinite', 'isinf',
+'isnan', 'isqrt', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'log2', 'modf', 'nan', 'perm', 'pi', 'pow', 'prod',
+'radians', 'remainder', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'tau', 'trunc']"""
+```
