@@ -6871,3 +6871,165 @@ def divide(a, b):
 result = divide(10, 2)
 print(result)
 ```
+
+---
+
+## 19 - Modules et packages
+
+### Module 
+
+Un module est un fichier avec l'extension `.py` qui contient du code. Les modules permettent de décomposer le code en partie plus petite. Chaque module pouvant contenir des classes, des fonctions et des variables, et peut également exécuter du code lors de son importation.
+
+```python 
+# =======================
+# module simple 
+# =======================
+# mymodule.py
+
+def greet(name):
+    return f"Hello, {name}!"
+
+pi = 3.14159
+```
+
+Le module peut ensuite être importé et utilisé dans un autre fichier.
+
+#### Importation de module 
+
+Python utilise une recherche dans cet ordre:
+1. **Répertoire courant**: recherche le module dans le repertoire courant d'ou le script à été lancé
+2. **Variable env `PYTHONPATH`**: il vient ensuite le recherché dans les repertoire indiqué dans la variable env
+3. **Répertoire standard**: il recherche ensuite dans les repertoire standard 
+
+**Importation du module complet**
+
+Cette syntaxe importe l'ensemble du module, et rends disponible les fonctions et variable de celui ci.
+
+```python 
+# ===========================
+# syntaxe 
+# ===========================
+import module
+
+print(module.greet("Alice"))  # Sortie : Hello, Alice!
+print(module.pi)  # Sortie : 3.14159
+```
+
+**Importation d'éléments du module**
+
+Il est possible de définir quels éléments doit être importé d'un module.
+
+```python 
+# ================================
+# syntaxe 
+# ================================
+from module import func, var
+
+# ================================
+# import du module 
+# ================================
+from mymodule import greet, pi
+
+print(greet("Bob"))  # Sortie : Hello, Bob!
+print(pi)  # Sortie : 3.14159
+```
+
+**Import du module avec un alias**
+
+Permet d'importer un module et de lui attribuer un nom.
+
+```python 
+# ===============================
+# import avec alias 
+# ===============================
+import mymodule as mm
+
+print(mm.greet("Charlie"))  # Sortie : Hello, Charlie!
+print(mm.pi)  # Sortie : 3.14159
+```
+
+**Importer tous les éléments du module**
+
+Permet d'importer tous les éléments du module. Cependant cette syntaxe n'est pas recommandé car cela peut causer des conflits de noms et rendre le code plus difficile à lire
+
+```python 
+from mymodule import *
+
+print(greet("Dave"))  # Sortie : Hello, Dave!
+print(pi)  # Sortie : 3.14159
+```
+
+#### Importation locale et globale
+
+Les modules peuvent être importés au niveau global (en début de fichier) ou au niveau local (dans une fonction ou méthode).
+
+**Importation globale**
+
+```python 
+# =======================
+# importation globale 
+# =======================
+import math
+
+def calculate_circle_area(radius):
+    return math.pi * radius ** 2
+```
+
+**Importation locale**
+
+Réalisé depuis l'intérieur d'une fonction ou d'une méthode et rend le module importé accessbiel uniquement dans la fonction 
+
+```python
+# ===========================
+# importation locale 
+# ===========================
+def calculate_square_root(x):
+    import math
+    return math.sqrt(x)
+
+print(calculate_square_root(16))
+```
+
+#### Importation dynamique 
+
+Permet d'importer des modules pendans l'exécution du programme. 
+
+```python 
+# ======================
+# syntaxe 
+# ======================
+module = __import__("module")
+
+# =========================
+# exemple 
+# =========================
+module_name = "math"
+module = __import__(module_name)
+print(module.sqrt(16))  # Sortie : 4.0
+```
+
+#### `getattr`
+
+Cette fonction permet d'accéder dynamiquement aux attrbuts d'un module (ou objet). Permet de connaitre les attributs présent dans un module 
+
+```python 
+# ==========================
+# syntaxe 
+# ==========================
+getattr(object, name, default = None)
+
+# ===============================
+# utilisation 
+# ===============================
+import math
+
+# Obtenir l'attribut sqrt du module math
+sqrt_function = getattr(math, 'sqrt')
+
+print(sqrt_function(25))  # Sortie : 5.0
+
+# Essayer d'obtenir un attribut inexistant, retourner la valeur par défaut
+non_existent_attr = getattr(math, 'non_existent', 'default_value')
+
+print(non_existent_attr)  # Sortie : default_value
+```
