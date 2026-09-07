@@ -7606,4 +7606,36 @@ file.write("Encore une ligne ajoutée.\n")
 file.close()  # Fermeture du fichier
 ```
 
+### `with`
 
+L'opérateur `with` permet de gérer les ressources comme les fichiers en assurant la fermeture automatique après achevement du bloc. 
+
+Il est utilisé pour envelopper l'exécution d'un bloc avec un gestionnaire de contexte. Lors de son utilisation, Python appelle automatiquement les méthodes `__enter__()` et `__exit__()` de l'objet gestionnaire de contexte.
+
+```python 
+# ==========================
+# travail avec des fichiers 
+# ==========================
+with open('example.txt', 'w') as file:
+    file.write("Hello, World!\n")
+    file.write("This is a test file.\n")
+```
+
+Dans ce code, le fichier `example.txt` est ouvert en mode écriture, et le nom du fichier est lié à la variable `file`. Le bloc de code à l'intérieur de `with` ferme automatiquement le fichier après avoir effectué toutes les opérations d'écriture.
+
+Avec l'opérateur, la fermeture automatique se fait même en cas d'exception.
+
+```python 
+# =============================
+# avec gestion d'exception
+# =============================
+try:
+    with open('example.txt', 'w') as file:
+        file.write("Hello, World!\n")
+        file.write("This is a test file.\n")
+        # Exception pour vérifier que le fichier se ferme malgré tout
+        raise Exception("Something went wrong")
+except Exception as e:
+    print(f"Caught an exception: {e}")
+# À ce stade, le fichier est déjà fermé
+```
