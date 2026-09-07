@@ -7272,3 +7272,338 @@ my_iterable = MyIterable([1, 2, 3, 4])
 for item in my_iterable:
     print(item)
 ```
+
+---
+
+## 21 - Surcharge d'opérateur 
+
+Permet de définir le comportement des opérateurs intégrés pour les classes personnalisées. Cela se fait via des méthodes magiques.
+
+Par exemple, dans la classe, il est possible de venir surcharger les opérateurs de comparaison : 
+
+**Opérateur de comparaison:**
+
+| Opérateur | Méthode sans underscore | Signature de la méthode |
+| --------- | ----------------------- | ----------------------- |
+| `==` | `eq()` | `__eq__(self, other)` |
+| `!=` | `ne()` | `__ne__(self, other)` |
+| `<` | `lt()` | `__lt___(self, other_` |
+| `<=` | `le()` | `__le__(self, other)` |
+| `>` | `gt()` | `__gt__(self, other)` | 
+| `>=` | `ge()` | `__ge__(self, other)` |
+
+**Opérateur arithmétique**
+| Opérateur | Méthode sans underscore | Signature de la méthode |
+| --------- | ----------------------- | ----------------------- |
+| `+` | `add`  | `__add__(self, other)` |
+| `-` | `sub` | `__sub__(self, other)` |
+| `*` | `mul` | `__mul__(self, other)` |
+| `/` | `truediv` | `__truediv__(self, other)` |
+| `//` | `floordiv` | `_floordiv__(self, other)` |
+| `%` | `mod` | `__mod__(self, other)` |
+| `**` | `pow` | `__pow__self(self, other)` |
+
+**Opérateur logique**
+| Opérateur | Méthode sans underscore | Signature de la méthode |
+| --------- | ----------------------- | ----------------------- |
+| `&` | `and` | `__and__(self, other)` |
+| `|` | `or` | `__or__(self, other)` |
+| `^` | `xor` | `__xor__(self, other)` |
+| `~` | `invert` | `__invert__(self)` |
+
+**Opérateur d'indéxation et découpage**
+| Opérateur | Méthode | 
+| --------- | ----------------------- | 
+| `obj[key]` | `__getitem__(self, key)` |  
+| `obj[key] = value` | `__setitem__(self, key, value)` |  
+| `del obj[key]` |`__delitem__(self, key)` |  
+
+
+**Opérateur unaire**
+| Opérateur | Méthode | 
+| --------- | ----------------------- | 
+| `-` | `__neg__(self)` |  
+| `+` | `__pos__(self)` |  
+| `abs()` | `__abs__(self)` |  
+| `~` | `__invert__(self)` |  
+| `` | `__` |  
+| `` | `__` |  
+| `` | `__` |  
+| `` | `__` |  
+
+
+**Opérateur d'affectation**
+| Opérateur | Méthode | 
+| --------- | ----------------------- | 
+| `+=` | `__iadd__(self, other)` |  
+| `-=` | `__isub__(self, other)` |  
+| `*=` | `__imul__(self, other)` |  
+| `/=` | `__itruediv__(self, other)` |  
+| `//=` | `__ifloordiv__(self, other)` |  
+| `%=` | `__imod__(self, other)` |  
+| `**=` | `__ipow__(self, other)` |  
+
+On as une classe et que l'on souhaite que les objets de la classe soient comparés comme souhaité. On implémente la méthode `__eq__` dans la classe et Python l'apellera chaque fois que les objets de cette classe seront comparé
+
+```python 
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+# Utilisation
+v1 = Vector(2, 3)
+v2 = Vector(2, 3)
+v3 = Vector(4, 5)
+print(v1 == v2)  # Affichera: True
+print(v1 == v3)  # Affichera: False
+```
+
+A chaque fois que l'on compare deux objets, Python vérifie si la méthode `__eq__` est implémentée dans la classe. Si elle existe, elle sera utilisé pour la comparaison, sinon ce sont les références des objets qui seront comparée
+
+**Classe avec opérateur d'indexaction**
+
+```python 
+class CustomList:
+    def __init__(self, data):
+        self.data = data
+
+    def __getitem__(self, index):
+        return self.data[index]
+
+    def __setitem__(self, index, value):
+        self.data[index] = value
+
+    def __delitem__(self, index):
+        del self.data[index]
+
+    def __repr__(self):
+        return repr(self.data)
+
+# Utilisation
+c_list = CustomList([1, 2, 3, 4, 5])
+print(c_list[1])  # Affichera: 2
+c_list[1] = 10
+print(c_list)  # Affichera: [1, 10, 3, 4, 5]
+del c_list[1]
+print(c_list)  # Affichera: [1, 3, 4, 5]
+```
+
+--- 
+
+## 22 - Travail avec des fichiers 
+
+### Ouverture de fichier 
+
+```python 
+# ========================
+# lecture du contenu d'un fichier
+# ========================
+file = open('example.txt', 'r') # ouverture du fichier
+content = file.read() # lecture du fichier 
+print(content) # affichage 
+file.close() # fermeture memoire
+
+# =================================
+# ecriture dans un fichier 
+# =================================
+file = open('example.txt', 'w')
+file.write("Hello, World!") # le contenu est supprimé, et remplacer par la chaîne
+file.close()
+
+# ==================================
+# ajout 
+# ==================================
+file = open('example.txt', 'a')
+file.write("\nAppended text.") # ajout à la fin du fichier
+file.close()
+```
+
+- `open()`: prends en premier argument le nom du fichier, puis le mode d'accès.
+
+#### Mode d'accès 
+
+- `r`: ouverture pour lecture. Le fichier doit exister
+- `w`: ouverture pour écriture. Le contenu du fichier sera effacé et s'il n'existe pas, il sera crée 
+- `a`: ouverture du fichier pour ajout. Les données sont ajouté à la fin du fichier. si le fichier n'existe pas, il sera crée 
+- `r+`: ouverture du fichier pour lecture et écriture, le fichier doit exister 
+- `w+`: ouverture pour lecture et écriture. Le contenu sera effacé. Si le fichier n'existe pas, il sera crée
+- `a+`: ouverture pour lecture et ajoute. Les données sont ajoutées à la fin du fichier et si le fichier n'existe pas, il sera créer 
+
+#### Fermeture du fichier 
+
+Lorsque l'on vient ouvrir un fichier, l'os vérifie les droits d'accés au fichier et le marque comme utilisé par le programme. Pour travailler avec un fichier, une ressource spéciale est allouée - un handler.
+
+Le nombre de handler par programme est limité. Par conséquent, après avoir terminé de travailler avec un fichier, il faut venir le fermer avec `close()`.
+
+```python
+file = open('example.txt', 'r')
+# Exécution des opérations avec le fichier
+file.close()
+```
+
+### Lecture de données depuis un fichier 
+
+Python fournis plusieurs méthodes pour lire des fichiers texte.
+
+#### `read()`
+
+`read()` vient lire le contenu du fichier et le stocke dans une chaîne. 
+
+```python 
+# ======================
+# read()
+# ======================
+file = open('example.txt', 'r')
+content = file.read()
+print(content)
+file.close()
+```
+
+Si le fichier est trop volumineuxm il est possible de venir le lire morceau par morceau. Dans la méthode `read(n)`, on peut venir un argument pour le nombre de caractère à lire. Si le fichier contient moins de caractère que l'argument, alors la méthode lira le fichier jusqu'a la fin.
+
+Cette approche ignore la division de fichier en lignes, et peut venir couper des lignes au milieu.
+
+```python 
+file = open('example.txt', 'r')
+content = file.read(10)  # Lit les 10 premiers caractères
+print(content)
+file.close()
+```
+
+#### `readline()`
+
+Cette méthode vient lire une ligne du fichier à la fois, et permet d'itérer sur les lignes lignes du fichier.
+
+```python 
+file = open('example.txt', 'r')
+line = file.readline()
+while line:
+    print(line.strip())
+    line = file.readline()
+file.close()
+```
+
+
+#### `readlines()`
+
+Permet de lire le contenu du fichier mais la retourne sous forme de liste de lignes. Chaque ligne du fichier sera une ligne distincte de la liste.
+
+```python 
+# ============================
+# readlines()
+# ============================
+file = open('example.txt', 'r')
+lines = file.readlines()
+for line in lines:
+    print(line.strip())  # strip() supprime les espaces et les caractères de nouvelle ligne inutiles
+file.close()
+```
+
+#### `file` - itération par lignes du fichier 
+
+L'objet `file` possède un itérateur intégré, et permet de parcourir son contenu avec une boucle `for`. On peut lire le fichier ligne par ligne sans charger tout le fichier en mémoire.
+
+Cette mémoire est plus efficase en mémoire pour les grands fichiers, les lignes étant lues une par une. Cependant, cela peut être plus difficile à traiter si on doit revenir à la ligne précédente ou modifier l'ordre de lecture.
+
+```python
+# ===========================
+# file 
+# ===========================
+file = open('example.txt', 'r')
+for line in file:
+    print(line.strip())
+file.close()
+```
+
+### Ecriture de données dans un fichier 
+
+```python 
+# ===========================
+# exemple de création 
+# ===========================
+file = open('example.txt', 'w')  # Ouvre le fichier pour écriture, le crée s'il n'existe pas
+file.write("This is a new file.\n")
+file.close()
+
+# ===============================
+# création de fichier vide 
+# ===============================
+file = open('example.txt', 'w')
+file.close()
+```
+
+#### `write()` - écriture d'une chaine 
+
+Permet d'écrire une chaîne dans un fichier. 
+
+```python 
+# Ouverture du fichier en mode écriture
+file = open('example.txt', 'w')
+file.write("Hello, World!\n")
+file.write("This is a test file.\n")
+file.close()
+```
+
+##### Ajout à la fin d'un fichier 
+
+```python
+file = open('example.txt', 'a')  # Ouverture du fichier pour ajout de données
+file.write("This is a new line added to the file.\n")
+file.write("Another line is appended.\n")
+file.close()  # Fermeture du fichier
+```
+
+#### `writelines()` - ajoute de liste de chaine
+
+Prends une liste de string et les écrits dans le fichier. Les caractères de nouvelles lignes ne sont pas ajouter automatiquement.
+
+```python 
+lines = ["First line.\n", "Second line.\n", "Third line.\n"]
+
+# Ouverture du fichier en mode écriture
+file = open('example.txt', 'w')
+file.writelines(lines)
+file.close()
+```
+
+##### Ajout de ligne à la fin du fichier 
+
+```python 
+lines = [
+    "Appending first line from list.\n",
+    "Appending second line from list.\n",
+    "Appending third line from list.\n"
+]
+
+file = open('example.txt', 'a')  # Ouverture du fichier pour ajout de données
+file.writelines(lines)  # Ajout de la liste de lignes
+file.close()  # Fermeture du fichier
+```
+
+### Encodage du fichier
+
+Il est possible de définir l'encodage du fichier texte de sa lecture ou écriture. Cela se fait en passant un troisième paramètre nommé `encoding`
+
+```python 
+# Ouverture du fichier pour écriture avec encodage UTF-8
+file = open('example_utf8.txt', 'w', encoding='utf-8')
+file.write("Texte en russe.\n")
+file.write("More text in UTF-8.\n")
+file.close()
+```
+
+#### Ajout de ligne avec un encodage spécifique 
+
+```python 
+# Ouverture du fichier pour ajout de données avec encodage spécifié
+file = open('example_utf8.txt', 'a', encoding='utf-8')
+file.write("Ajout d'une ligne avec UTF-8.\n")
+file.write("Encore une ligne ajoutée.\n")
+file.close()  # Fermeture du fichier
+```
+
+
