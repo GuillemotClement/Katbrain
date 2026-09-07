@@ -7100,3 +7100,175 @@ print(dir(math))
 'isnan', 'isqrt', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'log2', 'modf', 'nan', 'perm', 'pi', 'pow', 'prod',
 'radians', 'remainder', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'tau', 'trunc']"""
 ```
+
+### Gestionnaire de paquets 
+
+Les gestionnaires de paquets sont des outils permettant de gérer les dépendances et les paquets dans les projets. Il existe 4 gestionnaires de paquets populaire en Python:
+- `pip`
+- `conda`
+- `pipenv`
+- `poetry` 
+
+A partir de Python3, `pip` est installé par defaut.
+
+#### `pip`
+
+```shell
+# ======================
+# version installé
+# ======================
+pip --version 
+
+# ========================
+# installation 
+# ========================
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py
+
+# =========================
+# installation de paquet 
+# =========================
+pip install package_name
+
+# =========================
+# installation d'une version spécifique 
+# ==========================
+pip install package_name==1.0.0
+
+# ===============================
+# mise à jour d'un paquet 
+# ===============================
+pip install --upgrade package_name
+
+# =================================
+# suppression d'un paquet 
+# =================================
+pip uninstall package_name
+
+# =================================
+# listing des paquets installé
+# =================================
+pip list
+```
+
+#### `conda`
+
+`conda` est un gestionnaire de paquets et un systeme de gestion d'environnements utilisé pour installer et gérer des paquets pour Python ou d'autre language. Il permet de gérer les dépendances et de créer des environnement isolée
+
+```shell
+# ===========================
+# creation d'un environnement 
+# =============================
+conda create --name myenv
+
+# ===============================
+# activation de l'environnement 
+# ===============================
+conda activate myenv
+
+# ================================
+# désactivation de l'environnement 
+# ================================
+conda deactivate
+
+# ==================================
+# installation d'un paquet 
+# ==================================
+conda install package_name
+
+# ==================================
+# installation depuis un canal spécifique 
+# =========================================
+conda install -c conda-forge package_name
+
+# =========================================
+# listing des paquets installés
+# ========================================
+conda list
+
+# =========================================
+# exemple de workflow
+# =========================================
+conda create --name myenv
+conda activate myenv
+conda install numpy
+conda list
+conda deactivate
+```
+
+### Installation de packages 
+
+[pypi](https://pypi.org/) est le site permettant de trouver des packages.
+
+---
+
+## 20 - Iterators 
+
+Les itérateurs sont des objets qui implémentent le protocole de l'itérateur, permettant de récupérer séquentiellement les éléments d'une collection. Ils sont utilisées pour parcourir les éléments d'une listes, d'un tuples et de chaîne.
+
+### Objet itérable - `Iterable` 
+
+Objet qui implémente la méthode `__iter__()`, qui retourne un objet itérateur 
+
+### Objet itérateur - `Iterator` 
+
+Objet spécial qui possède la fonction `__next__()` pour donner l'élément suivant de la séquence. Lorsque tous les éléments sont épuisés, la méthode `__next__()` déclence une exception `StopIteration` comme signal d'arrêt.
+
+Il doit également implémenter la méthode `__iter__()` qui renvoie l'itérateur lui même.
+
+```python 
+# Objet itérable
+numbers = [1, 2, 3, 4, 5]
+
+# Obtenir un itérateur à partir de l'itérable
+iterator = iter(numbers)
+
+# Utiliser l'itérateur pour parcourir les éléments
+try:
+    while True:
+        number = next(iterator)
+        print(number)
+except StopIteration:
+    pass
+
+# ========================
+# équivalent à 
+# ========================
+# Objet itérable
+numbers = [1, 2, 3, 4, 5]
+
+for number in numbers:
+    print(number)
+```
+
+### Définir un itérateur 
+
+```python 
+# reçoit une collection sur laquelle on itère
+class MyIterable:
+    def __init__(self, data):
+        self.data = data
+
+    def __iter__(self):
+        return MyIterator(self.data)
+# itérateur qui retourne les éléments
+class MyIterator:
+    def __init__(self, data):
+        self.data = data
+        self.index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index >= len(self.data):
+            raise StopIteration
+        item = self.data[self.index]
+        self.index += 1
+        return item
+
+# Utilisation
+my_iterable = MyIterable([1, 2, 3, 4])
+for item in my_iterable:
+    print(item)
+```
