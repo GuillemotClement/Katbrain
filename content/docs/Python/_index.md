@@ -7394,7 +7394,7 @@ print(c_list)  # Affichera: [1, 3, 4, 5]
 
 --- 
 
-## 22 - Travail avec des fichiers 
+## 22 - Lecture et écriture de fichier
 
 ### Ouverture de fichier 
 
@@ -7638,4 +7638,398 @@ try:
 except Exception as e:
     print(f"Caught an exception: {e}")
 # À ce stade, le fichier est déjà fermé
+```
+
+### Fichier binaire 
+
+La fonction `open()` permet d'ouvrir un fichier binaire. Elle retourne un tableau d'octets. Toutes les données peuvent être lues comme binaire.
+
+**Mode d'accés**
+
+- `rb`: mode lecture 
+- `wb`: mode écriture 
+- `ab`: mode ajout 
+- `r+b` | `w+b` | `a+b`: lecture et écriture
+
+#### Lecture 
+
+**Lecture de tout le contenu**
+`read()` lit tout le contenu du fichier en octets.
+
+```python
+file = open('example.bin', 'rb')
+content = file.read()
+print(content)
+file.close()
+```
+
+**Lecture d'un certain nombre d'octets**
+
+`read(n)` vient lire n nombre d'octets dans le fichier 
+
+```python 
+file = open('example.bin', 'rb')
+content = file.read(10)  # Lit les 10 premiers octets
+print(content)
+file.close()
+```
+
+**Lecture ligne par ligne**
+
+La méthode `readline()` lit une ligne du fichier. Avec les fichiers binaires, la ligne se termine par un caractère `\n`.
+
+```python 
+file = open('example.bin', 'rb')
+line = file.readline()
+print(line)
+file.close()
+```
+
+**Lecture de toutes les lignes**
+
+`readlines()` lit toutes les lignes du fichiers et les retourne sous forme de liste d'octets.
+
+```python 
+file = open('example.bin', 'rb')
+lines = file.readlines()
+for line in lines:
+    print(line)
+file.close()
+```
+
+#### Écriture 
+
+`write()` écrits des octets dans un fichier. Les données à écrire doivent être sous forme d'octets `(bytes)`
+
+**Lecture et écriture d'images**
+
+Lecture d'une image à partir d'un fichier et écriture dans un autre fichier 
+
+```python 
+# Lecture de l'image
+with open('input_image.jpg', 'rb') as infile:
+    image_data = infile.read()
+
+# Écriture de l'image
+with open('output_image.jpg', 'wb') as outfile:
+    outfile.write(image_data)
+```
+
+Écriture de données texte
+
+```python 
+data = b"Hello, World!"
+lines = [b"First line.\n", b"Second line.\n", b"Third line.\n"]
+
+file = open('example.bin', 'wb')
+file.write(data)
+file.writelines(lines)
+file.close()
+```
+
+### 23 - Manipulation de fichier 
+
+#### `shutil.copy()`
+
+Permet de copier un fichier 
+
+```python 
+import shutil
+
+shutil.copy('source.txt', 'destination.txt')
+```
+
+#### `shutil.move()` 
+
+Permet de déplacer un fichier 
+
+```python 
+import shutil
+
+shutil.move('source.txt', 'destination.txt')
+```
+
+#### `os.remove()`
+
+Permet de supprimer un fichier 
+
+```python 
+import os
+
+os.remove('example.txt')
+```
+
+#### `os.path.exists()`
+
+Permet de vérifier si un fichier spécifier existe
+
+```python 
+import os
+
+if os.path.exists('example.txt'):
+    print("File exists")
+else:
+    print("File does not exist")
+    # Si le fichier n'existe pas, le programme exécutera les actions décrites dans le bloc else.
+    # Par exemple, on peut afficher un avertissement, créer un nouveau fichier ou quitter le programme.
+```
+
+#### `os.path.isdir()` | `os.path.isfile()`
+
+Permet de vérifier si l'argument est un fichier ou un répertoire.
+
+```python
+# ===========================
+# vérifier si répertoire 
+# ===========================
+if os.path.isdir('example_directory'):
+    print("C'est un répertoire")
+else:
+    print("Ce n'est pas un répertoire")
+
+# ================================
+# vérifier si fichier 
+# ================================
+if os.path.isfile('example_file'):
+    print("C'est un fichier")
+else:
+    print("Ce n'est pas un fichier")
+```
+
+#### `os.path.splitext()`
+
+Permet de diviser le nom du fichier en deux partie et renvoie une liste de deux éléments: nom et extension 
+
+```python 
+# ==============================
+# obtenir l'extension du fichier 
+# ===============================
+import os.path
+
+file_path = 'example.txt'
+file_extension = os.path.splitext(file_path)[1]
+print(f"Extension du fichier : {file_extension}")
+
+# ==================================
+# obtenir le nom du fichier sans extension 
+# ===================================
+import os.path
+
+# Obtenir le nom d'un fichier sans extension
+file_path = 'example.txt'
+file_name = os.path.splitext(os.path.basename(file_path))[0]
+print(f"Nom du fichier sans extension : {file_name}")
+```
+
+#### `os.path.basename()`
+
+Retourne le nom du fichier 
+
+```python 
+import os.path
+
+# Obtenir le nom d'un fichier à partir du chemin
+file_path = '/path/to/example.txt'
+file_name = os.path.basename(file_path)
+print(f"Nom du fichier : {file_name}")
+```
+
+#### `os.path.direname()`
+
+Retourne le dossier du fichier 
+
+```python 
+import os.path
+
+# Obtenir le répertoire à partir du chemin
+file_path = '/path/to/example.txt'
+directory = os.path.dirname(file_path)
+print(f"Répertoire : {directory}")
+```
+
+#### `os.path.join()`
+
+Permet d'obtenir le chemin complet vers le fichier 
+
+```python 
+import os.path
+
+# Concatenation des chemins
+directory = '/path/to'
+file_name = 'example.txt'
+full_path = os.path.join(directory, file_name)
+print(f"Chemin complet : {full_path}")
+```
+
+##### Chemin indépendament de la plateforme 
+
+```python 
+import os
+
+# Concatenation des chemins d'une manière indépendante de la plateforme
+directory = 'some_directory'
+file_name = 'example.txt'
+full_path = os.path.join(directory, file_name)
+print(f"Chemin complet : {full_path}")
+```
+
+#### `os.path.abspath()`
+
+Permet d'obtenir le chemin absolu
+
+```python 
+import os.path
+
+# Obtenir le chemin absolu
+relative_path = 'example.txt'
+absolute_path = os.path.abspath(relative_path)
+print(f"Chemin absolu : {absolute_path}")
+```
+
+## 24 - Manipulation de répertoire
+
+### `os.mkdir()`
+
+Permet de créer un noveau repertoire 
+
+```python 
+import os
+
+# Création d'un nouveau répertoire
+os.mkdir('new_directory')
+print("Répertoire 'new_directory' créé")
+```
+
+### `os.makedirs()`
+
+Permet de créer plusieurs répertoire imbriqués 
+
+```python 
+import os
+
+# Création de plusieurs répertoires imbriqués
+os.makedirs('parent_directory/child_directory')
+print("Répertoires imbriqués 'parent_directory/child_directory' créés")
+```
+
+### `os.rmdir()`
+
+Permet de supprimer un reportoire vide 
+
+```python 
+import os
+
+# Suppression d'un répertoire vide
+os.rmdir('new_directory')
+print("Répertoire 'new_directory' supprimé")
+```
+
+### `shutill.rmtree()`
+
+Permet de supprimer un repertoire avec du contenu 
+
+
+```python 
+import shutil
+
+# Suppression d'un répertoire avec contenu
+shutil.rmtree('parent_directory')
+print("Répertoire 'parent_directory' et tout son contenu supprimés")
+```
+
+**Attention**: on ne supprime pas un repertoire avec tout son contenu. Il est hautement probable qu'on bug arrive dans le programme. 
+
+Il est recommandé de vérifier l'existence du répertoire avant de le supprimer 
+
+```python 
+import os
+import shutil
+
+# Vérification de l'existence du répertoire avant suppression
+directory_path = 'parent_directory'
+if os.path.exists(directory_path):
+    shutil.rmtree(directory_path)
+    print(f"Répertoire '{directory_path}' et tout son contenu supprimés")
+else:
+    print(f"Répertoire '{directory_path}' n'existe pas, suppression impossible")
+```
+
+### `os.rename()`
+
+Permet de déplacer ou renommer un repertoire
+
+```python
+import os
+
+# Création de répertoire pour exemple
+os.mkdir('original_directory')
+
+# Renommage du répertoire
+os.rename('original_directory', 'renamed_directory')
+print("Répertoire 'original_directory' renommé en 'renamed_directory'")
+```
+
+### `shutil.copytree()`
+
+Permet de copier un repertoire. Elle copie le repertoire mais créer également un nouveau repertoire dans le chemin de destination.
+
+```python 
+import os
+import shutil
+
+# Création de répertoire pour exemple
+os.mkdir('source_directory')
+
+# Copie du répertoire
+shutil.copytree('source_directory', 'destination_directory')
+print("Répertoire 'source_directory' copié vers 'destination_directory'")
+```
+
+### `os.getcwd()`
+
+Permet d'obtenir le repertoire courant 
+
+```python
+import os
+
+# Obtenir le répertoire de travail courant
+current_directory = os.getcwd()
+print(f"Répertoire de travail courant : {current_directory}")
+```
+
+### `os.chdir()`
+
+Permet de changer le repertoire de travail courant
+
+```python 
+import os
+
+# Changer le répertoire de travail courant
+os.chdir('new_directory')
+print(f"Répertoire de travail courant changé en : {os.getcwd()}")
+```
+
+### `os.listdir()` - liste les fichiers dans un repertoire 
+
+Permet d'obtenir une liste de fichiers et repertoires dans le repertoire spécifié
+
+```python 
+import os
+
+# Obtenir une liste de fichiers et de répertoires dans le répertoire courant
+contents = os.listdir('.')
+print(f"Contenu du répertoire courant : {contents}")
+```
+
+### `os.scandir()` - information sur le contenu du répertoire
+
+Retourne un itérateur qui rends les objets `DirEntry` pour chaque entrée dans le répertoire. Ces objets contiennent ddes informations sur les fichiers et répertoires ce qui est plus efficase que `os.listdir()`
+
+```python 
+import os
+
+# Obtenir des informations sur le contenu du répertoire
+with os.scandir('.') as entries:
+    for entry in entries:
+        print(f"Nom : {entry.name}, Est-ce un répertoire : {entry.is_dir()}, Est-ce un fichier : {entry.is_file()}")
 ```
