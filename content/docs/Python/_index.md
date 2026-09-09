@@ -8033,3 +8033,445 @@ with os.scandir('.') as entries:
     for entry in entries:
         print(f"Nom : {entry.name}, Est-ce un répertoire : {entry.is_dir()}, Est-ce un fichier : {entry.is_file()}")
 ```
+
+---
+
+## 25 - Sérialisation 
+
+Processus de transformation d'un objet en séquence d'octets ou un format pouvant être enregistré dans un fichier, transmis sur un réseau ou sauvegardé dans une base de donnée.
+
+Pour enregistrer un objet dans un fichier, il faut le transformer en chaîne qu'il sera facile d'écrire dans un fichier ou transmettre sur un réseau.
+
+- **Enregistrement de l'état des objets**: pour conserver un état entre les exécution 
+- **Transmission de données**
+- **Mise en cache**: Stocker des objets en cache pour un accès rapide 
+- **Bases de données**: Stocker des structures de données complexes dans des BDD
+
+### Module `pickle`
+
+Permet de sauvegarder des objets Python dans un fichier ou une chaîne, puis de le restaurer dans son état initial.
+
+#### Sérialisation dans un fichier 
+
+1. Ouverture du fichier en mode `wb`
+2. Sérialisation de l'objet avec `pickle.dump(obj, file)`
+3. Déserialisation avec `pickle.load(file)`
+4. Fermeture du fichier 
+
+```python 
+# ===================================
+# serialisation et deserialization dans un fichier 
+# ===================================
+import pickle
+
+data = [1, 2, 3, 4, 5]
+
+# Sérialisation de la liste dans un fichier
+with open('list.pkl', 'wb') as file:
+    pickle.dump(data, file)
+
+# Désérialisation de la liste à partir du fichier
+with open('list.pkl', 'rb') as file:
+    loaded_data = pickle.load(file)
+
+print(loaded_data)  # Affichage : [1, 2, 3, 4, 5]
+
+# =============================================
+# serialisation dictionnaire 
+# =============================================
+import pickle
+
+# Exemple d'objet pour la sérialisation
+data = {'name': 'Alice', 'age': 30, 'is_student': False}
+
+# Sérialisation de l'objet dans un fichier
+with open('data.pkl', 'wb') as file:
+    pickle.dump(data, file)
+
+# Désérialisation de l'objet à partir du fichier
+with open('data.pkl', 'rb') as file:
+    loaded_data = pickle.load(file)
+
+print(loaded_data)  # Affichage : {'name': 'Alice', 'age': 30, 'is_student': False}
+```
+
+#### Sérialisation en chaîne 
+
+Sérialiser des objets en chaîne permet de les envoyer par le réseau.
+
+```python
+import pickle
+
+# Exemple d'objet pour la sérialisation
+data = {'name': 'Bob', 'age': 25, 'is_student': True}
+
+# Sérialisation de l'objet en chaîne
+serialized_data = pickle.dumps(data)
+print(serialized_data)
+
+# Désérialisation de l'objet à partir de la chaîne
+loaded_data = pickle.loads(serialized_data)
+print(loaded_data)  # Affichage : {'name': 'Bob', 'age': 25, 'is_student': True}
+```
+
+#### Erreur de sérialization 
+
+Le module déclenche des exceptions en cas d'erreur :
+- `pickle.PicklingError`: erreur pendant la sérialisation 
+- `pickle.UnpicklingError`: erreur pendant la déserialisation 
+
+```python 
+import pickle
+
+data = {'key': 'value'}
+
+try:
+    # Sérialisation de l'objet dans un fichier
+    with open('data.pkl', 'wb') as file:
+        pickle.dump(data, file)
+except pickle.PicklingError as e:
+    print(f"Erreur de sérialisation: {e}")
+
+try:
+    # Désérialisation de l'objet à partir du fichier
+    with open('data.pkl', 'rb') as file:
+        loaded_data = pickle.load(file)
+    print(loaded_data)
+except pickle.UnpicklingError as e:
+    print(f"Erreur de désérialisation: {e}")
+```
+
+### Module `json`
+
+Module intégré pour travailler avec JSON. 
+
+```python 
+import json
+
+# Exemple d'objet à sérialiser
+data = {'name': 'Bob', 'age': 25, 'is_student': True}
+
+# Sérialisation de l'objet en chaîne JSON
+json_string = json.dumps(data)
+print(json_string)
+
+# Sérialisation de l'objet dans un fichier JSON
+with open('data.json', 'w') as file:
+    json.dump(data, file)
+
+# Désérialisation de l'objet à partir de la chaîne JSON
+loaded_data = json.loads(json_string)
+print(loaded_data)
+
+# Désérialisation de l'objet à partir du fichier JSON
+with open('data.json', 'r') as file:
+    loaded_data = json.load(file)
+print(loaded_data)
+```
+
+### Module `yaml`
+
+```python 
+import yaml
+
+# Exemple d'objet à sérialiser
+data = {'name': 'Carol', 'age': 27, 'is_student': False}
+
+# Sérialisation de l'objet en chaîne YAML
+yaml_string = yaml.dump(data)
+print(yaml_string)
+
+# Sérialisation de l'objet dans un fichier YAML
+with open('data.yaml', 'w') as file:
+    yaml.dump(data, file)
+
+# Désérialisation de l'objet à partir de la chaîne YAML
+loaded_data = yaml.load(yaml_string, Loader=yaml.FullLoader)
+print(loaded_data)
+
+# Désérialisation de l'objet à partir du fichier YAML
+with open('data.yaml', 'r') as file:
+    loaded_data = yaml.load(file, Loader=yaml.FullLoader)
+print(loaded_data)
+```
+
+### Module `marshal` 
+
+Module intégré
+
+```python 
+import marshal
+
+# Exemple d'objet à sérialiser
+data = {'name': 'Dave', 'age': 35, 'is_student': True}
+
+# Sérialisation de l'objet dans un fichier
+with open('data.marshal', 'wb') as file:
+    marshal.dump(data, file)
+
+# Désérialisation de l'objet à partir d'un fichier
+with open('data.marshal', 'rb') as file:
+    loaded_data = marshal.load(file)
+
+print(loaded_data)
+```
+
+### Module `shelve`
+
+```python 
+import shelve
+
+# Exemple d'objet à sérialiser
+data = {'name': 'Eve', 'age': 28, 'is_student': False}
+
+# Sérialisation de l'objet dans un fichier
+with shelve.open('data.shelve') as db:
+    db['person'] = data
+
+# Désérialisation de l'objet à partir d'un fichier
+with shelve.open('data.shelve') as db:
+    loaded_data = db['person']
+
+print(loaded_data)
+```
+
+### Gestion de la sérialisation 
+
+Parfois, les objets contiennent beaucoup de références à différents objets de service que l'on ne souhaite pas transmettre sur le réseau (référence à des fichiers, bases de données, ...)
+
+Des méthodes sont fournis permettant d'indiquer comment les objets doivent être sérialisés et restaurés.
+
+#### `__reduce__()` 
+
+Cette méthode retourne un tuple qui indique comment l'objet doit être sérialisé et désérialisé. Le tuple contient généralement :
+- une référence à la fonction ou classe qui sera utilisée pour restaurer l'objet 
+- un tuple d'arguments pour cette fonction ou classe 
+- un état supplémentaire de l'objet 
+
+```python 
+import pickle
+
+class CustomClass:
+    def __init__(self, value):
+        self.value = value
+
+    def __reduce__(self):
+        return (self.__class__, (self.value,))
+
+    def __repr__(self):
+        return f"CustomClass(value={self.value})"
+
+# Création de l'objet
+obj = CustomClass(42)
+
+# Sérialisation de l'objet
+serialized_obj = pickle.dumps(obj)
+print("Objet sérialisé :", serialized_obj)
+
+# Désérialisation de l'objet
+deserialized_obj = pickle.loads(serialized_obj)
+print("Objet désérialisé :", deserialized_obj)
+```
+
+#### `__getstate__()` et `__setstate__(self, state)`
+
+Ces méthodes sont utilisées pour gérer l'état d'un objet pendant la sérialisaiton et désérialisation 
+
+- `__getstate__()`: retourne l'état de l'objet, qui doit être sérialisé
+- `__setstate__(self, state)`: restaure l'objet à partir de l'état 
+
+Exemple: on souhaite sauvegarder une partie des champs de l'objet. Dans `__getstate__()`, il faut:
+- Copier l'état actuel dans une variable séparé `state`
+- Supprimer de celle ci tous les champs qui ne doivent pas être sérialisé
+- Retourner l'objet obtenu en tant que résultat de la fonction `__getstate__()`
+
+```python 
+import pickle
+
+class CustomClass:
+    def __init__(self, value):
+        self.value = value
+        self.internal_state = "internal"
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state['internal_state']  # Exclusion de l'état interne
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        self.internal_state = "restored internal"  # Restauration de l'état interne
+
+    def __repr__(self):
+        return f"CustomClass(value={self.value}, internal_state={self.internal_state})"
+
+# Création de l'objet
+obj = CustomClass(42)
+print("Objet original :", obj)
+
+# Sérialisation de l'objet
+serialized_obj = pickle.dumps(obj)
+print("Objet sérialisé :", serialized_obj)
+
+# Désérialisation de l'objet
+deserialized_obj = pickle.loads(serialized_obj)
+print("Objet désérialisé :", deserialized_obj)
+```
+
+Lors de la désérialization, dans `__setstate__()`:
+- on met à jour l'état actuel de l'objet avec `update()`
+- le champ `internal_state` récupère de nouvelles valeurs 
+
+---
+
+## 26 - JSON 
+
+### Module `json`
+
+Le module `json` fournit des fonctions pour la sérialisation (python -> JSON) et déserialisation (JSON -> Python). 
+
+**Travail avec des fichiers**
+- `json.dump(obj, file)` - objet JSON -> fichier texte 
+- `json.load(file)` - déserialize un objet python depuis un fichier texte contenant des données au format JSON
+
+#### `json.dumps(obj)` - Objet Python -> chaîne JSON 
+
+```python 
+import json
+
+# Exemple d'objet pour la sérialisation
+data = {
+    "name": "Alice",
+    "age": 30,
+    "is_student": False,
+    "courses": ["Math", "Science"],
+    "address": {
+        "city": "New York",
+        "zip_code": "10001"
+    }
+}
+
+# Conversion de l'objet Python en chaîne JSON
+json_string = json.dumps(data, indent=4)
+print("Données sérialisées (JSON):", json_string)
+```
+
+#### `json.loads(s)` - Json -> Python 
+
+```python 
+import json
+
+# Exemple de chaîne JSON pour la désérialisation
+json_string = ''' { "name": "Alice", "age": 30, "is_student": false, "courses": ["Math", "Science"], "address": { "city": "New York", "zip_code": "10001" } } '''
+
+# Conversion de la chaîne JSON en objet Python
+data = json.loads(json_string)
+print("Données désérialisées (Python):", data)
+```
+
+#### `json.dump(obj, file)` - objet json dans un fichier au format json
+
+```python 
+import json
+
+# Exemple d'objet pour la sérialisation
+data = {
+    "name": "Bob",
+    "age": 25,
+    "is_student": True,
+    "courses": ["History", "Literature"],
+    "address": {
+        "city": "Los Angeles",
+        "zip_code": "90001"
+    }
+}
+
+# Écriture de l'objet Python dans un fichier JSON avec gestion des exceptions
+try:
+    with open('data.json', 'w') as file:
+        json.dump(data, file, indent=4)
+    print("Données écrites avec succès dans le fichier.")
+except IOError:
+    print("Erreur lors de l'écriture dans le fichier.")
+except json.JSONEncodeError:
+    print("Erreur lors de l'encodage JSON.")
+```
+
+#### `json.load()` - lecture d'objet Python depuis un fichier au format JSON 
+
+```python
+import json
+
+# Lecture de l'objet Python à partir du fichier JSON avec gestion des exceptions
+try:
+    with open('data.json', 'r') as file:
+        data = json.load(file)
+    print("Données désérialisées du fichier (Python):", data)
+except IOError:
+    print("Erreur lors de la lecture du fichier.")
+except json.JSONDecodeError:
+    print("Erreur lors du décodage JSON.")
+```
+
+#### Paramètre supplémentaire 
+
+Dans la fonction qui s'occupe de la sérialisation, on peut passer des paramètres suipplémentaire pour améliorer la lisibilité du json :
+- `skipkeys`: `True` ignore les clés qui ne sont pas des chaînes
+- `ensure_ascii`: caractère non ASCII seront échappés 
+- `indent`: prends un nombre. Les indentations seront ajoutées
+- `sort_key`: si `True`, les clé JSON seront triées 
+
+```python 
+import json
+
+data = {"c": 3, "b": 2, "a": 1}
+
+# Sérialisation avec tri des clés et indentations
+json_string = json.dumps(data, indent=4, sort_keys=True)
+print(json_string)
+```
+
+### Encodeur et décodeur personnalisées 
+
+```python 
+# ====================================
+# encodeur personalisé 
+# ====================================
+import json
+from datetime import datetime
+
+class CustomEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime): return obj.isoformat()
+        return super().default(obj)
+
+data = {
+    "name": "Alice",
+    "timestamp": datetime.now()
+}
+
+# Sérialisation avec un encodeur personnalisé
+json_string = json.dumps(data, cls=CustomEncoder, indent=4)
+print(json_string)
+
+# ===========================================
+# décodeur personnalisé 
+# ===========================================
+import json
+from datetime import datetime
+
+def custom_decoder(dct):
+    if 'timestamp' in dct: dct['timestamp'] = datetime.fromisoformat(dct['timestamp'])
+    return dct
+
+json_string = '''
+{
+    "name": "Alice",
+    "timestamp": "2023-05-15T14:30:00"
+}
+'''
+
+# Désérialisation avec un décodeur personnalisé
+data = json.loads(json_string, object_hook=custom_decoder)
+print(data)
+```
