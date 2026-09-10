@@ -2,3 +2,5 @@ public
 public/
 ressources/
 .hugo_build.lock
+
+.obsidian
