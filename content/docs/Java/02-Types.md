@@ -96,6 +96,16 @@ System.out.println(original.toLowerCase()); // bonjour
 String messy = "   hello   ";
 System.out.println(messy.trim()); // "hello"
 ```
+---
+
+## `boolean`
+
+Contient une valeur `true` ou `false`. 
+
+```java
+boolean isAdult = true; 
+boolean hasMoney = false; 
+```
 
 ---
 
