@@ -138,3 +138,29 @@ boolean adult = (age >= 18) ? true : false;
 // syntaxe avec ternaire
 boolean adult = (age >= 18);
 ```
+
+## Comparaison avec des nombre flottants 
+
+### Comparaison fiable de flottant
+
+Le `double` n'est pas capable de stocker de manière précise une valeur. Une comparaison directe avec `==` peut provoquer des bug. Pour des compararaison, on vient comparer le module de la différence à un trés petit nombre (epsilon).
+
+```jaja
+double a = 0.1 + 0.2;
+double b = 0.3;
+double epsilon = 0.000001;
+
+if (Math.abs(a - b) < epsilon)
+{
+    System.out.println("Presque égal !"); // C’est plus sûr de comparer ainsi
+}
+```
+
+Ici on viens vérifier que la différence entre les nombres est inférieur à un millionième.
+
+### Vérification des valeurs spéciale `double`
+
+```java 
+System.out.println(Double.isInfinite(result));    // true, si infini
+System.out.println(Double.isNaN(result));         // true, si NaN
+```

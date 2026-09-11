@@ -12,6 +12,25 @@ System.out.println("hello");
 System.out.print("Hello");
 ```
 
+### Sortie formatée de `double`
+
+Par dèfaut, un nombre à virgule sera afficher avec de nombreux zéro. Il est possible de venir formater la sortie.
+
+```java 
+double temp = 23.56789;
+System.out.println(temp); // 23.56789
+
+// 2 décimales
+System.out.println(String.format("%.2f", temp)); // 23.57
+
+// 1 décimale
+System.out.println(String.format("%.1f%n", temp)); // 23.6
+```
+
+- `%.2f`: nombre avec 2 décimale
+- `%.1f`: nombre avec 1 décimale
+
+
 ## Saisie au clavier 
 
 ### `System.in` - Lecture depuis la console 
