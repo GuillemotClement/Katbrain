@@ -139,6 +139,14 @@ boolean adult = (age >= 18) ? true : false;
 boolean adult = (age >= 18);
 ```
 
+#### Ternaire multiple 
+
+```java
+String category = (age < 7) ? "préscolaire" :
+                  (age < 18) ? "scolaire" :
+                  (age < 65) ? "adulte" : "retraité";
+```
+
 ## Comparaison avec des nombre flottants 
 
 ### Comparaison fiable de flottant
