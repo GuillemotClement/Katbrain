@@ -3051,3 +3051,9 @@ catch (ExceptionType variableName)
     // Code pour traiter l’exception
 }
 ```
+
+
+
+666
+
+
