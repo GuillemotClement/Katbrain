@@ -254,4 +254,220 @@ String greeting = getGreeting("Alisa");
 System.out.println(greeting); // Bonjour, Alisa !
 ```
 
+---
 
+## Passage de paramètres
+
+**Passage par valeur**: la fonction reçoit une copie de la valeur de la variable. Si la fonction modifie cette valeur, l'original ne change pas.
+**Passage par référence**: la fonction reçoit une référence -> pointeur vers l'objet original. Les modification dans la fonction affecte l'original.
+
+En Java, tous les paramètres sont passée par valeur. Sauf pour les types primitifs où c'est la valeur elle même qui est copiée. Lorsque l'on passe des tableaux ou des objets, c'est la valeur de la référence qui est copiée.
+
+### Type primitifs
+
+Une copie de la valeur de la variable `number` est passée à la méthode `changeValue`. A l'intérieur de la méthode, c'est la copie de la valeur qui est modifier, l'origine ne change pas.
+
+```java
+public class Demo
+{
+    public static void main(String[] args)
+    {
+        int number = 5;
+        changeValue(number);
+        System.out.println(number); // Que sera affiché ?
+    }
+
+    public static void changeValue(int n)
+    {
+        n = 42;
+    }
+}
+
+// Résultat: 5
+```
+
+### Type de référence 
+
+Avec un tableau, une copie de la référence est passer dans la méthode. Les deux variables `numbers` poitent vers le même tableau en mémoire. Si on modifie un élément dans le tableau depuis la méthode, le tableau est modifier.
+
+```java
+public class Demo
+{
+    public static void main(String[] args)
+    {
+        int[] numbers = {1, 2, 3};
+        changeFirst(numbers);
+        System.out.println(numbers[0]); // Que sera affiché ?
+    }
+
+    public static void changeFirst(int[] arr)
+    {
+        arr[0] = 99;
+    }
+}
+
+// Résultat: 99
+```
+
+#### Objets
+
+```java 
+class Box
+{
+    int value;
+}
+
+public class Demo
+{
+    public static void main(String[] args)
+    {
+        Box box = new Box();
+        box.value = 7;
+        changeBox(box);
+        System.out.println(box.value); // 42
+    }
+
+    public static void changeBox(Box b)
+    {
+        b.value = 42;
+    }
+}
+```
+
+---
+
+## Modificateurs d'accès et portée des variables
+
+Les modificateurs d'accès sont des mot clé permettant de définir où l'on peut utiliser une variable ou méthode.
+
+- `public`: Visible partout où la classe est visible.
+- `private`: visible uniquemenet dans la même classe
+- sans modificateur: visible uniquement à l'intérieur du même package
+
+```java 
+public class User
+{
+    public String name;           // visible par tous
+    private int age;              // visible uniquement à l'intérieur de la classe User
+
+    public void sayHello()
+    {
+        System.out.println("Bonjour, je m'appelle " + name);
+    }
+
+    private void secretMethod()
+    {
+        System.out.println("C'est une méthode secrète !");
+    }
+}
+```
+
+### Cas concret 
+
+On as une classe décrivant un compte bancaire. On ne souhaite pas que n'importe qui puisse modifier le solde du compte. La variable du solde aura donc une accès `private`, et des méthodes dédiées permettront de la manipuler.
+
+### Bonne pratique 
+
+On commence par tout passer en `private`, puis on expose uniquement ce qui est nécessaire.
+
+### Portée des variables 
+
+La portée est la zone où une variable existe et peut être utilisée. En dehors de cette zone, la variable n'existe pas.
+
+#### Variable locales 
+
+La variable ne vit qu'à l'intérieur de la méthode du bloc dans laquelle est est déclarée
+
+```java 
+void printSum(int a, int b)
+{
+    int sum = a + b; // variable locale
+    System.out.println(sum);
+}
+// sum n'existe plus ici !
+```
+
+#### Paramètre de méthode
+
+Les paramètres sont des variables qui vivent dans une méthode 
+
+```java 
+void greet(String name)
+{
+    System.out.println("Bonjour, " + name);
+}
+// name n'existe plus ici !
+```
+
+#### Champs de classe 
+
+Les champs de classes sont déclarées dans une classe, en dehors des méthodes. Ils sont visible dans toutes les méthodes de cette classe 
+
+```java 
+public class Counter
+{
+    private int count = 0; // champ de classe
+
+    public void increment()
+    {
+        count++; // nous pouvons utiliser le champ
+    }
+
+    public int getCount()
+    {
+        return count; // nous pouvons aussi utiliser le champ
+    }
+}
+```
+
+#### Shadowing 
+
+La shadowing (masquage) est une situation où dans une zonr de portée, on déclare une variable ou un paramètre avec le meme nom qu'à l'extérieur. Dans le bloc, le nouveau nom masque l'ancien, et on ne peut plus accéder directement à la valeur externe.
+
+```java 
+class ShadowDemo
+{
+    int value = 10; // champ de classe
+
+    void printValue()
+    {
+        System.out.println(value);  // 10 — affiche le champ de classe
+        int value = 5; // la variable locale masque le champ de classe
+        System.out.println(value); // affiche 5, pas 10
+    }
+}
+```
+
+Pour accéder quand même à un champ de classe statique, il faut utiliser le nom de classe comme préfixe 
+
+```java 
+class ShadowDemo
+{
+    static int value = 10; // champ de classe statique
+
+    void printValue()
+    {
+        System.out.println(value);      // 10 — champ de classe
+        int value = 5;
+        System.out.println(value);      // 5 — variable locale
+        System.out.println(ShadowDemo.value); // 10 — champ de classe statique, accès via 'ShadowDemo'
+    }
+}
+```
+
+S'il faut accéder à un champ de classe non statique, il faut utiliser `this`. Il désigne l'instance courante de l'objet.
+
+```java 
+class ShadowDemo
+{
+    int value = 10;
+
+    void printValue()
+    {
+        System.out.println(value);      // 10 — champ de classe
+        int value = 5;
+        System.out.println(value);      // 5 — variable locale
+        System.out.println(this.value); // 10 — champ de classe, accès via 'this'
+    }
+}
+```
