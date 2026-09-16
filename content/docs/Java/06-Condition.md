@@ -146,7 +146,6 @@ String category = (age < 7) ? "préscolaire" :
                   (age < 18) ? "scolaire" :
                   (age < 65) ? "adulte" : "retraité";
 ```
-
 ## Comparaison avec des nombre flottants 
 
 ### Comparaison fiable de flottant
@@ -171,4 +170,164 @@ Ici on viens vérifier que la différence entre les nombres est inférieur à un
 ```java 
 System.out.println(Double.isInfinite(result));    // true, si infini
 System.out.println(Double.isNaN(result));         // true, si NaN
+```
+
+---
+
+## Switch 
+
+```java 
+// ==================================
+// syntaxe 
+// ==================================
+switch (expression)
+{
+    case value1:
+        // actions si expression == value1
+        break;
+    case value2:
+        // actions si expression == value2
+        break;
+    ...
+    default:
+        // actions si aucune correspondance avec un case
+        break;
+}
+```
+
+- `switch(expression)` : expression dont le résultat est comparé à chaque `case`
+- `case valeur`: option comparée 
+- `break`: termine le bloc 
+- `default`: exécuter si aucune option ne match
+
+Si l'opérateur `break` n'est pas indiquer dans un bloc, l'exécution du code "tombe" dans le bloc suivant.
+
+### Pattern 
+
+#### Menu CLI 
+
+```java 
+import java.util.Scanner;
+
+public class CoffeeShop
+{
+    public static void main(String[] args)
+    {
+        Scanner console = new Scanner(System.in);
+
+        System.out.println("Choisissez une boisson:");
+        System.out.println("1 - Espresso");
+        System.out.println("2 - Cappuccino");
+        System.out.println("3 - Latte");
+        int choice = console.nextInt();
+
+        switch (choice)
+        {
+            case 1:
+                System.out.println("Vous avez choisi un espresso.");
+                break;
+            case 2:
+                System.out.println("Vous avez choisi un cappuccino.");
+                break;
+            case 3:
+                System.out.println("Vous avez choisi un latte.");
+                break;
+            default:
+                System.out.println("Cette boisson n’existe pas.");
+                break;
+        }
+    }
+}
+```
+
+#### Switch sur des chaîne 
+
+La comparaison sur des chaîne est sensible à la casse.
+
+```java 
+import java.util.Scanner;
+
+public class CommandMenu
+{
+    public static void main(String[] args)
+    {
+        Scanner console = new Scanner(System.in);
+
+        System.out.println("Saisissez une commande (start, stop, pause):");
+        String command = console.nextLine();
+
+        switch (command)
+        {
+            case "start":
+                System.out.println("Démarrage du programme!");
+                break;
+            case "stop":
+                System.out.println("Arrêt du programme.");
+                break;
+            case "pause":
+                System.out.println("Pause.");
+                break;
+            default:
+                System.out.println("Commande inconnue.");
+                break;
+        }
+    }
+}
+```
+
+#### Switch sur des `char`
+
+```java 
+char grade = 'B';
+
+switch (grade)
+{
+    case 'A':
+        System.out.println("Excellent!");
+        break;
+    case 'B':
+        System.out.println("Bien.");
+        break;
+    case 'C':
+        System.out.println("Satisfaisant.");
+        break;
+    default:
+        System.out.println("Essayez encore.");
+        break;
+}
+```
+
+### Regroupement de `case`
+
+Si plusieurs valerus doivent avoir le même comportement, on peut venir les regrouper
+
+```java 
+int month = 1;
+
+switch (month)
+{
+    case 12:
+    case 1:
+    case 2:
+        System.out.println("Hiver");
+        break;
+    case 3:
+    case 4:
+    case 5:
+        System.out.println("Printemps");
+        break;
+    case 6:
+    case 7:
+    case 8:
+        System.out.println("Été");
+        break;
+    case 9:
+    case 10:
+    case 11:
+        System.out.println("Automne");
+        break;
+    default:
+        System.out.println("Mois inconnu");
+        break;
+}
 ```
