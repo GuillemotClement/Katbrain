@@ -605,3 +605,257 @@ System.out.println(Arrays.toString(arr)); // [1, 2, 3]
 int[][] matrix = {{1, 2}, {3, 4}};
 System.out.println(Arrays.deepToString(matrix)); // [[1, 2], [3, 4]]
 ```
+
+---
+
+## `ArrayList<T>` - Tableau infini
+
+Tableau qui peut grandir et rétrécir automatiquement
+
+### Création 
+
+Le type des éléments doit être placer entre `< >`, et prends tous les types sauf les primitifs. Les types primitifs devront être remplacer par leur enveloppe.
+
+```java
+// ======================================
+// création de tableau infini de String 
+// ======================================
+ArrayList<String> array = new ArrayList<String>()
+
+// ===============================
+// création tableau infinie avec enveloppe 
+// ===============================
+ArrayList<Integer> numbers = new ArrayList<Integer>();      // int
+ArrayList<Double> fees = new ArrayList<Double>();            // double
+ArrayList<Boolean> yesList = new ArrayList<Boolean>();       // boolean
+ArrayList<Character> chars = new ArrayList<Character>();     // char
+```
+
+### Méthode 
+
+#### `add()` - ajout d'élément au tableau 
+
+La méthode permet d'ajouter un élément en fin de tableau. La taille grandit au fur et à mesure des ajouts.
+
+```java 
+ArrayList<String> todo = new ArrayList<>(); // liste des tâches
+todo.add("Apprendre ArrayList");
+todo.add("Préparer du thé");
+todo.add("Se promener");
+```
+
+#### `get()` - accès par indice 
+
+Chaque élément possède son indice. Cette méthode permet d'obtenir l'élément en passant l'indice souhaité.
+
+
+```java
+String task = todo.get(1);
+System.out.println("Deuxième tâche : " + task);
+```
+
+#### `set(index, element)` - remplacement d'élément
+
+Cette méthode permet de remplacer un élément du tableau
+
+```java
+todo.set(1, "Préparer du café");
+System.out.println("Désormais, la deuxième tâche : " + todo.get(1));
+```
+
+#### `remove(index)` - supprime un élément
+
+Permet de supprimer l'élément. La suppression d'un élément entraine un décalage (1 devient 0, etc)
+
+```java 
+todo.remove(0);
+System.out.println("La première tâche maintenant : " + todo.get(0));
+```
+
+#### `size()` - taille de la liste 
+
+La méthode retourne le nombre d'éléments du tableau. 
+
+```java 
+System.out.println("Nombre total de tâches : " + todo.size());
+```
+
+#### `contains(element)` - vérification de présence 
+
+Permet de savoir si un élément est présent dans le tableau. Elle retourne un boolean
+
+```java 
+System.out.println(todo.contains("Se promener"));
+System.out.println(todo.contains("Préparer du thé"));
+```
+
+### Parcourir la liste 
+
+#### Boucle par indice 
+
+```java 
+for (int i = 0; i < todo.size(); i++)
+{
+    System.out.println(i + ": " + todo.get(i));
+}
+```
+
+#### Boucle for-each 
+
+```java 
+for (String task : todo)
+{
+    System.out.println("Tâche : " + task);
+}
+```
+
+### Exemple d'utilisation 
+
+```java 
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class TodoApp
+{
+    public static void main(String[] args)
+    {
+        ArrayList<String> todo = new ArrayList<>();
+        Scanner console = new Scanner(System.in);
+
+        while (true)
+        {
+            System.out.print("Saisissez une tâche (ou une ligne vide pour quitter) : ");
+            String task = console.nextLine();
+            if (task.isEmpty()) break;
+            todo.add(task);
+        }
+
+        System.out.println("Votre liste de tâches :");
+        for (int i = 0; i < todo.size(); i++)
+        {
+            System.out.println((i + 1) + ". " + todo.get(i));
+        }
+    }
+}
+```
+
+---
+
+## `HashMap<K,V>` - Dictionnaire 
+
+Liste trier par clé valeur.
+
+### Création 
+
+Pour créer un dictionnaire, on indique le premier type pour la clé, et le second pour la valeur.
+
+```java 
+import java.util.HashMap;
+
+HashMap<String, String> phonebook = new HashMap<String, String>();
+HashMap<String, Integer> grades = new HashMap<String, Integer>();  // nom → note
+HashMap<Integer, String> users = new HashMap<Integer, String>();   // id → nom
+HashMap<String, Boolean> flags = new HashMap<String, Boolean>();   // clé → valeur booléenne
+```
+
+### Méthode 
+
+#### `put(key, value)` - ajout d'élément 
+
+Les clé sont unique, et si on ajoute une nouvelle valeur avec une clé existante, l'ancienne valeur est écrasé.
+
+```java 
+phonebook.put("Alice", "+380501112233");
+phonebook.put("Bob", "+380671234567");
+```
+
+#### `get(key)` - obtenir une valeur 
+
+Si la clé n'existe pas, on obtient une valeur `null`.
+
+```java 
+System.out.println(phonebook.get("Alice"));
+```
+
+#### `containsKey(key)` - vérifier la présence 
+
+```java 
+System.out.println(phonebook.containsKey("Charlie"));
+
+// utilisation avec un ajout 
+if (phonebook.containsKey("Alice"))
+{
+    System.out.println("Alice a déjà un numéro!");
+}
+else
+{
+    phonebook.put("Alice", "+10111111111");
+}
+```
+
+#### `remove(key)` - supprimer une entrée 
+```java
+phonebook.remove("Bob");
+System.out.println(phonebook.get("Bob"));
+```
+
+#### `entrySet()` - Parcourir les paires 
+
+Permet d'afficher les clé valeurs du dictionnaire 
+
+```java 
+for (var entry : phonebook.entrySet()) {
+    System.out.println(entry.getKey() + " -> " + entry.getValue());
+}
+```
+
+### Utilisation dans un compteur de mot 
+
+```java 
+String text = "java java core java";
+HashMap<String, Integer> freq = new HashMap<String, Integer>();
+
+// on sépare chaque mot de la chaine
+for (String w : text.split(" "))
+{
+    Integer old = freq.get(w); // verifie si le mot est present
+    freq.put(w, (old == null) ? 1 : old + 1); // si null on passe la valeur a 1, puis on increment 
+}
+
+System.out.println(freq);
+
+// sortie: {core=1, java=3}
+```
+
+### Utilisation dans un annuaire 
+
+```java 
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class PhonebookApp {
+    public static void main(String[] args)
+    {
+        HashMap<String, String> phonebook = new HashMap<String, String>();
+        Scanner console = new Scanner(System.in);
+
+        while (true)
+        {
+            System.out.print("Saisissez un nom (ou une ligne vide pour quitter): ");
+            String name = console.nextLine();
+            if (name.isEmpty()) break;
+
+            System.out.print("Saisissez le numéro: ");
+            String phone = console.nextLine();
+
+            phonebook.put(name, phone);
+        }
+
+        System.out.println("Annuaire téléphonique:");
+        for (var entry : phonebook.entrySet())
+        {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+    }
+}
+```
