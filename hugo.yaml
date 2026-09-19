@@ -16,15 +16,6 @@ menu:
       pageRef: /docs
       weight: 2
 
-    - name: Projets
-      pageRef: /projet
-      weight: 3
-
     - name: Search
       params:
         type: search
-
-    - name: Github
-      url: "https://github.com"
-      params:
-        icon: github
