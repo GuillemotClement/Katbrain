@@ -114,6 +114,16 @@ john.sayHello(); // Affichera: Bonjour, je m'appelle John !
 
 ---
 
+## `new`
+
+Pour créer un nouvel objet, on utilise le mot clé `new`. Cela demande à la JVM d'allouer de la mémoire pour le nouvel objet et d'appeller son constructeur.
+
+```java 
+Person john = new Person();
+```
+
+---
+
 ## Modificateurs d'accès 
 
 Les champs peuvent être `public` ou `private`. Généralement, on passe les champs en `private` pour empêcher d'y accéder directement depuis d'autres classes. Cela fait partie du principe d'encapsulation.
@@ -185,3 +195,110 @@ public Person() {
 ```
 
 Si une constructeur est déclaré, alors il n'est pas créer automatiquement, et doit être déclarée explicitement si nécessaire.
+
+### Constructeur avec paramètres 
+
+```java 
+public class Person {
+    String name;
+    int age;
+
+    // Constructeur avec paramètres
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+// ===============================
+// création de l'objet 
+// ===============================
+Person peter = new Person("Peter", 25);
+```
+
+### Constructeur sans paramètre 
+
+```java
+public Person() {
+    this.name = "Sans nom";
+    this.age = 0;
+}
+
+Person mysteryMan = new Person(); // name="Sans nom", age=0
+```
+
+---
+
+## Surcharge de constructeur 
+
+Permet d'offrir un choix: quels paramètre préciser lors de la création de l'objet, quels paramètres laisser par defaut. Cela permet de rendre la classe flexible.
+
+La surcharge c'est lorsque plusieurs constructeurs sont déclarées dans une même classe, mais avec des paramètres différents (nombre, type, ordre).
+
+```java 
+// =========================
+// classe avec surcharge de constructeur 
+// =========================
+public class Person {
+    String name;
+    int age;
+
+    // Constructeur sans paramètres (par défaut)
+    public Person() {
+        this.name = "Inconnu";
+        this.age = 0;
+    }
+
+    // Constructeur avec un paramètre
+    public Person(String name) {
+        this.name = name;
+        this.age = 0;
+    }
+
+    // Constructeur avec deux paramètres
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+// ================================
+// utilisation 
+// ================================
+Person p1 = new Person();                // nom = "Inconnu", âge = 0
+Person p2 = new Person("John");         // nom = "John", âge = 0
+Person p3 = new Person("Peter", 25);     // nom = "Peter", âge = 25
+```
+
+### Appel de constructeur depuis un constructeur 
+
+Lors d'une surcharge de constructeur, une partie du code se répète. Par exemple, on souhaite que tous les constructeurs définissent obligatoirement le nom, et que l'age s'il n'est pas fournis valle 0. Pour ne pas dupliquer la logique dans chaque constructeur, on peut appeler un constructeur depuis un autre avec `this()`.
+
+L'appel d'un autre constructeur via `this()` doit être la premiere ligne du constructeur.
+
+```java 
+public class Person {
+    String name;
+    int age;
+
+    // Constructeur avec deux paramètres
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Le constructeur avec un paramètre appelle un autre constructeur
+    public Person(String name) {
+        this(name, 0); // appelle Person(String name, int age)
+    }
+
+    // Le constructeur sans paramètres appelle un autre constructeur
+    public Person() {
+        this("Inconnu", 0);
+    }
+}
+
+public Person(String name) {
+    this(name, 0); // appelle Person(String, int)
+}
+```
